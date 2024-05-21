@@ -1,13 +1,17 @@
+import { Input as InputText, InputProps } from "@nextui-org/react"
 
-type Props = {
-    label: string
-    name: string
-}
 
-export function Input({ label, name }: Props) {
+import * as React from "react"
 
+
+export const Input = ({ label, className, type, ...props }: InputProps) => {
     return (
-        <> </>
+        <InputText
+            className=""
+            label={label}
+            type={type}
+            {...props}
+        />
     )
-
 }
+
