@@ -4,7 +4,6 @@ import { Button } from '@/modules/common/components/button';
 import { useFormStatus } from "react-dom"
 
 type Props = {
-
     children: React.ReactNode
 }
 

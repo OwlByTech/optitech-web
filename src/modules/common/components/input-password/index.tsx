@@ -7,7 +7,7 @@ import { EyeFilledIcon } from "../../icons/EyeFilledIcon";
 import { Input } from "../input";
 
 
-export const InputPassword = ({ label, className, ...props }: InputProps) => {
+export function InputPassword({ label, className, ...props }: InputProps) {
     const [isVisible, setIsVisible] = React.useState(false);
     const toggleVisibility = () => setIsVisible(!isVisible);
 
