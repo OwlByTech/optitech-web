@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextUIProvider } from "@nextui-org/react";
 import "../styles/index.css"
-import SessionProvider from "../modules/account/templates/AuthProvider";
+import SessionProvider from "../modules/auth//templates/AuthProvider";
 import authOptions from "./api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 const inter = Inter({ subsets: ["latin"] });

@@ -1,6 +1,9 @@
-import { signOut } from "@/auth";
-import { Button } from "@/modules/common/components/button";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
+export const metadata = {
+    title: "Inicio"
+}
+
 
 export default function Home() {
     return (
@@ -9,7 +12,12 @@ export default function Home() {
             <form
                 action={async (formData) => {
                     "use server"
-                    await signOut()
+                    try {
+                        await signOut()
+
+                    } catch (e) {
+                        console.log(e)
+                    }
                 }}
             >
                 <button type="submit">Sign out</button>
