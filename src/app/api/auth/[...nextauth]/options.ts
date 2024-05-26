@@ -1,6 +1,7 @@
 import NextAuth, { DefaultSession, NextAuthOptions } from 'next-auth'
 import { DefaultJWT } from 'next-auth/jwt'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import jwt from "jsonwebtoken"
 
 declare module 'next-auth' {
     interface Session {
@@ -21,16 +22,14 @@ declare module 'next-auth' {
 const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/login',
-        signOut: '/login',
-        error: '/'
+        error: '/error'
     },
-    secret: 'asfkasdlasd',
     debug: true,
     providers: [
         CredentialsProvider({
             name: 'credentials',
             credentials: {
-                email: { label: 'ddentification', type: 'text' },
+                email: { label: 'identification', type: 'text' },
                 password: { label: 'Password', type: 'password' }
             },
             //@ts-ignore
@@ -40,8 +39,8 @@ const authOptions: NextAuthOptions = {
                     const user = { email: "demo@demo.com", password: "demo" }
 
                     console.log(credentials)
+
                     if (user.email === credentials?.email && user.password === credentials?.password) {
-                        console.log("validate")
                         return {
                             ...user, name: "Demo Demo"
 
@@ -77,7 +76,16 @@ const authOptions: NextAuthOptions = {
             }
             return session
         }
-    }
+    },
+    jwt: {
+        async encode({ secret, token }) {
+            return jwt.sign(token, secret)
+        },
+        async decode({ secret, token }) {
+            return jwt.verify(token, secret)
+        },
+    },
+
 }
 
 export default authOptions
