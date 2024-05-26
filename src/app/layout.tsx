@@ -21,7 +21,7 @@ export default async function RootLayout({
     return (
         <html lang="en" className="light">
             <body className={inter.className}>
-                <SessionProvider basePath="/login" session={session} refetchInterval={120} >
+                <SessionProvider session={session} refetchInterval={120} >
                     <NextUIProvider>
                         {children}
                     </NextUIProvider>
