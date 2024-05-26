@@ -38,8 +38,6 @@ const authOptions: NextAuthOptions = {
                 try {
                     const user = { email: "demo@demo.com", password: "demo" }
 
-                    console.log(credentials)
-
                     if (user.email === credentials?.email && user.password === credentials?.password) {
                         return {
                             ...user, name: "Demo Demo"
@@ -49,7 +47,6 @@ const authOptions: NextAuthOptions = {
                         return null
                     }
                 } catch (e) {
-                    console.log(e)
                 }
 
 
