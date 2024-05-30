@@ -8,13 +8,11 @@ import { Button } from '@/modules/common/components/button';
 
 export default function Login() {
     const session = useSession()
-    const user = session.data?.user
     const route = useRouter()
     if (session.status === 'authenticated') {
         route.push("/")
     }
 
-    console.log(session)
     return (
         <>
             {session.status === 'unauthenticated' &&
@@ -25,17 +23,13 @@ export default function Login() {
                         <Button onClick={async () => {
                             await new Promise((resolve) => { setTimeout(resolve, 3000) })
                             try {
-                                const response = await signIn('credentials', {
+                                await signIn('credentials', {
                                     email: "demo@demo.com",
                                     password: "demo",
                                     redirect: false,
                                     callbackUrl: '/'
                                 })
-                                console.log(response)
                             } catch (e) {
-                                console.log(e)
-
-
                             }
 
                         }}>Aceptar</Button>
