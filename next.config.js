@@ -22,6 +22,7 @@ const nextConfig = withStoreConfig({
     },
     env: {
         AUTH_SECRET: process.env.AUTH_SECRET,
+        MODE: process.env.MODE,
     },
     reactStrictMode: true,
     transpilePackages: ['next-auth'],

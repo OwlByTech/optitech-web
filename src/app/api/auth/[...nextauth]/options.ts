@@ -24,7 +24,7 @@ const authOptions: NextAuthOptions = {
         signIn: '/login',
         error: '/error'
     },
-    debug: true,
+    debug: process.env.MODE === "dev" ? true : false,
     providers: [
         CredentialsProvider({
             name: 'credentials',
