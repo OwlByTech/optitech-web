@@ -1,42 +1,23 @@
 "use client"
-import { Input } from '@/modules/common/components/input'
-import { signIn, useSession } from "next-auth/react";
-import { SubmitButton } from '@/modules/common/components/submit-button';
-import { InputPassword } from '@/modules/common/components/input-password';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/modules/common/components/button';
+import { useFormState } from 'react-dom';
+import { authenticate } from '../services/actions';
+import { Input } from '../../common/components/input';
+import { InputPassword } from '../../common/components/input-password';
+import { SubmitButton } from '../../common/components/submit-button';
 
 export default function Login() {
-    const session = useSession()
-    const route = useRouter()
-    if (session.status === 'authenticated') {
-        route.push("/")
-    }
+    const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
     return (
         <>
-            {session.status === 'unauthenticated' &&
-                <div className='w-screen h-screen flex flex-col items-center justify-center'>
-                    <form className=' flex flex-col  gap-4 min-w-80 '>
-                        <Input label='Correo' name="email" required type='email' />
-                        <InputPassword label='Contrasena' name="password" required />
-                        <Button onClick={async () => {
-                            await new Promise((resolve) => { setTimeout(resolve, 3000) })
-                            try {
-                                await signIn('credentials', {
-                                    email: "demo@demo.com",
-                                    password: "demo",
-                                    redirect: false,
-                                    callbackUrl: '/'
-                                })
-                            } catch (e) {
-                            }
-
-                        }}>Aceptar</Button>
-
-                    </form>
-                </div>
-            }
+            <div className='w-screen h-screen flex flex-col items-center justify-center'>
+                <form action={dispatch} className=' flex flex-col  gap-4 min-w-80 '>
+                    <Input label='Correo' name="email" required type='email' />
+                    <InputPassword label='Contrasena' name="password" required />
+                    {errorMessage && <p className='text-red-600 font-bold text-xs' >{errorMessage}</p>}
+                    <SubmitButton>Aceptar</SubmitButton>
+                </form>
+            </div>
         </>
     )
 }

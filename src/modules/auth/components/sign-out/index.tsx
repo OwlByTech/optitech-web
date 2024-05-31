@@ -1,8 +1,12 @@
-"use client"
-import { Button } from "@/modules/common/components/button"
-import { signOut } from "next-auth/react"
+import { signOut } from "@/auth"
+import { SubmitButton } from "@/modules/common/components/submit-button"
 
 export function SignOut() {
 
-    return <Button onClick={async () => { await signOut({ redirect: true, callbackUrl: "/login" }) }} type="submit">Cerrar sesión</Button>
+    return <form action={async () => {
+        'use server'
+        await signOut()
+    }}>
+        <SubmitButton>Salir</SubmitButton>
+    </form>
 }
