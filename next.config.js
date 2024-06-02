@@ -1,9 +1,5 @@
-/** @type {import('next').NextConfig} */
 const { withStoreConfig } = require("./store-config")
 
-/**
- * @type {import('next').NextConfig}
- */
 const nextEnv = require("@next/env")
 const path = require("path")
 const dotenv = require("dotenv")
@@ -17,7 +13,6 @@ const nextConfig = withStoreConfig({
         ignoreDuringBuilds: true,
     },
     typescript: {
-        // TODO: Fix all typescript errors
         ignoreBuildErrors: true,
     },
     env: {
