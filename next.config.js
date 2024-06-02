@@ -22,6 +22,7 @@ const nextConfig = withStoreConfig({
     },
     env: {
         AUTH_SECRET: process.env.AUTH_SECRET,
+        NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         MODE: process.env.MODE,
     },
     reactStrictMode: true,
