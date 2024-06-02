@@ -21,7 +21,7 @@ export const authConfig = {
 
 
     },
-
+    debug: process.env.ENV === "prod" ? false : true,
     basePath: '/',
     providers: []
 
