@@ -4,10 +4,17 @@ import { authenticate } from '../services/actions';
 import { Input } from '../../common/components/input';
 import { InputPassword } from '../../common/components/input-password';
 import { SubmitButton } from '../../common/components/submit-button';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Login() {
     const [errorMessage, dispatch] = useFormState(authenticate, undefined);
-
+    const route = useRouter()
+    const pathname = usePathname()
+    useEffect(() => {
+        if (pathname === '/')
+            route.push("login")
+    }, [pathname])
     return (
         <>
             <div className='w-screen h-screen flex flex-col items-center justify-center'>
