@@ -7,9 +7,12 @@ import * as React from "react"
 export function Input({ label, className, type, ...props }: InputProps) {
     return (
         <InputText
-            className=""
+            className="border border-black"
             label={label}
+            color="default"
             type={type}
+            radius="none"
+
             {...props}
         />
     )
