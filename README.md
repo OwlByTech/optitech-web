@@ -4,6 +4,8 @@ To start the project in development mode, you must copy the .env.example to .env
 ```bash
 docker compose  up
 ```
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
+
 ## Testing
 First run project in mode dev or production and then run the following command:
 ```bash
@@ -11,4 +13,3 @@ yarn cypress:open
 ```
 
 
-Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
