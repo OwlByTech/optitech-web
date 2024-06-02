@@ -17,7 +17,8 @@ export default function Login() {
     }, [pathname])
     return (
         <>
-            <div className='w-screen h-screen flex flex-col items-center justify-center'>
+            <div className='w-screen h-screen flex flex-col items-center gap-6 justify-center'>
+                <h1 className=' font-bold text-xl' >Iniciar sesión</h1>
                 <form action={dispatch} className=' flex flex-col  gap-4 min-w-80 '>
                     <Input label='Correo' name="email" required type='email' />
                     <InputPassword label='Contrasena' name="password" required />
