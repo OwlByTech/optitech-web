@@ -5,6 +5,13 @@ module.exports = defineConfig({
         devServer: {
             framework: 'next',
             bundler: 'webpack',
+
         },
+
     },
+    e2e: {
+        setupNodeEvents(on, config) { },
+        supportFile: false
+    },
+
 })
