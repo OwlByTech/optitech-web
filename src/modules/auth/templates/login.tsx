@@ -6,6 +6,7 @@ import { InputPassword } from '../../common/components/input-password';
 import { SubmitButton } from '../../common/components/submit-button';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { ROUTES_AUTH } from '../types/auth';
 
 export default function Login() {
     const [errorMessage, dispatch] = useFormState(authenticate, undefined);
@@ -13,7 +14,7 @@ export default function Login() {
     const pathname = usePathname()
     useEffect(() => {
         if (pathname === '/')
-            route.push("login")
+            route.push(ROUTES_AUTH.LOGIN)
     }, [pathname])
     return (
         <>
