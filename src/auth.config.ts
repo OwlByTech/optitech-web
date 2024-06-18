@@ -6,6 +6,7 @@ export const authConfig = {
 
     pages: {
         signIn: ROUTES_AUTH.LOGIN,
+        newUser: ROUTES_AUTH.SING_UP
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
@@ -13,6 +14,10 @@ export const authConfig = {
             if (isLoggedIn && nextUrl.pathname === ROUTES_AUTH.LOGIN) {
                 return NextResponse.redirect(new URL('/', nextUrl));
             } else if (isLoggedIn) {
+                return true
+            } else if (nextUrl.pathname === ROUTES_AUTH.PRINCIPAL) {
+                return true
+            } else if (nextUrl.pathname === ROUTES_AUTH.SING_UP) {
                 return true
             } else {
                 return false
