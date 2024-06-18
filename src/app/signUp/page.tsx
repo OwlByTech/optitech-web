@@ -1,5 +1,3 @@
-import Principal from "@/modules/auth/templates/principal";
-
 export const metadata = {
   title: "Registrarse",
 };

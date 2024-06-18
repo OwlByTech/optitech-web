@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/modules/common/components/button";
-
 export default function Principal() {
   return (
     <section className="flex flex-col items-center justify-center h-screen w-full">
