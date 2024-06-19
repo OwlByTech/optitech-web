@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Principal() {
   return (
     <section className="flex flex-col items-center justify-center h-screen w-full">
@@ -9,18 +11,18 @@ export default function Principal() {
           <p>Welcome back</p>
         </div>
         <div className="flex  justify-between">
-          <a
+          <Link
             href="/login"
             className="bg-black text-white p-1 border border-black rounded-md hover:bg-white hover:text-black text-xs"
           >
             Sign In
-          </a>
-          <a
+          </Link>
+          <Link
             href="/signUp"
             className="p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
           >
             Register
-          </a>
+          </Link>
         </div>
       </div>
     </section>
