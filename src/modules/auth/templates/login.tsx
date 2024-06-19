@@ -47,7 +47,7 @@ export default function Login() {
 
           <div className="flex flex-grows gap-1 mx-4">
             <p className="text-xs">¿Perdiste tu contraseña? </p>
-            <Link href="" className="text-xs font-bold">
+            <Link href="/reset-password" className="text-xs font-bold">
               Recuperar Contraseña
             </Link>
           </div>

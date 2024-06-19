@@ -8,5 +8,6 @@ export enum ROUTES_AUTH {
     LOGIN = "/login",
     SING_UP = "/signUp",
     PRINCIPAL = "/principal",
-    HOME = "/home"
+    HOME = "/home",
+    RESET_PASSWORD = "/reset-password"
 }
