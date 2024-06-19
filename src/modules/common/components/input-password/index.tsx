@@ -10,7 +10,7 @@ export function InputPassword({ label, className, ...props }: InputProps) {
 
   return (
     <Input
-      className={`border border-black ${className}`}
+      className={className}
       label={label}
       endContent={
         <button

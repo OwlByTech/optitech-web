@@ -17,7 +17,7 @@ export default function ResetPassword() {
         </Link>
         <h1>Iniciar sesión</h1>
       </div>
-      <div className="flex flex-col gap-[50px]">
+      <div className="flex flex-col gap-[50px] bg-none">
         <div>
           <h1 className="font-extrabold text-xl">Restablecer Contraseña.</h1>
           <p className="text-sm">
@@ -25,14 +25,15 @@ export default function ResetPassword() {
             solicitar un restablecimiento de contraseña.
           </p>
         </div>
-        <form action={dispatch} className="flex flex-col gap-[50px]">
+        <form action={dispatch} className="flex flex-col gap-[50px] bg-none">
           <div>
             <Input
               label="Correo"
               name="email"
               required
               type="email"
-              className="border rounded-md"
+              radius="sm"
+              variant="bordered"
             />
           </div>
           {errorMessage && (

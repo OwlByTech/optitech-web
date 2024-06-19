@@ -2,7 +2,7 @@ import { Input as InputText, InputProps } from "@nextui-org/react";
 import * as React from "react";
 
 export function Input({ label, className, type, ...props }: InputProps) {
-  const combinedClassName = `border border-black ${className}`;
+  const combinedClassName = `${className}`;
 
   return (
     <InputText

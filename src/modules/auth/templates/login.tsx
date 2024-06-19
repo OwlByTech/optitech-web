@@ -30,7 +30,8 @@ export default function Login() {
               name="email"
               required
               type="email"
-              className="border rounded-md"
+              radius="sm"
+              variant="bordered"
             />
           </div>
           <div className="mx-5">
@@ -38,7 +39,8 @@ export default function Login() {
               label="Contrasena"
               name="password"
               required
-              className="border rounded-md"
+              radius="sm"
+              variant="bordered"
             />
           </div>
           {errorMessage && (
