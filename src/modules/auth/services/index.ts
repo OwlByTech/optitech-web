@@ -1,4 +1,3 @@
-
 export async function resetPasswordService(email: string): Promise<boolean> {
 
     try {
@@ -16,5 +15,28 @@ export async function resetPasswordService(email: string): Promise<boolean> {
     } catch (e) {
         return false
 
+    }
+}
+
+
+export async function loginService(email: string, password: string): Promise<{ token: string } | null> {
+    try {
+        const response = await fetch(`${process.env.API_URL}/client/login`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return { token: data.token };
+        } else {
+            console.error('Login failed:', response.statusText);
+            return null;
+        }
+    } catch (e) {
+        console.error('Login error:', e);
+        return null;
     }
 }

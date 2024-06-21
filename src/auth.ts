@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { authConfig } from "@/auth.config";
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod'
+import { loginService } from "./modules/auth/services";
 export const { auth, handlers, signIn, signOut } = NextAuth({
     ...authConfig,
     providers: [
@@ -13,13 +14,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     .safeParse(credentials);
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data;
-                    if (email === "optitech@optitech.com" && password === "optitech")
+                    const result = await loginService(email, password)
+
+                    if (result) {
                         return {
-                            name: "Optitech",
-                            email: "optitech@gmail.com"
-                        }
-
-
+                            name: "User",
+                            email: email,
+                            token: result.token
+                        };
+                    } else {
+                        return null;
+                    }
+                    
+                } else {
+                    return null;
                 }
             }
         })
