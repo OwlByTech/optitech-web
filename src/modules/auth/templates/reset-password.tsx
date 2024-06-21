@@ -7,6 +7,7 @@ import { SubmitButton } from "@/modules/common/components/submit-button";
 import { resetPassword } from "../services/actions";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { ROUTES_AUTH } from "../types/auth";
 
 export default function ResetPassword() {
     const [response, dispatch] = useFormState(resetPassword, { state: false, message: "" });
@@ -19,7 +20,7 @@ export default function ResetPassword() {
     return (
         <section className="flex flex-col items-center justify-between gap-[114px] py-16 mx-5 sm:mx-96">
             <div className="flex items-start justify-start w-full gap-x-5 ">
-                <Link href="/signloginUp">
+                <Link href={ROUTES_AUTH.LOGIN}>
                     <FiArrowLeftCircle className="h-7 w-7" />
                 </Link>
                 <h1>Iniciar sesión</h1>
