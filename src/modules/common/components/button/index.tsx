@@ -7,11 +7,9 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  const combinedClassName = `text-white bg-black ${className}`;
-
   return (
     <ButtonNext
-      className={combinedClassName}
+      className={`text-white bg-black ${className}`}
       radius="none"
       type={type}
       {...props}
