@@ -6,6 +6,7 @@ const publicRoutes = new Set([
     ROUTES_AUTH.LOGIN,
     ROUTES_AUTH.SING_UP,
     ROUTES_AUTH.PRINCIPAL,
+    ROUTES_AUTH.RESET_PASSWORD
 ]);
 
 export const authConfig: NextAuthConfig = {
