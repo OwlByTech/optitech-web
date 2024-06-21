@@ -2,7 +2,7 @@ import { NextAuthConfig } from "next-auth";
 import { NextResponse } from "next/server";
 import { ROUTES_AUTH } from "./modules/auth/types/auth";
 
-const publicRoutes = new Set([
+const publicRoutes = new Set<string>([
     ROUTES_AUTH.LOGIN,
     ROUTES_AUTH.SING_UP,
     ROUTES_AUTH.PRINCIPAL,
@@ -26,7 +26,7 @@ export const authConfig: NextAuthConfig = {
             if (!isLoggedIn && publicRoutes.has(pathname)) {
                 return true;
             }
-            
+
             if (isLoggedIn && publicRoutes.has(pathname)) {
                 return NextResponse.redirect(new URL('/', nextUrl));
             }
