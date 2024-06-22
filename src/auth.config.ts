@@ -1,12 +1,13 @@
 import { NextAuthConfig } from "next-auth";
 import { NextResponse } from "next/server";
-import { ROUTES_AUTH } from "./modules/auth/types/auth";
+import { ROUTES_AUTH } from "./modules/auth/types";
 
 const publicRoutes = new Set([
     ROUTES_AUTH.LOGIN,
     ROUTES_AUTH.SING_UP,
     ROUTES_AUTH.PRINCIPAL,
-    ROUTES_AUTH.RESET_PASSWORD
+    ROUTES_AUTH.RESET_PASSWORD,
+    ROUTES_AUTH.CHANGE_PASSWORD
 ]);
 
 export const authConfig: NextAuthConfig = {

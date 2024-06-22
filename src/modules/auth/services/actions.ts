@@ -1,12 +1,21 @@
 "use server"
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { resetPasswordService } from '.';
+import { changePasswordService, resetPasswordService } from '.';
+import { z } from 'zod';
+import { StateChangePasword, StateResetPassword } from '../types';
 
-// ...
+const ChangePassword = z.object({
+    token: z.string(),
+    password: z.string().min(6).max(10),
+    passwordReply: z.string().min(6).max(10)
+});
+const ResetPassword = z.object({
+    email: z.string().email(),
+});
+
 
 export async function authenticate(
-    prevState: string | undefined,
     formData: FormData,
 ) {
     try {
@@ -25,20 +34,70 @@ export async function authenticate(
 }
 
 export async function resetPassword(
-    prevState: string | undefined,
+    prevState: StateResetPassword,
     formData: FormData,
-) {
-    const response = await resetPasswordService(formData.get("email"))
-    if (response) {
-        return {
-            state: true,
-            message: "Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña"
-        }
+): Promise<StateResetPassword> {
+    const validateFields = ResetPassword.safeParse({
+        email: formData.get("email")
+    })
 
-    } else {
-        return {
-            state: false,
-            message: 'Error'
+    if (validateFields.success) {
+        const response = await resetPasswordService(validateFields.data.email)
+        if (response) {
+            return {
+                message: "Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña"
+            }
+
+        } else {
+            return {
+                errors: {
+                },
+                message: 'Error'
+            }
         }
     }
+    return {
+        errors: validateFields.error.flatten().fieldErrors,
+        message: 'Error'
+    }
+
+}
+
+export async function changePassword(
+    token: string,
+    prevState: StateChangePasword,
+    formData: FormData,
+): Promise<StateChangePasword> {
+    const validateFields = ChangePassword.safeParse({
+        token: token,
+        password: formData.get("password"),
+        passwordReply: formData.get("passwordReply")
+    })
+
+    if (validateFields.success) {
+        if (validateFields.data.password === validateFields.data.passwordReply) {
+            const response = await changePasswordService(validateFields.data.token, validateFields.data.password)
+            if (response) {
+                return {
+                    message: 'La contrasena ha sido actualizada'
+                }
+
+            } else {
+                return {
+                    errors: {
+                    },
+                    message: 'Error'
+                }
+
+
+            }
+
+
+        }
+    }
+    return {
+        errors: validateFields.error?.flatten().fieldErrors,
+        message: 'Error'
+    }
+
 }
