@@ -30,7 +30,8 @@ export async function loginService(email: string, password: string): Promise<{ t
         });
         if (response.ok) {
             const data = await response.json();
-            return { token: data.token };
+            console.log(data);
+            return data.Token
         } else {
             console.error('Login failed:', response.statusText);
             return null;

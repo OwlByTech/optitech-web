@@ -3,7 +3,8 @@ import { ROUTES_AUTH } from "../types/auth";
 import { SignOut } from "../components/sign-out";
 
 export type PrincipalProps = {
-  isLoggedIn: boolean;
+  // TODO: Add type to clientInfo
+  clientInfo: any;
 };
 
 export default function Principal(props: PrincipalProps) {
@@ -15,8 +16,25 @@ export default function Principal(props: PrincipalProps) {
           <p>Bienvenido de nuevo</p>
         </div>
         {
-          props.isLoggedIn ?
-            <SignOut />
+          props.clientInfo ?
+          <>
+          <div className="flex flex-col font-bold justify-center">
+                <p>
+                    {props.clientInfo.GivenName}
+                </p>
+                <p>
+                    {props.clientInfo.Id}
+                </p>
+                <p>
+                    {props.clientInfo.Surname}
+                </p>
+                <p>
+                    {props.clientInfo.Email}
+                </p>
+            </div>
+           <SignOut />
+          </>
+           
             :
             <div className="flex  justify-between">
               <Link

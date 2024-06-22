@@ -1,13 +1,14 @@
 import { auth } from "@/auth";
 import Principal from "@/modules/auth/templates/principal";
+import { clientInfoService } from "@/modules/dashboard";
 
 export const metadata = {
   title: "OptiTech",
 };
 
 export default async function Page() {
-    const session = await auth();
+    const clientInfo = await clientInfoService();
 
-  return <Principal isLoggedIn={!!session?.user}/>;
+  return <Principal clientInfo={clientInfo}/>;
 }
 

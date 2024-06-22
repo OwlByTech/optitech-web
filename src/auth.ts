@@ -14,23 +14,31 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     .safeParse(credentials);
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data;
-                    const result = await loginService(email, password)
+                    const token = await loginService(email, password)
 
-                    if (result) {
-                        return {
-                            name: "User",
-                            email: email,
-                            token: result.token
-                        };
+                    if (token) {
+                        return { token };
                     } else {
                         return null;
                     }
-                    
+
                 } else {
                     return null;
                 }
             }
         })
-    ]
+    ],
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.token = user.token;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            session.user.token = token.token as string;
+            return session;
+        }
+    }
 
 })
