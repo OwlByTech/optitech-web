@@ -1,7 +1,6 @@
 import { NextAuthConfig } from "next-auth";
 import { NextResponse } from "next/server";
-import { ROUTES_AUTH } from "./modules/auth/types/auth";
-import path from "path";
+import { ROUTES_AUTH } from "./modules/auth/types";
 
 const publicRoutes = new Set<string>([
     ROUTES_AUTH.LOGIN,

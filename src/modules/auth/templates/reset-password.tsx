@@ -10,10 +10,10 @@ import { useEffect } from "react";
 import { ROUTES_AUTH } from "../types/auth";
 
 export default function ResetPassword() {
-    const [response, dispatch] = useFormState(resetPassword, { state: false, message: "" });
+    const [response, dispatch] = useFormState(resetPassword, { message: null, errors: {} });
 
     useEffect(() => {
-        if (response?.state)
+        if (!response?.errors)
             toast(response?.message)
     }, [response])
 
@@ -44,7 +44,7 @@ export default function ResetPassword() {
                             variant="bordered"
                         />
                     </div>
-                    {!response.state && response?.message !== '' && (
+                    {response?.errors && (
                         <p className="text-red-600 font-bold text-xs">{response?.message}</p>
                     )}
                     <SubmitButton className="rounded-lg font-bold">
