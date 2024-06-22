@@ -7,6 +7,7 @@ import { changePassword } from "../services/actions";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { InputPassword } from "@/modules/common/components/input-password";
+import { ROUTES_AUTH } from "../types";
 
 
 export default function ChangePassword({ token }: { token: string }) {
@@ -21,7 +22,7 @@ export default function ChangePassword({ token }: { token: string }) {
     return (
         <section className="flex flex-col items-center justify-between gap-[114px] py-16 mx-5 sm:mx-96">
             <div className="flex items-start justify-start w-full gap-x-5 ">
-                <Link href="/signloginUp">
+                <Link href={ROUTES_AUTH.LOGIN}>
                     <FiArrowLeftCircle className="h-7 w-7" />
                 </Link>
                 <h1>Iniciar sesión</h1>
