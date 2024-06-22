@@ -7,7 +7,7 @@ import { SubmitButton } from "@/modules/common/components/submit-button";
 import { resetPassword } from "../services/actions";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { ROUTES_AUTH } from "../types/auth";
+import { ROUTES_AUTH } from "../types";
 
 export default function ResetPassword() {
     const [response, dispatch] = useFormState(resetPassword, { message: null, errors: {} });
