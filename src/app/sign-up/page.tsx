@@ -1,9 +1,9 @@
-import Step3 from "@/modules/auth/templates/step-3";
+import { Settings } from "@/modules/auth/components/settings";
 
 export const metadata = {
   title: "Registrarse",
 };
 
 export default function Page() {
-  return <h1>hola</h1>;
+  return <Settings />;
 }
