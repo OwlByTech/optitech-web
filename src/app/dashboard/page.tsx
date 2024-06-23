@@ -8,7 +8,7 @@ export const metadata = {
 export default async function Home() {
     const clientInfo = await clientInfoService();
     return (
-        <main className="flex  flex-col items-center justify-between min-h-screen p-24">
+        <main className="flex  flex-col items-center justify-between p-24">
             <div className="flex flex-col font-bold justify-center">
                 <p>
                     {clientInfo.GivenName}
