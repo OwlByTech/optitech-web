@@ -20,10 +20,10 @@ export default function Principal(props: PrincipalProps) {
         {props.clientInfo ? (
           <>
             <div className="flex flex-col font-bold justify-center">
-              <p>{props.clientInfo.GivenName}</p>
-              <p>{props.clientInfo.Id}</p>
-              <p>{props.clientInfo.Surname}</p>
-              <p>{props.clientInfo.Email}</p>
+              <p>{props.clientInfo.givenName}</p>
+              <p>{props.clientInfo.id}</p>
+              <p>{props.clientInfo.surname}</p>
+              <p>{props.clientInfo.email}</p>
             </div>
             <SignOut />
           </>
