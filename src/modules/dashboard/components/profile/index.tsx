@@ -8,10 +8,10 @@ export async function Profile() {
         <img className="bg-white md:bg-gray-200 text-xs  text-black h-12 w-12 " src="/profile.png" />
         <div className=" flex flex-col justify-end text-xs">
             <span>
-                {`${clientInfo.GivenName} ${clientInfo.Surname}`}
+                {`${clientInfo.givenName} ${clientInfo.surname}`}
             </span>
             <span>
-                {clientInfo.Email}
+                {clientInfo.email}
             </span>
 
         </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ROUTES_AUTH } from "../types";
 import { SignOut } from "../components/sign-out";
+import { Button } from "@/modules/common/components/button";
 
 export type PrincipalProps = {
   // TODO: Add type to clientInfo
@@ -16,43 +17,33 @@ export default function Principal(props: PrincipalProps) {
           <h1 className="text-2xl">OptiTech</h1>
           <p>Bienvenido de nuevo</p>
         </div>
-        {
-          props.clientInfo ?
+        {props.clientInfo ? (
           <>
-          <div className="flex flex-col font-bold justify-center">
-                <p>
-                    {props.clientInfo.GivenName}
-                </p>
-                <p>
-                    {props.clientInfo.Id}
-                </p>
-                <p>
-                    {props.clientInfo.Surname}
-                </p>
-                <p>
-                    {props.clientInfo.Email}
-                </p>
+            <div className="flex flex-col font-bold justify-center">
+              <p>{props.clientInfo.givenName}</p>
+              <p>{props.clientInfo.id}</p>
+              <p>{props.clientInfo.surname}</p>
+              <p>{props.clientInfo.email}</p>
             </div>
-           <SignOut />
+            <SignOut />
           </>
-           
-            :
-            <div className="flex  justify-between">
-              <Link
-                href="/login"
-                className="bg-black text-white p-1 border border-black rounded-md hover:bg-white hover:text-black text-xs"
-              >
-                Iniciar sesión
-              </Link>
-              <Link
-                href={ROUTES_AUTH.SING_UP}
-                className="p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
-              >
-                Registrarse
-              </Link>
-            </div>
-        }
+        ) : (
+          <div className="flex justify-between">
+            <Button
+              className="bg-black text-white p-1 border border-black rounded-md hover:bg-white hover:text-black text-xs"
+              href={ROUTES_AUTH.LOGIN}
+            >
+              Iniciar sesión
+            </Button>
 
+            <Button
+              className="bg-white p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
+              href={ROUTES_AUTH.SING_UP}
+            >
+              Registrarse
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
