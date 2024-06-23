@@ -27,8 +27,7 @@ export async function loginService(email: string, password: string): Promise<{ t
         });
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
-            return data.Token
+            return data.token
         } else {
             console.error('Login failed:', response.statusText);
             return null;
