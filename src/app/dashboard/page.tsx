@@ -11,16 +11,16 @@ export default async function Home() {
         <main className="flex  flex-col items-center justify-between min-h-screen p-24">
             <div className="flex flex-col font-bold justify-center">
                 <p>
-                    {clientInfo.GivenName}
+                    {clientInfo.givenName}
                 </p>
                 <p>
-                    {clientInfo.Id}
+                    {clientInfo.id}
                 </p>
                 <p>
-                    {clientInfo.Surname}
+                    {clientInfo.surname}
                 </p>
                 <p>
-                    {clientInfo.Email}
+                    {clientInfo.email}
                 </p>
             </div>
             <div className="flex flex-col gap-2">

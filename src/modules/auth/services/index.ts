@@ -27,7 +27,7 @@ export async function loginService(email: string, password: string): Promise<{ t
         });
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
+            // TODO: change in api the name to camelCase
             return data.Token
         } else {
             console.error('Login failed:', response.statusText);
