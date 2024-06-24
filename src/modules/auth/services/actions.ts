@@ -82,7 +82,6 @@ export async function changePassword(
                 return {
                     message: 'La contrasena ha sido actualizada'
                 }
-
             } else {
                 return {
                     errors: {
