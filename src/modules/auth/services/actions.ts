@@ -89,8 +89,6 @@ export async function changePassword(
                     message: 'Error'
                 }
             }
-
-
         }
     }
     return {
