@@ -1,10 +1,76 @@
 "use client";
 
+import { useFormState } from "react-dom";
+import { authenticate } from "../services/actions";
+import { usePathname } from "next/navigation";
+import { Input } from "@/modules/common/components/input";
+import Link from "next/link";
+import { SubmitButton } from "../../common/components/submit-button";
+
+
 export default function SignUp() {
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const pathname = usePathname();
+
   return (
-    <section>
-      <div></div>
-      <div></div>
-    </section>
+    <div className="border justify-center w-screen h-screen gap-5">
+      <span className="font-bold text-3xl m-6">Optitech</span>
+      <section className="flex flex-col m-6">
+        <h1 className="font-bold text-3xl">Registrarse</h1>
+        <span className="text-lg">Registrate para usar optitech</span>
+        <div className="flex items-center">
+          <form action={dispatch} className="flex flex-col gap-4 min-w-80 ">
+            <label htmlFor="email">Email</label>
+            <Input
+              label="Escribe tu email"
+              name="email"
+              required
+              type="email"
+              radius="sm"
+              variant="bordered"
+            />
+            <label htmlFor="email">Contraseña</label>
+            <Input
+              label="Escribe tu contraseña"
+              name="password"
+              required
+              type="password"
+              radius="sm"
+              variant="bordered"
+            />
+            <label htmlFor="email">Confirmar contraseña</label>
+            <Input
+              label="Vuelve a escribir tu contraseña"
+              name="re-password"
+              required
+              type="re-password"
+              radius="sm"
+              variant="bordered"
+            />
+            {errorMessage && (
+              <p className="text-red-600 font-bold text-xs">{errorMessage}</p>
+            )}
+            <SubmitButton className="rounded-lg gap-1">Registrar</SubmitButton>
+
+            <div className="flex flex-row gap-1 mx-4">
+              <span className="text-xs">¿Ya tienes cuenta? </span>
+              <Link href="/login" className="text-xs font-bold">
+                Inicia sesión 
+              </Link>
+            </div>
+            <div className="gap-1 mx-4">
+              <span className="text-xs">Si te registras estás aceptando nuestros </span>
+              <Link href="/service-terms" className="text-xs font-bold underline">
+              Términos de servicio
+              </Link>
+              <span className="text-xs"> y </span>
+              <Link href="/privacity-policy" className="text-xs font-bold underline">
+              Política de privacidad
+              </Link>
+            </div>
+          </form>
+        </div>
+      </section >
+    </div>
   );
 }
