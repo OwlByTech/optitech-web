@@ -80,20 +80,15 @@ export async function changePassword(
             const response = await changePasswordService(validateFields.data.token, validateFields.data.password)
             if (response) {
                 return {
-                    message: 'La contrasena ha sido actualizada'
+                    message: 'La contraseña ha sido actualizada'
                 }
-
             } else {
                 return {
                     errors: {
                     },
                     message: 'Error'
                 }
-
-
             }
-
-
         }
     }
     return {

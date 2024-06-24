@@ -4,12 +4,11 @@ import { SignOut } from "../components/sign-out";
 import { Button } from "@/modules/common/components/button";
 
 export type PrincipalProps = {
-  // TODO: Add type to clientInfo
-  clientInfo: any;
+    // TODO: Add type to clientInfo
+    clientInfo: any;
 };
 
 export default function Principal(props: PrincipalProps) {
-  console.log(props.clientInfo);
   return (
     <section className="flex flex-col items-center justify-center h-screen w-full">
       <div className="flex flex-col justify-center p-10 rounded-3xl gap-3 border border-black h-60 w-64">
@@ -20,10 +19,10 @@ export default function Principal(props: PrincipalProps) {
         {props.clientInfo ? (
           <>
             <div className="flex flex-col font-bold justify-center">
-              <p>{props.clientInfo.givenName}</p>
-              <p>{props.clientInfo.id}</p>
-              <p>{props.clientInfo.surname}</p>
-              <p>{props.clientInfo.email}</p>
+              <p>{props.clientInfo.GivenName}</p>
+              <p>{props.clientInfo.Id}</p>
+              <p>{props.clientInfo.Surname}</p>
+              <p>{props.clientInfo.Email}</p>
             </div>
             <SignOut />
           </>
@@ -35,16 +34,15 @@ export default function Principal(props: PrincipalProps) {
             >
               Iniciar sesión
             </Button>
-
-            <Button
-              className="bg-white p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
-              href={ROUTES_AUTH.SING_UP}
-            >
-              Registrarse
-            </Button>
-          </div>
-        )}
-      </div>
-    </section>
-  );
+                        <Button
+                            className="bg-white p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
+                            href={ROUTES_AUTH.SING_UP}
+                        >
+                            Registrarse
+                        </Button>
+                    </div>
+                )}
+            </div>
+        </section>
+    );
 }
