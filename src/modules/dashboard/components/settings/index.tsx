@@ -34,32 +34,32 @@ export function Settings() {
       <div className="flex flex-col justify-between bg-white h-full w-3/12 border rounded-3xl p-5">
         <div className="flex flex-col gap-2">
           <button
-            className="text-left text-sm p-2 hover:bg-gray-100 hover:rounded-xl"
+            className="text-left text-sm p-2 hover:bg-gray-100 rounded-xl"
             onClick={() => setSelectOption("Detalles Generales")}
           >
             Detalles Generales
           </button>
           <button
-            className="text-left text-sm p-2 hover:bg-gray-100 hover:rounded-xl"
+            className="text-left text-sm p-2 hover:bg-gray-100 rounded-xl"
             onClick={() => setSelectOption("Notificaciones")}
           >
             Notificaciones
           </button>
           <button
-            className="text-left text-sm p-2 hover:bg-gray-100 hover:rounded-xl"
+            className="text-left text-sm p-2 hover:bg-gray-100 rounded-xl"
             onClick={() => setSelectOption("Seguridad")}
           >
             Seguridad
           </button>
           <button
-            className="text-left text-sm p-2 hover:bg-gray-100 hover:rounded-xl"
+            className="text-left text-sm p-2 rounded-xl hover:bg-gray-100"
             onClick={() => setSelectOption("Integraciones")}
           >
             Integraciones
           </button>
         </div>
         <div>
-          <SignOut />
+          <SignOut className="w-full rounded-xl bg-gray-100" />
         </div>
       </div>
       <div className="flex flex-col justify-between bg-white h-full w-9/12 border rounded-3xl p-5">
