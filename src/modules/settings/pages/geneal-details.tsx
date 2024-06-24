@@ -1,6 +1,7 @@
 import { Button } from "@/modules/common/components/button";
 import { Input } from "@/modules/common/components/input";
 import { clientInfoService } from "@/modules/dashboard/services";
+import { input } from "@nextui-org/react";
 import { FiDelete, FiEdit, FiTrash, FiTrash2 } from "react-icons/fi";
 
 export default async function GeneralDetails() {
