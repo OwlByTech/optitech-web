@@ -17,7 +17,7 @@ export default function ResetPassword() {
     }, [response])
 
     return (
-        <section className="flex flex-col items-center justify-between gap-[114px] py-16 mx-5 sm:mx-96">
+        <section className="flex flex-col justify-between gap-[114px] py-16 mx-5 sm:mx-96">
             <div className="flex items-start justify-start w-full gap-x-5 ">
                 <Link href="/signloginUp">
                     <FiArrowLeftCircle className="h-7 w-7" />
@@ -43,11 +43,11 @@ export default function ResetPassword() {
                             variant="bordered"
                         />
                     </div>
-                    {response?.errors && (
+                    {response?.errors && response.message && (
                         <p className="text-red-600 font-bold text-xs">{response?.message}</p>
                     )}
                     <SubmitButton className="rounded-lg font-bold">
-                        Enviar restablecimiento de contraseña
+                        Restablecer contraseña
                     </SubmitButton>
                 </form>
                 <div className="flex flex-row gap-1">
