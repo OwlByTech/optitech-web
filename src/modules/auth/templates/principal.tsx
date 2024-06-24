@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ROUTES_AUTH } from "../types";
 import { SignOut } from "../components/sign-out";
 import { Button } from "@/modules/common/components/button";
