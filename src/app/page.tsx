@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import Principal from "@/modules/auth/templates/principal";
 import { clientInfoService } from "@/modules/dashboard/services";
 
