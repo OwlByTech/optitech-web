@@ -2,17 +2,27 @@
 import { FiArrowLeftCircle } from "react-icons/fi";
 import Link from "next/link";
 import { useFormState } from "react-dom";
-import { authenticate } from "../services/actions";
 import { Input } from "@/modules/common/components/input";
 import { SubmitButton } from "@/modules/common/components/submit-button";
+import { resetPassword } from "../services/actions";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { ROUTES_AUTH } from "../types";
 
 export default function ResetPassword() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const [response, dispatch] = useFormState(resetPassword, {
+    message: null,
+    errors: {},
+  });
+
+  useEffect(() => {
+    if (!response?.errors) toast(response?.message);
+  }, [response]);
 
   return (
     <section className="flex flex-col items-center justify-between gap-[114px] py-16 mx-5 sm:mx-96">
       <div className="flex items-start justify-start w-full gap-x-5 ">
-        <Link href="/signloginUp">
+        <Link href={ROUTES_AUTH.LOGIN}>
           <FiArrowLeftCircle className="h-7 w-7" />
         </Link>
         <h1>Iniciar sesión</h1>
@@ -36,16 +46,18 @@ export default function ResetPassword() {
               variant="bordered"
             />
           </div>
-          {errorMessage && (
-            <p className="text-red-600 font-bold text-xs">{errorMessage}</p>
+          {response?.errors && (
+            <p className="text-red-600 font-bold text-xs">
+              {response?.message}
+            </p>
           )}
-          <SubmitButton className="rounded-lg font-bold">
+          <SubmitButton className="bg-black text-white rounded-lg font-bold">
             Enviar restablecimiento de contraseña
           </SubmitButton>
         </form>
         <div className="flex flex-row gap-1">
           <h1 className="text-sm">¿Recuerdas tu contraseña?</h1>
-          <Link href="/login" className="text-sm font-bold">
+          <Link href={ROUTES_AUTH.LOGIN} className="text-sm font-bold">
             Inicia sesión.
           </Link>
         </div>

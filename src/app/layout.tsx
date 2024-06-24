@@ -3,6 +3,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import "../styles/index.css"
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -19,6 +21,7 @@ export default async function RootLayout({
                     <NextUIProvider>
                         {children}
                     </NextUIProvider>
+                    <ToastContainer />
                 </SessionProvider>
             </body>
 

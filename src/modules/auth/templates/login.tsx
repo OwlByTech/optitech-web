@@ -6,8 +6,8 @@ import { InputPassword } from "../../common/components/input-password";
 import { SubmitButton } from "../../common/components/submit-button";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ROUTES_AUTH } from "../types/auth";
 import Link from "next/link";
+import { ROUTES_AUTH } from "../types";
 
 export default function Login() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
@@ -49,12 +49,17 @@ export default function Login() {
 
           <div className="flex flex-grows gap-1 mx-4">
             <p className="text-xs">¿Perdiste tu contraseña? </p>
-            <Link href="/reset-password" className="text-xs font-bold">
+            <Link
+              href={ROUTES_AUTH.RESET_PASSWORD}
+              className="text-xs font-bold"
+            >
               Recuperar Contraseña
             </Link>
           </div>
 
-          <SubmitButton className="mx-5 rounded-lg">Aceptar</SubmitButton>
+          <SubmitButton className="bg-black text-white mx-5 rounded-lg">
+            Aceptar
+          </SubmitButton>
         </form>
       </div>
     </section>
