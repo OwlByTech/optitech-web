@@ -58,7 +58,9 @@ export function Settings() {
             Integraciones
           </button>
         </div>
-        <div>Salir</div>
+        <div>
+          <SignOut />
+        </div>
       </div>
       <div className="flex flex-col justify-between bg-white h-full w-9/12 border rounded-3xl p-5">
         {renderContent()}

@@ -1,4 +1,4 @@
-import { signOut } from "@/auth";
+import { handleSignOut } from "@/modules/auth/actions";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 
 type SignOutProps = {
@@ -7,12 +7,7 @@ type SignOutProps = {
 
 export function SignOut({ className }: SignOutProps) {
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
-    >
+    <form action={handleSignOut}>
       <SubmitButton className={className}>Salir</SubmitButton>
     </form>
   );
