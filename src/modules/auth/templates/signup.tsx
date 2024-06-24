@@ -50,7 +50,7 @@ export default function SignUp() {
             {errorMessage && (
               <p className="text-red-600 font-bold text-xs">{errorMessage}</p>
             )}
-            <SubmitButton className="rounded-lg gap-1"><Link href="/login" className="text-xs font-bold">
+            <SubmitButton className="rounded-lg gap-1"><Link href="/step1" className="text-xs font-bold">
               Registrar</Link></SubmitButton>
 
             <div className="flex flex-row gap-1 mx-4">
