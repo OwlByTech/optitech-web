@@ -8,7 +8,7 @@ type SignOutProps = {
 export function SignOut({ className }: SignOutProps) {
   return (
     <form action={handleSignOut}>
-      <SubmitButton className={className}>Salir</SubmitButton>
+      <SubmitButton className={className}>Cerrar Sesión</SubmitButton>
     </form>
   );
 }

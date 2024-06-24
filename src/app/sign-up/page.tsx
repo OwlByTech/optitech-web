@@ -1,4 +1,4 @@
-import { Settings } from "@/modules/dashboard/components/settings";
+import { Settings } from "@/modules/settings/components/settings";
 
 export const metadata = {
   title: "Registrarse",

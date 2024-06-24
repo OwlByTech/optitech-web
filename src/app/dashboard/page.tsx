@@ -1,5 +1,5 @@
 import { SignOut } from "@/modules/auth/components/sign-out";
-import { clientInfoService } from "@/modules/dashboard";
+import { clientInfoService } from "@/modules/dashboard/services";
 export const metadata = {
   title: "Inicio",
 };

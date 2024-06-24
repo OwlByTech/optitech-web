@@ -1,4 +1,4 @@
-import { clientInfoService } from "../..";
+import { clientInfoService } from "../../services";
 
 export async function Profile() {
   const clientInfo = await clientInfoService();
