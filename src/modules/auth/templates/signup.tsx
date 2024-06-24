@@ -43,29 +43,30 @@ export default function SignUp() {
               label="Vuelve a escribir tu contraseña"
               name="re-password"
               required
-              type="re-password"
+              type="password"
               radius="sm"
               variant="bordered"
             />
             {errorMessage && (
               <p className="text-red-600 font-bold text-xs">{errorMessage}</p>
             )}
-            <SubmitButton className="rounded-lg gap-1">Registrar</SubmitButton>
+            <SubmitButton className="rounded-lg gap-1"><Link href="/login" className="text-xs font-bold">
+              Registrar</Link></SubmitButton>
 
             <div className="flex flex-row gap-1 mx-4">
               <span className="text-xs">¿Ya tienes cuenta? </span>
               <Link href="/login" className="text-xs font-bold">
-                Inicia sesión 
+                Inicia sesión
               </Link>
             </div>
             <div className="gap-1 mx-4">
               <span className="text-xs">Si te registras estás aceptando nuestros </span>
               <Link href="/service-terms" className="text-xs font-bold underline">
-              Términos de servicio
+                Términos de servicio
               </Link>
               <span className="text-xs"> y </span>
               <Link href="/privacity-policy" className="text-xs font-bold underline">
-              Política de privacidad
+                Política de privacidad
               </Link>
             </div>
           </form>
