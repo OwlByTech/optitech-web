@@ -13,8 +13,8 @@ export default function SignUp() {
   const pathname = usePathname();
 
   return (
-    <div className="border justify-center w-screen h-screen gap-5">
-      <span className="font-bold text-3xl m-6">Optitech</span>
+    <div className="flex flex-col border justify-center items-center w-1/2 h-screen gap-5">
+      <span className="font-bold items-left text-3xl m-6">Optitech</span>
       <section className="flex flex-col m-6">
         <h1 className="font-bold text-3xl">Registrarse</h1>
         <span className="text-lg">Registrate para usar optitech</span>
