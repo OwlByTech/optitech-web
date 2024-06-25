@@ -7,7 +7,6 @@ import { Input } from "@/modules/common/components/input";
 import Link from "next/link";
 import { SubmitButton } from "../../common/components/submit-button";
 
-
 export default function SignUp() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const pathname = usePathname();
