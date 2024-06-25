@@ -10,8 +10,5 @@ export function ErrorValidatePasswordReset() {
     }, [])
     const router = useRouter()
     router.replace("/reset-password")
-
-
-
     return <></>
 }
