@@ -10,7 +10,7 @@ export enum ROUTES_AUTH {
     PRINCIPAL = "/principal",
     HOME = "/home",
     RESET_PASSWORD = "/reset-password",
-    STEP1 = "/signUp/stepOne",
-    STEP2 = "/signUp/stepTwo",
-    STEP3 = "/signUp/stepThree",
+    STEP1 = "/sign-up/step-one",
+    STEP2 = "/sign-up/step-two",
+    STEP3 = "/sign-up/step-three",
 }
