@@ -1,23 +1,39 @@
 import { auth } from "@/auth";
 
-export async function clientInfoService() {
+interface ApiGetOptions {
+    type?: string;
+    params?: { [key: string]: string };
+}
+
+type ApiResponse = any; 
+
+export async function apiGet(endpoint: string, options: ApiGetOptions = {}): Promise<ApiResponse | null> {
     const session = await auth();
+    const { type = "application/json", params = {} } = options;
+
     try {
-        const response = await fetch(`${process.env.API_URL}/client`, {
+        const url = new URL(`${process.env.API_URL}${endpoint}`);
+        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+        const response = await fetch(url.toString(), {
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": type,
                 "Authorization": `Bearer ${session?.user.token}`
             }
         });
+
         if (response.ok) {
-            // TODO: add types to the client Info service
             return await response.json();
         } else {
-            console.error('Login failed:', response.statusText);
+            console.error(`GET request failed: ${response.statusText}`);
             return null;
         }
     } catch (e) {
-        console.error('Login error:', e);
+        console.error('GET request error:', e);
         return null;
     }
+}
+
+export async function clientInfoService(): Promise<ApiResponse | null> {
+    return await apiGet('/client');
 }
