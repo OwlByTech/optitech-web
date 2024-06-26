@@ -14,8 +14,6 @@ export type route = {
     icon: ReactNode
 }
 
-
-
 export const routesSidebarUp = [
     {
         route: ROUTES_SIDEBAR.DASHBOARD,
