@@ -18,7 +18,7 @@ export default function Principal() {
             Iniciar sesión
           </Link>
           <Link
-            href="/signUp"
+            href="/sign-up"
             className="p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
           >
             Registrarse

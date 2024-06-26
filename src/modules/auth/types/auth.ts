@@ -6,7 +6,7 @@ export type Auth = {
 
 export enum ROUTES_AUTH {
     LOGIN = "/login",
-    SING_UP = "/signUp",
+    SIGN_UP = "/sign-up",
     PRINCIPAL = "/principal",
     HOME = "/home",
     RESET_PASSWORD = "/reset-password",

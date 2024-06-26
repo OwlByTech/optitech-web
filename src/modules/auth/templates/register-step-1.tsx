@@ -39,7 +39,7 @@ export default function Step1() {
                             <p className="text-red-600 font-bold text-xs">{errorMessage}</p>
                         )}
                         <SubmitButton className="rounded-lg gap-1">
-                            <Link href="/signUp/stepTwo" className="text-xs text-white font-bold">
+                            <Link href="/sign-up/step-two" className="text-xs text-white font-bold">
                                 Siguiente
                             </Link>
                         </SubmitButton>

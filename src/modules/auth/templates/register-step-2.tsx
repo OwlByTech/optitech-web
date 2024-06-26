@@ -9,7 +9,7 @@ export default function Step2() {
     return (
         <section className="flex flex-col border justify-center items-left w-full sm:w-1/2 h-screen gap-5 p-4 sm:p-10">
             <div className="flex items-left">
-                <Link href="/signUp/stepOne">
+                <Link href="/sign-up/step-one">
                     <FiArrowLeftCircle className="h-7 w-7" />
                 </Link>
                 <span> Vuelve al paso uno </span>
@@ -23,7 +23,7 @@ export default function Step2() {
                 <ButtonCard title="Institución / Independiente" icon={false} description="Si te encargas de subir documentos" className={""} />
             </div>
             <SubmitButton className="rounded-lg">
-                <Link href="/signUp/stepThree" className="font-bold">
+                <Link href="/sign-up/step-three" className="font-bold">
                     Registrar
                 </Link>
             </SubmitButton>
