@@ -7,7 +7,6 @@ export const metadata = {
 };
 
 export default async function Page({ searchParams }: { searchParams: { token: string } }) {
-
     const tokenValidate = await validateTokenPasswordResetService(searchParams.token)
     return tokenValidate ? <ChangePassword token={searchParams.token} /> : <ErrorValidatePasswordReset />;
 }
