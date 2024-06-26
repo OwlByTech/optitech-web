@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { InputPassword } from "@/modules/common/components/input-password";
 import { ROUTES_AUTH } from "../types";
 
-
 export default function ChangePassword({ token }: { token: string }) {
     const change = changePassword.bind(null, token)
     const [response, dispatch] = useFormState(change, { errors: {}, message: null });
