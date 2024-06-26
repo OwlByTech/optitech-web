@@ -4,15 +4,18 @@ import { ROUTES_AUTH } from "./modules/auth/types/auth";
 
 const publicRoutes = new Set([
     ROUTES_AUTH.LOGIN,
-    ROUTES_AUTH.SING_UP,
+    ROUTES_AUTH.SIGN_UP,
     ROUTES_AUTH.PRINCIPAL,
-    ROUTES_AUTH.RESET_PASSWORD
+    ROUTES_AUTH.RESET_PASSWORD,
+    ROUTES_AUTH.STEP1,
+    ROUTES_AUTH.STEP2,
+    ROUTES_AUTH.STEP3
 ]);
 
 export const authConfig: NextAuthConfig = {
     pages: {
         signIn: ROUTES_AUTH.LOGIN,
-        newUser: ROUTES_AUTH.SING_UP,
+        newUser: ROUTES_AUTH.SIGN_UP,
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
