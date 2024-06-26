@@ -19,15 +19,22 @@ export default function SignUp() {
         <span className="text-lg">Registrate para usar optitech</span>
         <div className="flex items-center">
           <form action={dispatch} className="flex flex-col gap-4 min-w-80 ">
-            <label htmlFor="email">Email</label>
-            <Input
-              label="Escribe tu email"
+          <Input
+              label="Email"
               name="email"
               required
               type="email"
+              labelPlacement="outside"
+              placeholder="Escribe tu email"
               radius="sm"
-              variant="bordered"
-            />
+              classNames={
+                   {
+                       inputWrapper: "h-[50px] ",
+                       label: 'pb-1'
+                    }
+                }
+                variant="bordered"
+              />
             <label htmlFor="email">Contraseña</label>
             <Input
               label="Escribe tu contraseña"
