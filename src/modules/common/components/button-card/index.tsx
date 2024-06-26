@@ -8,7 +8,7 @@ export function ButtonCard({
     description,
 }: CardProps) {
     return (
-        <CardNext className="bg-gray m-5" isPressable>
+        <CardNext className="bg-gray gap-4 m-5" isPressable>
             <CardBody>
                  {icon ? <FiGlobe /> : <FiPackage />}
                 <h1 className="font-bold">{title}</h1>

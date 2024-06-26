@@ -18,7 +18,7 @@ export default function Step2() {
             <div className="flex flex-col m-6">
                 <span className="text-lg">Una vez lo escojas, no podrás cambiarlo.</span>
             </div>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 m-6">
+            <div className="flex flex-col sm:flex-row justify-center items-center m-6">
                 <ButtonCard title="Asesor" icon={true} description="Si te encargas de revisar documentos" className={""} />
                 <ButtonCard title="Institución / Independiente" icon={false} description="Si te encargas de subir documentos" className={""} />
             </div>
