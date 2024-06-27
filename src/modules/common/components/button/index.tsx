@@ -7,12 +7,9 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  // Combina las clases Tailwind con las clases predeterminadas de NextUI
-  const combinedClassName = `text-white bg-black ${className}`;
-
   return (
     <ButtonNext
-      className={combinedClassName}
+      className={`text-white bg-black ${className}`}
       radius="none"
       type={type}
       {...props}
