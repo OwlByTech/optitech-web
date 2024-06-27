@@ -13,7 +13,6 @@ export async function Profile() {
             <span>
                 {clientInfo.email}
             </span>
-
         </div>
     </div>
 }
