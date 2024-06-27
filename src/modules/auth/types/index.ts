@@ -12,7 +12,6 @@ export enum ROUTES_AUTH {
     REGISTER_INSTITUTION = "/register-institution"
 }
 
-
 export type StateChangePasword = {
     errors?: {
         password?: string[];

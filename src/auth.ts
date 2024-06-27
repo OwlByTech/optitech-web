@@ -14,7 +14,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     .safeParse(credentials);
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data;
-                    console.log(email, password)
                     const token = await loginService(email, password)
 
                     if (token) {

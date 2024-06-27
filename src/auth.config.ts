@@ -23,7 +23,7 @@ export const authConfig: NextAuthConfig = {
             const isLoggedIn = !!auth?.user;
             const { pathname } = nextUrl;
 
-            if(!isLoggedIn && secureRoutes.has(pathname)){
+            if (!isLoggedIn && secureRoutes.has(pathname)) {
                 return NextResponse.redirect(new URL('/', nextUrl));
             }
 
@@ -38,7 +38,6 @@ export const authConfig: NextAuthConfig = {
             if (isLoggedIn && publicRoutes.has(pathname)) {
                 return NextResponse.redirect(new URL(ROUTES_AUTH.DASHBOARD, nextUrl));
             }
-            
             return true;
         },
     },
