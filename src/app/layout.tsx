@@ -3,6 +3,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import "../styles/index.css"
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -19,6 +20,7 @@ export default async function RootLayout({
                     <NextUIProvider>
                         {children}
                     </NextUIProvider>
+                    <Toaster position="top-right" closeButton />
                 </SessionProvider>
             </body>
 
