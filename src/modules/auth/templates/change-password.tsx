@@ -46,7 +46,7 @@ export default function ChangePassword({ token }: { token: string }) {
                     </div>
                     <div className="mx-5">
                         <InputPassword
-                            label="Repetir contrasena"
+                            label="Repetir contraseña"
                             name="passwordReply"
                             required
                             radius="sm"
