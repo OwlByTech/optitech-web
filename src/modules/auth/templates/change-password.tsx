@@ -4,12 +4,11 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { changePassword } from "../services/actions";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useEffect } from "react";
 import { InputPassword } from "@/modules/common/components/input-password";
 import { ROUTES_AUTH } from "../types";
 import { useRouter } from "next/navigation";
-
 
 export default function ChangePassword({ token }: { token: string }) {
     const change = changePassword.bind(null, token)
@@ -25,7 +24,7 @@ export default function ChangePassword({ token }: { token: string }) {
     }, [response])
 
     return (
-        <section className="flex flex-col justify-between gap-[114px] py-16 mx-5 sm:mx-96">
+        <section className="flex flex-col justify-between  gap-20 md:gap-[114px] py-16 mx-5 md:mx-20 lg:mx-96">
             <div className="flex items-start justify-start w-full gap-x-5 ">
                 <Link href={ROUTES_AUTH.LOGIN}>
                     <FiArrowLeftCircle className="h-7 w-7" />

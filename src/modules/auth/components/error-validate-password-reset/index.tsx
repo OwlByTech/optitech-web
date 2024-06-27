@@ -1,17 +1,15 @@
 "use client"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { toast } from "react-toastify"
+import { toast } from "sonner"
 
 export function ErrorValidatePasswordReset() {
     useEffect(() => {
 
-        toast("Error al restablecer la contrasena intentalo nuevamente")
+        toast("Error al restablecer la contraseña intentalo nuevamente")
     }, [])
     const router = useRouter()
     router.replace("/reset-password")
-
-
 
     return <></>
 }
