@@ -12,14 +12,14 @@ import { useRouter } from "next/navigation";
 
 export default function ChangePassword({ token }: { token: string }) {
     const change = changePassword.bind(null, token)
+    const router = useRouter()
     const [response, dispatch] = useFormState(change, { errors: {}, message: null });
 
-    const router = useRouter()
     useEffect(() => {
         if (!response?.errors) {
-            toast(response?.message)
-            router.push(ROUTES_AUTH.LOGIN)
 
+            toast.success(response?.message)
+            router.replace(ROUTES_AUTH.LOGIN)
         }
     }, [response])
 
