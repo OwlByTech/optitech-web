@@ -5,7 +5,6 @@ import { toast } from "sonner"
 
 export function ErrorValidatePasswordReset() {
     useEffect(() => {
-
         toast("Error al restablecer la contraseña intentalo nuevamente")
     }, [])
     const router = useRouter()

@@ -7,11 +7,16 @@ import { SubmitButton } from "@/modules/common/components/submit-button";
 import { resetPassword } from "../services/actions";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { ROUTES_AUTH } from "../types";
 
 export default function ResetPassword() {
-    const [response, dispatch] = useFormState(resetPassword, { message: null, errors: {} });
+    const [response, dispatch] = useFormState(resetPassword, {
+        message: null,
+        errors: {},
+    });
 
     useEffect(() => {
+
         if (!response?.errors)
             toast.info(response?.message)
     }, [response])
@@ -19,7 +24,7 @@ export default function ResetPassword() {
     return (
         <section className="flex flex-col justify-between  gap-20 md:gap-[114px] py-16 mx-5 md:mx-20 lg:mx-96">
             <div className="flex items-start justify-start w-full gap-x-5 ">
-                <Link href="/signloginUp">
+                <Link href={ROUTES_AUTH.LOGIN}>
                     <FiArrowLeftCircle className="h-7 w-7" />
                 </Link>
                 <h1>Iniciar sesión</h1>

@@ -17,6 +17,7 @@ export default function ChangePassword({ token }: { token: string }) {
 
     useEffect(() => {
         if (!response?.errors) {
+
             toast.success(response?.message)
             router.replace(ROUTES_AUTH.LOGIN)
         }

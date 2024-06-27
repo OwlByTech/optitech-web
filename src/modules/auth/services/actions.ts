@@ -82,18 +82,13 @@ export async function changePassword(
                 return {
                     message: 'La contraseña ha sido actualizada'
                 }
-
             } else {
                 return {
                     errors: {
                     },
                     message: 'Error'
                 }
-
-
             }
-
-
         }
     }
     return {

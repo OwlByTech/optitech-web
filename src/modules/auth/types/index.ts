@@ -3,12 +3,10 @@ export type Auth = {
     password: string
 }
 
-
 export enum ROUTES_AUTH {
     LOGIN = "/login",
-    SING_UP = "/signUp",
-    PRINCIPAL = "/principal",
-    HOME = "/home",
+    SING_UP = "/sign-up",
+    DASHBOARD = "/dashboard",
     RESET_PASSWORD = "/reset-password",
     CHANGE_PASSWORD = "/change-password"
 }
@@ -27,3 +25,14 @@ export type StateResetPassword = {
     message?: string | null;
 };
 
+declare module "next-auth" {
+    interface Session {
+      user: {
+        token: string;
+      }
+    }
+    interface User {
+        token: string;
+  
+    }
+  }
