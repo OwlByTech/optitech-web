@@ -31,7 +31,7 @@ export default function ChangePassword({ token }: { token: string }) {
                 <div>
                     <h1 className="font-extrabold text-xl">Cambiar Contraseña.</h1>
                     <p className="text-sm">
-                        Por favor, introduce tu contrasena.
+                        Por favor, introduce tu contraseña.
                     </p>
                 </div>
                 <form action={dispatch} className="flex flex-col gap-4 min-w-80 ">
