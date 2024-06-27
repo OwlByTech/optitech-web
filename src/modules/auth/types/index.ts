@@ -8,7 +8,8 @@ export enum ROUTES_AUTH {
     SING_UP = "/sign-up",
     DASHBOARD = "/dashboard",
     RESET_PASSWORD = "/reset-password",
-    CHANGE_PASSWORD = "/change-password"
+    CHANGE_PASSWORD = "/change-password",
+    REGISTER_INSTITUTION = "/register-institution"
 }
 
 

@@ -5,7 +5,8 @@ import { ROUTES_AUTH } from "./modules/auth/types";
 const publicRoutes = new Set<string>([
     ROUTES_AUTH.LOGIN,
     ROUTES_AUTH.SING_UP,
-    ROUTES_AUTH.RESET_PASSWORD
+    ROUTES_AUTH.RESET_PASSWORD,
+    ROUTES_AUTH.REGISTER_INSTITUTION
 ]);
 
 const secureRoutes = new Set<string>([
