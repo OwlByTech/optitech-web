@@ -16,7 +16,7 @@ export default function SignUp() {
       <span className="font-bold items-left text-3xl m-6">Optitech</span>
       <section className="flex flex-col m-6">
         <h1 className="font-bold text-3xl">Registrarse</h1>
-        <span className="text-lg">Registrate para usar optitech</span>
+        <span className="text-lg">Regístrate para usar optitech</span>
         <div className="flex items-center">
           <form action={dispatch} className="flex flex-col gap-4 min-w-80 ">
           <Input
