@@ -4,7 +4,6 @@ import { RoutesSidebar } from "../components/routes-sidebar";
 import { routesSidebarDown, routesSidebarUp } from "../types";
 
 export function Routes() {
-
     const path = usePathname()
 
     console.log(path)
