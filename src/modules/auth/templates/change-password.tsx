@@ -37,7 +37,7 @@ export default function ChangePassword({ token }: { token: string }) {
                 <form action={dispatch} className="flex flex-col gap-4 min-w-80 ">
                     <div className="mx-5">
                         <InputPassword
-                            label="Nueva contrasena"
+                            label="Nueva contraseña"
                             name="password"
                             required
                             radius="sm"
