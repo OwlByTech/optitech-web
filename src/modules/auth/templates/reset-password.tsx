@@ -5,7 +5,7 @@ import { useFormState } from "react-dom";
 import { Input } from "@/modules/common/components/input";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { resetPassword } from "../services/actions";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useEffect } from "react";
 
 export default function ResetPassword() {
@@ -13,11 +13,11 @@ export default function ResetPassword() {
 
     useEffect(() => {
         if (!response?.errors)
-            toast(response?.message)
+            toast.info(response?.message)
     }, [response])
 
     return (
-        <section className="flex flex-col justify-between gap-[114px] py-16 mx-5 sm:mx-96">
+        <section className="flex flex-col justify-between  gap-20 md:gap-[114px] py-16 mx-5 md:mx-20 lg:mx-96">
             <div className="flex items-start justify-start w-full gap-x-5 ">
                 <Link href="/signloginUp">
                     <FiArrowLeftCircle className="h-7 w-7" />

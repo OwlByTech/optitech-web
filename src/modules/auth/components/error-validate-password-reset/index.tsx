@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { toast } from "react-toastify"
+import { toast } from "sonner"
 
 export function ErrorValidatePasswordReset() {
     useEffect(() => {
@@ -11,5 +11,5 @@ export function ErrorValidatePasswordReset() {
     const router = useRouter()
     router.replace("/reset-password")
 
-    return null
+    return <></>
 }
