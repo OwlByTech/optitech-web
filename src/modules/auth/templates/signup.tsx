@@ -36,7 +36,6 @@ export default function SignUp() {
       return;
     }
     router.push("/sign-up/step-one");
-    console.log("Form Data:", JSON.stringify(formData));
   };
 
   return (
