@@ -37,3 +37,7 @@ export async function apiGet(endpoint: string, options: ApiGetOptions = {}): Pro
 export async function clientInfoService(): Promise<ApiResponse | null> {
     return await apiGet('/client');
 }
+
+export async function clientUpdateInfoService(endpoint: string, options:ApiGetOptions = {}): Promise<ApiResponse| null> {
+
+}
