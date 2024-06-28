@@ -9,7 +9,6 @@ export type PrincipalProps = {
 };
 
 export default function Principal(props: PrincipalProps) {
-  console.log(props.clientInfo);
   return (
     <section className="flex flex-col items-center justify-center h-screen w-full">
       <div className="flex flex-col justify-center p-10 rounded-3xl gap-3 border border-black h-60 w-64">
