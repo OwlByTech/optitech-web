@@ -4158,6 +4158,11 @@ jose@^5.1.3:
   resolved "https://registry.npmjs.org/jose/-/jose-5.4.1.tgz"
   integrity sha512-U6QajmpV/nhL9SyfAewo000fkiRQ+Yd2H0lBxJJ9apjpOgkOcBQJWOrMo917lxLptdS/n/o/xPzMkXhF46K8hQ==
 
+jotai@^2.8.4:
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.8.4.tgz#ea82b013d640016100e360d19d565862816c96d0"
+  integrity sha512-f6jwjhBJcDtpeauT2xH01gnqadKEySwwt1qNBLvAXcnojkmb76EdqRt05Ym8IamfHGAQz2qMKAwftnyjeSoHAA==
+
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
