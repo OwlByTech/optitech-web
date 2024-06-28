@@ -37,7 +37,6 @@ export const authConfig: NextAuthConfig = {
             if (isLoggedIn && publicRoutes.has(pathname)) {
                 return NextResponse.redirect(new URL(ROUTES_AUTH.DASHBOARD, nextUrl));
             }
-            
             return true;
         },
     },

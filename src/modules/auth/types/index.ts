@@ -11,7 +11,6 @@ export enum ROUTES_AUTH {
     CHANGE_PASSWORD = "/change-password"
 }
 
-
 export type StateChangePasword = {
     errors?: {
         password?: string[];

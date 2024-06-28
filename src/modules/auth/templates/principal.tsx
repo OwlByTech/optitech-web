@@ -4,8 +4,8 @@ import { SignOut } from "../components/sign-out";
 import { Button } from "@/modules/common/components/button";
 
 export type PrincipalProps = {
-  // TODO: Add type to clientInfo
-  clientInfo: any;
+    // TODO: Add type to clientInfo
+    clientInfo: any;
 };
 
 export default function Principal(props: PrincipalProps) {
@@ -34,16 +34,15 @@ export default function Principal(props: PrincipalProps) {
             >
               Iniciar sesión
             </Button>
-
-            <Button
-              className="bg-white p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
-              href={ROUTES_AUTH.SING_UP}
-            >
-              Registrarse
-            </Button>
-          </div>
-        )}
-      </div>
-    </section>
-  );
+                        <Button
+                            className="bg-white p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
+                            href={ROUTES_AUTH.SING_UP}
+                        >
+                            Registrarse
+                        </Button>
+                    </div>
+                )}
+            </div>
+        </section>
+    );
 }

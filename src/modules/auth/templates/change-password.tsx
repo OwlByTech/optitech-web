@@ -4,30 +4,34 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { changePassword } from "../services/actions";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useEffect } from "react";
 import { InputPassword } from "@/modules/common/components/input-password";
 import { ROUTES_AUTH } from "../types";
-
+import { useRouter } from "next/navigation";
 
 export default function ChangePassword({ token }: { token: string }) {
     const change = changePassword.bind(null, token)
+    const router = useRouter()
     const [response, dispatch] = useFormState(change, { errors: {}, message: null });
 
     useEffect(() => {
-        if (!response?.errors)
-            toast(response?.message)
+        if (!response?.errors) {
+
+            toast.success(response?.message)
+            router.replace(ROUTES_AUTH.LOGIN)
+        }
     }, [response])
 
     return (
-        <section className="flex flex-col items-center justify-between gap-[114px] py-16 mx-5 sm:mx-96">
+        <section className="flex flex-col justify-between  gap-20 md:gap-[114px] py-16 mx-5 md:mx-20 lg:mx-96">
             <div className="flex items-start justify-start w-full gap-x-5 ">
                 <Link href={ROUTES_AUTH.LOGIN}>
                     <FiArrowLeftCircle className="h-7 w-7" />
                 </Link>
                 <h1>Iniciar sesión</h1>
             </div>
-            <div className="flex flex-col gap-[50px] bg-none">
+            <div className="flex flex-col  gap-[50px] bg-none">
                 <div>
                     <h1 className="font-extrabold text-xl">Cambiar Contraseña.</h1>
                     <p className="text-sm">
@@ -56,7 +60,7 @@ export default function ChangePassword({ token }: { token: string }) {
                     {response.errors && (
                         <p className="text-red-600 font-bold text-xs">{response.message}</p>
                     )}
-                    <SubmitButton className="mx-5 rounded-lg">Aceptar</SubmitButton>
+                    <SubmitButton className="rounded-lg">Aceptar</SubmitButton>
                 </form>
             </div>
         </section>
