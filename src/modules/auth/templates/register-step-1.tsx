@@ -22,7 +22,6 @@ export default function Step1() {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         router.push("/sign-up/step-two");
-        console.log("Form Data:", JSON.stringify(formData));
     };
 
     return (

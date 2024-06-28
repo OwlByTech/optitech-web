@@ -2,7 +2,7 @@
 
 import { useFormState } from "react-dom";
 import { authenticate } from "../services/actions";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { formDataAtom } from "../../../context/atom";
 import { Input } from "@/modules/common/components/input";
@@ -36,7 +36,6 @@ export default function SignUp() {
       return;
     }
     router.push("/sign-up/step-one");
-    console.log("Form Data:", JSON.stringify(formData));
   };
 
   return (
