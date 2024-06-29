@@ -6,7 +6,6 @@ export function Input({
     className,
     type,
     defaultValue,
-    classNames,
     ...props
 }: InputProps) {
     return (
@@ -16,12 +15,7 @@ export function Input({
             color="default"
             type={type}
             radius="sm"
-
-            classNames={{
-                base: 'hover:bg-none',
-                inputWrapper: 'bg-white hover:bg-white border-1 border-black',
-                ...classNames
-            }}
+            variant="bordered"
             defaultValue={defaultValue}
             {...props}
         />

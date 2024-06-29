@@ -12,7 +12,6 @@ export async function resetPasswordService(email: string): Promise<boolean> {
         return await response.json()
 
     } catch (e) {
-        console.log(e)
         return false
     }
 }

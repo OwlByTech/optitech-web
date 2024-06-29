@@ -53,7 +53,7 @@ export default function Login() {
                         </Link>
                     </div>
 
-                    <SubmitButton className="bg-black text-white mx-5 rounded-lg">
+                    <SubmitButton className="bg-black text-white  rounded-lg">
                         Aceptar
                     </SubmitButton>
                 </form>
