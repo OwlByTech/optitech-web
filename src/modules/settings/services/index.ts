@@ -39,5 +39,5 @@ export async function clientInfoService(): Promise<ApiResponse | null> {
 }
 
 export async function clientUpdateInfoService(endpoint: string, options:ApiGetOptions = {}): Promise<ApiResponse| null> {
-
+    return await apiGet('/client', )  
 }
