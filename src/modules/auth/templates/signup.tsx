@@ -2,7 +2,7 @@
 
 import { useFormState } from "react-dom";
 import { authenticate } from "../services/actions";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { formDataAtom } from "../../../context/atom";
 import { Input } from "@/modules/common/components/input";
@@ -43,7 +43,7 @@ export default function SignUp() {
       <span className="font-bold items-left text-3xl m-6">Optitech</span>
       <section className="flex flex-col m-6">
         <h1 className="font-bold text-3xl">Registrarse</h1>
-        <span className="text-lg">Registrate para usar optitech</span>
+        <span className="text-lg">Regístrate para usar optitech</span>
         <div className="flex items-center">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 min-w-80">
             <label htmlFor="email">Email</label>
@@ -52,6 +52,8 @@ export default function SignUp() {
               name="email"
               required
               type="email"
+              labelPlacement="outside"
+              placeholder="Escribe tu email"
               radius="sm"
               variant="bordered"
               value={formData.email}
