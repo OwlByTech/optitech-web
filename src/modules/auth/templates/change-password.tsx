@@ -7,8 +7,8 @@ import { changePassword } from "../services/actions";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { InputPassword } from "@/modules/common/components/input-password";
-import { ROUTES_AUTH } from "../types";
 import { useRouter } from "next/navigation";
+import { ROUTES_AUTH } from "../types/auth";
 
 export default function ChangePassword({ token }: { token: string }) {
     const change = changePassword.bind(null, token)
