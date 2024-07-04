@@ -1,12 +1,14 @@
-import { signOut } from "@/auth"
-import { SubmitButton } from "@/modules/common/components/submit-button"
+import { handleSignOut } from "@/modules/auth/actions";
+import { SubmitButton } from "@/modules/common/components/submit-button";
 
-export function SignOut() {
+type SignOutProps = {
+  className?: string;
+};
 
-    return <form action={async () => {
-        'use server'
-        await signOut()
-    }}>
-        <SubmitButton>Salir</SubmitButton>
+export function SignOut({ className }: SignOutProps) {
+  return (
+    <form action={handleSignOut}>
+      <SubmitButton className={className}>Cerrar Sesión</SubmitButton>
     </form>
+  );
 }

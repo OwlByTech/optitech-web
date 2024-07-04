@@ -1,9 +1,10 @@
-import SignUp from "@/modules/auth/templates/signup";
+import { Settings } from "@/modules/settings/components/settings";
+import { Settings } from "@/modules/settings/components/settings";
 
 export const metadata = {
   title: "Registrarse",
 };
 
 export default function Page() {
-  return <SignUp/>;
+  return <p>Registro</p>;
 }
