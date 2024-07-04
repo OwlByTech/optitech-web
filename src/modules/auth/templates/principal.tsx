@@ -36,7 +36,7 @@ export default function Principal(props: PrincipalProps) {
                         </Button>
                         <Button
                             className="bg-white p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
-                            href={ROUTES_AUTH.STEP1}
+                            href={ROUTES_AUTH.SIGN_UP}
                         >
                             Registrarse
                         </Button>
