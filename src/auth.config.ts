@@ -1,6 +1,7 @@
 import { NextAuthConfig } from "next-auth";
 import { NextResponse } from "next/server";
-import { ROUTES_AUTH } from "./modules/auth/types";
+import { ROUTES_AUTH } from "./modules/auth/types/auth";
+import { ROUTES_SIDEBAR } from "./modules/dashboard/types";
 
 const publicRoutes = new Set<string>([
     ROUTES_AUTH.LOGIN,
@@ -13,7 +14,7 @@ const publicRoutes = new Set<string>([
 ]);
 
 const secureRoutes = new Set<string>([
-    ROUTES_AUTH.DASHBOARD
+    ROUTES_SIDEBAR.DASHBOARD
 ]);
 
 export const authConfig: NextAuthConfig = {
@@ -26,12 +27,12 @@ export const authConfig: NextAuthConfig = {
             const isLoggedIn = !!auth?.user;
             const { pathname } = nextUrl;
 
-            if(!isLoggedIn && secureRoutes.has(pathname)){
+            if (!isLoggedIn && secureRoutes.has(pathname)) {
                 return NextResponse.redirect(new URL('/', nextUrl));
             }
 
             if (isLoggedIn && pathname === ROUTES_AUTH.LOGIN) {
-                return NextResponse.redirect(new URL(ROUTES_AUTH.DASHBOARD, nextUrl));
+                return NextResponse.redirect(new URL(ROUTES_SIDEBAR.DASHBOARD, nextUrl));
             }
 
             if (!isLoggedIn && publicRoutes.has(pathname)) {
@@ -39,12 +40,12 @@ export const authConfig: NextAuthConfig = {
             }
 
             if (isLoggedIn && publicRoutes.has(pathname)) {
-                return NextResponse.redirect(new URL(ROUTES_AUTH.DASHBOARD, nextUrl));
+                return NextResponse.redirect(new URL(ROUTES_SIDEBAR.DASHBOARD, nextUrl));
             }
             return true;
         },
     },
     debug: process.env.NODE_ENV !== "production",
-    basePath: ROUTES_AUTH.DASHBOARD,
+    basePath: ROUTES_SIDEBAR.DASHBOARD,
     providers: [],
 } satisfies NextAuthConfig;
