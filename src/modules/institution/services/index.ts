@@ -68,7 +68,6 @@ export async function updateLogoInstitutionService(id: number, logo: File): Prom
             },
             body: formData
         });
-        console.log(response)
         if (response.status === 401) {
             return null
         }

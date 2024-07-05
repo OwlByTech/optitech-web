@@ -35,7 +35,7 @@ export default function AddLogo() {
     }, [response])
     return (
         <>
-            <ContainerRegister href={ROUTES_INSTITUTION.REGISTER_INSTITUTION}
+            <ContainerRegister href={ROUTES_INSTITUTION.REGISTER_INSTITUTION_SERVICES}
                 title="Logo" subtitle="Elige un logo para la institución"
                 action={dispatch}
                 buttonName="Crear"

@@ -47,7 +47,6 @@ export function UploadFile({ required, multiple, name, preview }: Props) {
     };
 
     const processFiles = (filesArray: any) => {
-        console.log(filesArray)
         const newSelectedFiles = [...selectedFiles];
         let hasError = false;
         const fileTypeRegex = new RegExp(acceptedFileExtensions.join("|"), "i");

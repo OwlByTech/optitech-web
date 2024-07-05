@@ -39,7 +39,6 @@ export default function Services({ servicesData, institution, setInstitution }: 
                 } else {
                     const list: number[] = []
                     selectedKeys.forEach((value) => {
-                        console.log(value)
                         list.push(Number(value))
                     })
                     setServices(list)
