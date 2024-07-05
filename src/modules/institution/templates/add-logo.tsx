@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { ContainerRegister } from "../components/container-register";
+import { ROUTES_SIDEBAR } from "@/modules/dashboard/types/types";
 
 export default function AddLogo() {
     const router = useRouter()
@@ -26,7 +27,7 @@ export default function AddLogo() {
     useEffect(() => {
         if (!response?.errors) {
             toast.success(response?.message)
-            router.replace(`${ROUTES_INSTITUTION.REGISTER_INSTITUTION_LOGO}?id=${response.institution?.id}`)
+            router.replace(ROUTES_SIDEBAR.DASHBOARD)
         }
         if (response.errors?.api) {
             toast.error(response.errors?.api)

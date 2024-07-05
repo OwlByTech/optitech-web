@@ -29,10 +29,10 @@ export default function Modal({ isOpen, onOpenChange, title, children, onClick }
                                 {children}
                             </ModalBody>
                             <ModalFooter>
-                                <Button className="font-bold" onClick={onClick}>
+                                <Button className="font-bold rounded-lg" onClick={onClick}>
                                     Aceptar
                                 </Button>
-                                <Button className="text-black font-bold bg-white border-1 border-black" onPress={onClose}>
+                                <Button className="text-black rounded-lg font-bold bg-white border-1 border-black" onPress={onClose}>
                                     Cancelar
                                 </Button>
 

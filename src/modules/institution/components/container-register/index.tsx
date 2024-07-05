@@ -23,13 +23,13 @@ export function ContainerRegister({ children, href, title, subtitle, action, but
                 {subtitle && <p className="text-sm sm:text-xl">
                     {subtitle}
                 </p>}
-                <form action={action} className="flex flex-col gap-6">
-                    {children}
-                    <SubmitButton className="rounded-lg">
-                        {buttonName}
-                    </SubmitButton>
-                </form>
             </div>
+            <form action={action} className="flex flex-col gap-6">
+                {children}
+                <SubmitButton className="rounded-lg">
+                    {buttonName}
+                </SubmitButton>
+            </form>
         </div>
     )
 }
