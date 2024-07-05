@@ -8,4 +8,5 @@ export function SideBar() {
             <Routes />
         </div>
     );
+
 }
