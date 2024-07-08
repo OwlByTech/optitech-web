@@ -2,13 +2,13 @@
 
 import { Input } from "@nextui-org/react";
 import { useAtom } from "jotai";
-import { formDataAtom } from "../../../context/atom";
+import { signUpAtom } from "../context/signup";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { ChangeEvent, FormEvent } from "react";
 
 export default function Step1() {
-    const [formData, setFormData] = useAtom(formDataAtom);
+    const [formData, setFormData] = useAtom(signUpAtom);
     const router = useRouter();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

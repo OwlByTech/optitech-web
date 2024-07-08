@@ -4,7 +4,7 @@ import { useFormState } from "react-dom";
 import { authenticate } from "../services/actions";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
-import { formDataAtom } from "../../../context/atom";
+import { signUpAtom } from "../context/signup";
 import { Input } from "@/modules/common/components/input";
 import Link from "next/link";
 import { SubmitButton } from "../../common/components/submit-button";
@@ -12,7 +12,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function SignUp() {
   const [errorMessage] = useFormState(authenticate, undefined);
-  const [formData, setFormData] = useAtom(formDataAtom);
+  const [formData, setFormData] = useAtom(signUpAtom);
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
 
