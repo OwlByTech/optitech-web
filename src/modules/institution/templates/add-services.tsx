@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useAtom } from "jotai";
 import { institutionStorage } from "../context";
 import { ContainerRegister } from "../components/container-register";
+import { ImageSection } from "@/modules/common/layouts/image-section";
 
 export default function AddServices({ servicesData }: { servicesData: Service[] }) {
     const router = useRouter()
@@ -15,7 +16,7 @@ export default function AddServices({ servicesData }: { servicesData: Service[] 
     }
 
     return (
-        <>
+        <ImageSection src="https://www.clinicaazul.com.co/wp-content/uploads/2020/05/noticia2.jpg">
             <ContainerRegister
                 href={ROUTES_INSTITUTION.REGISTER_INSTITUTION}
                 title="Servicios"
@@ -33,7 +34,7 @@ export default function AddServices({ servicesData }: { servicesData: Service[] 
                 <Services servicesData={servicesData} institution={institution} setInstitution={setInstitution} />
             </ContainerRegister >
             <div className="bg-gray-100 hidden md:block md:w-1/2"></div>
-        </>
+        </ImageSection>
     );
 
 }

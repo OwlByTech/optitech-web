@@ -6,12 +6,13 @@ import { Textarea } from "@/modules/common/components/text-area";
 import { useAtom } from "jotai";
 import { institutionStorage } from "../context";
 import { ContainerRegister } from "../components/container-register";
+import { ImageSection } from "@/modules/common/layouts/image-section";
 
 export default function RegisterInstitution() {
     const route = useRouter()
     const [institution, setInstitution] = useAtom(institutionStorage)
     return (
-        <>
+        <ImageSection src="https://www.clinicaazul.com.co/wp-content/uploads/2020/05/noticia2.jpg">
             <ContainerRegister
                 title="Registrar institución"
                 buttonName="Siguiente"
@@ -25,7 +26,6 @@ export default function RegisterInstitution() {
                     required
                     placeholder="Nombre"
                     defaultValue={institution?.name}
-                    labelPlacement="outside"
                 />
 
                 <Textarea
@@ -34,11 +34,9 @@ export default function RegisterInstitution() {
                     name="description"
                     defaultValue={institution?.description}
                     placeholder="Escribe una descripción"
-                    labelPlacement="outside"
                 />
 
             </ContainerRegister >
-            <div className="bg-gray-100 hidden md:block md:w-1/2"></div>
-        </>
+        </ImageSection>
     );
 }
