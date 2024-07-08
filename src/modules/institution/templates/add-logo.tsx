@@ -1,6 +1,4 @@
 "use client"
-import { LinkRef } from "@/modules/common/components/link-ref";
-import { SubmitButton } from "@/modules/common/components/submit-button";
 import { UploadFile } from "@/modules/common/components/upload-file";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -12,6 +10,7 @@ import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { ContainerRegister } from "../components/container-register";
 import { ROUTES_SIDEBAR } from "@/modules/dashboard/types/types";
+import { ImageSection } from "@/modules/common/layouts/image-section";
 
 export default function AddLogo() {
     const router = useRouter()
@@ -34,17 +33,16 @@ export default function AddLogo() {
         }
     }, [response])
     return (
-        <>
+        <ImageSection src="https://www.clinicaazul.com.co/wp-content/uploads/2020/05/noticia2.jpg">
             <ContainerRegister href={ROUTES_INSTITUTION.REGISTER_INSTITUTION_SERVICES}
                 title="Logo" subtitle="Elige un logo para la institución"
                 action={dispatch}
                 buttonName="Crear"
             >
-                <UploadFile name="logo" required preview />
+                <UploadFile name="logo" required preview acceptedFileExtensions={["jpg", "png", "jpeg"]} />
 
             </ContainerRegister>
-            <div className="bg-gray-100 hidden md:block md:w-1/2"></div>
-        </>
+        </ImageSection>
     );
 
 

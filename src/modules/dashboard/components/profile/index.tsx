@@ -9,8 +9,8 @@ export async function Profile() {
                 src="/profile.png"
             />
             <div className=" flex flex-col justify-end text-xs">
-                <span>{`${clientInfo.givenName} ${clientInfo.surname}`}</span>
-                <span>{clientInfo.email}</span>
+                <span>{`${clientInfo?.givenName} ${clientInfo?.surname}`}</span>
+                <span>{clientInfo?.email}</span>
             </div>
 
         </div>

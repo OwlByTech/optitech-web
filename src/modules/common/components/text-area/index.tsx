@@ -5,7 +5,6 @@ export function Textarea({ ...props }: TextAreaProps) {
     return (
         <TextareaUI
             required
-            labelPlacement="outside"
             placeholder="Enter your description"
             variant="bordered"
             radius="sm"

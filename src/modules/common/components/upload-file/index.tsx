@@ -7,18 +7,16 @@ type Props = {
     multiple?: boolean
     name: string
     preview?: boolean
+    acceptedFileExtensions: string[]
 }
 
-export function UploadFile({ required, multiple, name, preview }: Props) {
+export function UploadFile({ required, multiple, name, preview, acceptedFileExtensions }: Props) {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [error, setError] = useState("");
     const [previewLoad, setPreview] = useState(null);
 
-
     const fileInputRef = useRef(null);
     const buttonRef = useRef(null);
-    const acceptedFileExtensions = ["jpg", "png", "jpeg"];
-
     const acceptedFileTypesString = acceptedFileExtensions
         .map((ext) => `.${ext}`)
         .join(",");
