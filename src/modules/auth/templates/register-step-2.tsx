@@ -7,18 +7,14 @@ import Link from "next/link";
 import { FiArrowLeftCircle, FiGlobe, FiPackage } from "react-icons/fi";
 import { signUpAtom, SignUpRoleType } from "../context/signup";
 import { Button } from "@/modules/common/components/button";
+import { BackButton } from "@/modules/common/components/back-button";
 
 export default function Step2() {
     const [signUpData, setSignUpData] = useAtom(signUpAtom);
 
     return (
         <section className="flex flex-col border justify-center items-left w-full sm:w-1/2 h-screen gap-5 p-4 sm:p-10">
-            <Link href="/sign-up/step-one">
-                <div className="flex items-center gap-2">
-                    <FiArrowLeftCircle className="h-7 w-7" />
-                    <span>Vuelve al paso uno</span>
-                </div>
-            </Link>
+            <BackButton href="/sign-up/step-one" title="Vuelve al paso uno" />
             <span className="font-bold text-3xl">Paso 2: Escoge tu Rol</span>
             <div className="flex flex-col">
                 <span className="text-lg">Una vez lo escojas, no podrás cambiarlo.</span>
