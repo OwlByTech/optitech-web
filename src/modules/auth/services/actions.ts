@@ -3,7 +3,7 @@ import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { changePasswordService, resetPasswordService } from '.';
 import { z } from 'zod';
-import { StateChangePasword, StateResetPassword } from '../types';
+import { StateChangePasword, StateResetPassword } from '../types/';
 
 const ChangePassword = z.object({
     token: z.string(),
