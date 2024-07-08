@@ -10,7 +10,7 @@ export default async function Home() {
     const clientInfo = await clientInfoService();
 
     return (
-        <main className="flex flex-col items-center justify-between min-h-screen p-24">
+        <main className="flex flex-col items-center justify-between h-full p-24">
             <div className="flex flex-col font-bold justify-center">
                 <p>{clientInfo?.givenName}</p>
                 <p>{clientInfo?.id}</p>

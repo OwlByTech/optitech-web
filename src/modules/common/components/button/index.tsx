@@ -1,10 +1,7 @@
 import { clx } from "@/utils/clx";
 import { Button as ButtonNext, ButtonProps } from "@nextui-org/react";
-import Link from "next/link";
 
-interface CustomButtonProps extends ButtonProps {
-    href?: string;
-}
+
 
 export function Button({
     className,
@@ -13,20 +10,11 @@ export function Button({
     children,
     href,
     ...props
-}: CustomButtonProps) {
-    const buttonElement = (
+}: ButtonProps) {
+    return (
         <ButtonNext className={clx("bg-black text-white", className)} radius="none" type={type} {...props}>
             {children}
         </ButtonNext>
-    );
+    )
 
-    if (href) {
-        return (
-            <Link href={href} passHref>
-                {buttonElement}
-            </Link>
-        );
-    }
-
-    return buttonElement;
 }
