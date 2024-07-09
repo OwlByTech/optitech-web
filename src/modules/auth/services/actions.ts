@@ -1,9 +1,10 @@
 "use server"
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { changePasswordService, resetPasswordService } from '.';
+import { changePasswordService, registerService, resetPasswordService } from '.';
 import { z } from 'zod';
-import { StateChangePasword, StateResetPassword } from '../types/';
+import { StateChangePasword, StateRegister, StateResetPassword } from '../types/';
+import { SignUpRoleType } from '../context/signup';
 
 const ChangePassword = z.object({
     token: z.string(),
@@ -14,6 +15,13 @@ const ResetPassword = z.object({
     email: z.string().email(),
 });
 
+const Register = z.object({
+    givenName: z.string(),
+    surname: z.string(),
+    email: z.string().email(),
+    password: z.string().min(6).max(10),
+    role: z.nativeEnum(SignUpRoleType)
+});
 
 export async function authenticate(
     prevState: string | undefined,
@@ -95,5 +103,34 @@ export async function changePassword(
         errors: validateFields.error?.flatten().fieldErrors,
         message: 'Error'
     }
+
+}
+
+export async function registerForm(
+    prevState: StateRegister,
+    formData: FormData,
+): Promise<StateRegister> {
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = Register.safeParse(entries)
+
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: 'Error'
+        }
+    }
+
+    const response = await registerService(validateFields.data)
+    if (!response) {
+        return {
+            errors: {},
+            message: 'Error'
+        }
+    }
+
+    return {
+        message: 'Te has registrado'
+    }
+
 
 }
