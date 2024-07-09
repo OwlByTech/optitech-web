@@ -1,3 +1,6 @@
+import { signIn } from "@/auth";
+import { signUpReq } from "../context/signup";
+
 export async function resetPasswordService(email: string): Promise<boolean> {
     try {
         const response = await fetch(`${process.env.API_URL}/client/reset-password`,
@@ -28,6 +31,34 @@ export async function loginService(email: string, password: string): Promise<{ t
         if (response.ok) {
             const data = await response.json();
             return data.token
+        } else {
+            console.error('Login failed:', response.statusText);
+            return null;
+        }
+    } catch (e) {
+        console.error('Login error:', e);
+        return null;
+    }
+}
+
+export async function registerService(signUpReq: signUpReq) {
+    try {
+        const response = await fetch(`${process.env.API_URL}/client`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...signUpReq, role: parseInt(signUpReq.role) })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            if (!data.token) return null;
+
+            const credentials = {
+                email: signUpReq.email,
+                password: signUpReq.password
+            };
+            return await signIn('credentials', { redirect: false, ...credentials });
         } else {
             console.error('Login failed:', response.statusText);
             return null;
