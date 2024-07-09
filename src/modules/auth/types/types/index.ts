@@ -1,14 +1,12 @@
-
-export enum StatusClient {
-    INACTIVE = "inactivo",
-    ACTIVE = "inactivo"
-}
-
 export type Auth = {
     email: string
     password: string
 }
 
+export enum StatusClient {
+    ACTIVE = "activo",
+    INACTIVE = "inactivo"
+}
 export type StateChangePasword = {
     errors?: {
         password?: string[];
@@ -20,11 +18,6 @@ export type StateResetPassword = {
     errors?: {
         email?: string[];
     };
-    message?: string | null;
-};
-
-export type StateRegister = {
-    errors?: {} | null;
     message?: string | null;
 };
 

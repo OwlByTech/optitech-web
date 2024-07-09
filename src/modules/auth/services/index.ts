@@ -15,7 +15,6 @@ export async function resetPasswordService(email: string): Promise<boolean> {
         return await response.json()
 
     } catch (e) {
-        console.error(e)
         return false
     }
 }
@@ -54,7 +53,7 @@ export async function registerService(signUpReq: signUpReq) {
         if (response.ok) {
             const data = await response.json();
             if (!data.token) return null;
-            
+
             const credentials = {
                 email: signUpReq.email,
                 password: signUpReq.password
