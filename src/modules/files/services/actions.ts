@@ -3,8 +3,8 @@
 import { getDirectoryService } from "."
 
 
-export async function createInstitution(
-    id: number,
+export async function getDirectoryAction(
+    id?: number,
 
 ) {
     const response = await getDirectoryService(id)
@@ -12,7 +12,8 @@ export async function createInstitution(
 
         return {
             message: "Institución creada exitosamente",
-            institution: response
+            directory: response
+
         }
 
     }
