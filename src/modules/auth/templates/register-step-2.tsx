@@ -1,16 +1,46 @@
 "use client";
 
 import { ButtonCard } from "@/modules/common/components/button-card";
-import { SubmitButton } from "@/modules/common/components/submit-button";
 import { useAtom } from "jotai";
 import { FiGlobe, FiPackage } from "react-icons/fi";
 import { signUpAtom, SignUpRoleType } from "../context/signup";
 import { Button } from "@/modules/common/components/button";
 import { BackButton } from "@/modules/common/components/back-button";
 import { ImageSection } from "@/modules/common/layouts/image-section";
+import { registerForm } from "../services/actions";
+import { useFormState } from "react-dom";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { ROUTES_AUTH } from "../types/auth";
 
 export default function Step2() {
+    const [response, dispatch] = useFormState(registerForm, {
+        message: null,
+        errors: {},
+    });
+
     const [signUpData, setSignUpData] = useAtom(signUpAtom);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (response.errors) {
+            return
+        }
+
+        toast.success(response?.message)
+        router.replace(ROUTES_AUTH.DASHBOARD)
+    }, [response])
+
+    const handleSubmit = () => {
+        const formData = new FormData();
+
+        Object.entries(signUpData).forEach(([key, value]) => {
+            formData.append(key, value as string);
+        });
+
+        dispatch(formData);
+    }
 
     return (
         <ImageSection src="https://talentspot-prod.s3.eu-west-1.amazonaws.com/template-4053/man%20at%20desk%20writing%20notes%20with%20headphones%20on-1694074539.jpeg?1694074539">
@@ -31,9 +61,7 @@ export default function Step2() {
                         title="Institución / Independiente" icon={<FiPackage size={24} />} description="Si te encargas de subir documentos" />
                 </div>
                 <Button
-                    onClick={() => {
-                        console.log(signUpData);
-                    }}
+                    onClick={handleSubmit}
                     className="font-bold rounded-lg">
                     Registrar
                 </Button>

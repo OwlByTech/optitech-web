@@ -1,8 +1,9 @@
 import { atom } from "jotai";
 
 export enum SignUpRoleType {
-    ASSESOR = "assesor",
-    INSTITUTION = "institution"
+    // TODO: Find a way to create enum with number and use zod to received string and convert to int
+    ASSESOR = '1',
+    INSTITUTION ='2'
 };
 
 export type signUpReq = {
