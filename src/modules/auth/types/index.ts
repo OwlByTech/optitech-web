@@ -17,6 +17,11 @@ export type StateResetPassword = {
     message?: string | null;
 };
 
+export type StateRegister = {
+    errors?: {} | null;
+    message?: string | null;
+};
+
 declare module "next-auth" {
     interface Session {
         user: {
