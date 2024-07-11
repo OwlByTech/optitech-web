@@ -46,7 +46,7 @@ export async function clientInfoService(): Promise<ApiResponse | null> {
 
 export async function updateUserInfo(user: User) {
   try {
-    const response = await fetch(`${process.env.API_URL}/client/update`, {
+    const response = await fetch(`${process.env.API_URL}/client/update/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

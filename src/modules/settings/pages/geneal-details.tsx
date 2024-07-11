@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/modules/common/components/button";
 import { Input } from "@/modules/common/components/input";
 import { clientInfoService } from "@/modules/dashboard/services";
