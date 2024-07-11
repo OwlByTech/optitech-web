@@ -60,6 +60,14 @@ export default async function GeneralDetails() {
               defaultValue={clientInfo.email}
               labelPlacement="outside"
             />
+            <div className="flex flex-grow gap-5 justify-end">
+              <Button className="rounded-xl bg-black hover:bg-gray-200 hover:text-black">
+                Restablecer
+              </Button>
+              <Button className="rounded-xl bg-gray-200 text-black hover:bg-black hover:text-white">
+                Actualizar
+              </Button>
+            </div>
           </form>
         </div>
         <div>
@@ -67,14 +75,6 @@ export default async function GeneralDetails() {
           <hr className="w-full border-t" />
         </div>
         <div>Biografia ?</div>
-      </div>
-      <div className="flex flex-grow gap-5 justify-end">
-        <Button className="rounded-xl bg-white hover:bg-gray-200">
-          Restablecer
-        </Button>
-        <Button className="rounded-xl bg-gray-200 hover:bg-white">
-          Actualizar
-        </Button>
       </div>
     </section>
   );
