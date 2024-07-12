@@ -9,6 +9,18 @@ export type route = {
   name: string;
 };
 
+export type UpdateClientInfoReq = {
+  id: string;
+  name?: string;
+  surname?: string;
+  email?: string;
+};
+
+export type StateUpdateUser = {
+  errors?: {} | null;
+  message?: string | null;
+};
+
 export const routesSettings = [
   {
     route: ROUTES_SETTINGS.GENERAL_DETAILS,
