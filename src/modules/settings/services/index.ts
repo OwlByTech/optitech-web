@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { User } from "../types";
+import { UpdateClientInfoReq } from "../types";
 
 interface ApiGetOptions {
   type?: string;
@@ -44,26 +44,28 @@ export async function clientInfoService(): Promise<ApiResponse | null> {
   return await apiGet("/client");
 }
 
-export async function updateUserInfo(user: User) {
+export async function updateUserInfo(user: UpdateClientInfoReq) {
   const session = await auth();
-  
   try {
-    const response = await fetch(`${process.env.API_URL}/client/update/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user.token}`,
-      },
-      body: JSON.stringify({
-        id: user.id,
-        name: user.name,
-        surname: user.surname,
-        email: user.email,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.API_URL}/client/update/${user.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+        body: JSON.stringify({
+          ...user,
+          id: parseInt(user.id),
+        }),
+      }
+    );
     if (!response.ok) {
-      throw new Error("Failed to update user info");
+      console.error("Update info failed");
+      return null;
     }
+    return await response.json();
   } catch (e) {
     console.error("Login error:", e);
     return null;

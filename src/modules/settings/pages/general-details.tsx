@@ -2,20 +2,41 @@
 
 import { Button } from "@/modules/common/components/button";
 import { Input } from "@/modules/common/components/input";
+import { SubmitButton } from "@/modules/common/components/submit-button";
 import { ClientInfoRes } from "@/modules/dashboard/types";
+import { useFormState } from "react-dom";
 import { FiDelete, FiEdit, FiTrash, FiTrash2 } from "react-icons/fi";
+import { updateUserForm } from "../services/actions";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export type GeneralDetailsProps = {
   clientInfo: ClientInfoRes;
 };
 
-export default async function GeneralDetails(props: GeneralDetailsProps) {
+export default function GeneralDetails(props: GeneralDetailsProps) {
+  const [response, dispatch] = useFormState(updateUserForm, {
+    message: null,
+    errors: {},
+  });
+
   const classNames = {
     label: "font-bold text-md",
     inputWrapper: "h-[49px]",
   };
 
-  const handleSubmit = () => {};
+  useEffect(() => {
+    if (response.errors) {
+      return;
+    }
+
+    toast.success(response?.message);
+  }, [response]);
+
+  const handleSubmit = (formData: FormData) => {
+    formData.set("id", props.clientInfo.id.toString());
+    dispatch(formData);
+  };
 
   return (
     <section className="flex flex-col">
@@ -44,12 +65,14 @@ export default async function GeneralDetails(props: GeneralDetailsProps) {
               </Button>
             </div>
           </div>
+
           <form
             action={handleSubmit}
             className="flex  flex-col gap-y-[20px] pt-1 flex-grow"
           >
             <Input
               classNames={classNames}
+              name="givenName"
               label="Nombre"
               placeholder="Nombre"
               defaultValue={props.clientInfo.givenName}
@@ -58,6 +81,7 @@ export default async function GeneralDetails(props: GeneralDetailsProps) {
 
             <Input
               classNames={classNames}
+              name="surname"
               label="Apellido"
               placeholder="Apellido"
               defaultValue={props.clientInfo.surname}
@@ -65,9 +89,10 @@ export default async function GeneralDetails(props: GeneralDetailsProps) {
             />
 
             <Input
+              classNames={classNames}
+              name="email"
               label="Correo"
               placeholder="Correo"
-              classNames={classNames}
               defaultValue={props.clientInfo.email}
               labelPlacement="outside"
             />
@@ -75,9 +100,9 @@ export default async function GeneralDetails(props: GeneralDetailsProps) {
               <Button className="rounded-xl bg-black hover:bg-gray-200 hover:text-black">
                 Restablecer
               </Button>
-              <Button className="rounded-xl bg-gray-200 text-black hover:bg-black hover:text-white">
+              <SubmitButton className="rounded-xl bg-gray-200 text-black hover:bg-black hover:text-white">
                 Actualizar
-              </Button>
+              </SubmitButton>
             </div>
           </form>
         </div>

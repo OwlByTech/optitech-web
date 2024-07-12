@@ -9,9 +9,8 @@ export type route = {
   name: string;
 };
 
-export type User = {
-  id?: number;
-  token?: string;
+export type UpdateClientInfoReq = {
+  id: string;
   name?: string;
   surname?: string;
   email?: string;

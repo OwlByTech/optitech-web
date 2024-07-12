@@ -5,25 +5,27 @@ import { StateUpdateUser } from '../types'
 import { updateUserInfo } from ".";
 
 const UserInfo = z.object({
-    id: z.number(),
-    name: z.string(),
+    id: z.string(),
+    givenName: z.string(),
     surname: z.string(),
-    email: z.string()
+    email: z.string().email()
 })
 
-export async function updateUser(
+export async function updateUserForm(
     prevState: StateUpdateUser,
     formData: FormData,
 ): Promise<StateUpdateUser> {
     const entries = Object.fromEntries(formData.entries());
-    const validateFields = UserInfo.safeParse(entries)
+    const validateFields = UserInfo.safeParse(entries);
+
+
     if (!validateFields.success) {
         return {
             errors: validateFields.error?.flatten().fieldErrors,
             message: 'Error'
         }
     }
-
+    
     const response = await updateUserInfo(validateFields.data)
     if (!response) {
         return {
