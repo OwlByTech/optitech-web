@@ -5,7 +5,6 @@ import { StateUpdateUser } from '../types'
 import { updateUserInfo } from ".";
 
 const UserInfo = z.object({
-    token: z.string(),
     id: z.number(),
     name: z.string(),
     surname: z.string(),

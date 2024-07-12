@@ -2,15 +2,21 @@
 
 import { Button } from "@/modules/common/components/button";
 import { Input } from "@/modules/common/components/input";
-import { clientInfoService } from "@/modules/dashboard/services";
+import { ClientInfoRes } from "@/modules/dashboard/types";
 import { FiDelete, FiEdit, FiTrash, FiTrash2 } from "react-icons/fi";
 
-export default async function GeneralDetails() {
-  const clientInfo = await clientInfoService();
+export type GeneralDetailsProps = {
+  clientInfo: ClientInfoRes;
+};
+
+export default async function GeneralDetails(props: GeneralDetailsProps) {
   const classNames = {
     label: "font-bold text-md",
     inputWrapper: "h-[49px]",
   };
+
+  const handleSubmit = () => {};
+
   return (
     <section className="flex flex-col">
       <div className="flex flex-col gap-[30px]">
@@ -38,12 +44,15 @@ export default async function GeneralDetails() {
               </Button>
             </div>
           </div>
-          <form className="flex  flex-col gap-y-[20px] pt-1 flex-grow">
+          <form
+            action={handleSubmit}
+            className="flex  flex-col gap-y-[20px] pt-1 flex-grow"
+          >
             <Input
               classNames={classNames}
               label="Nombre"
               placeholder="Nombre"
-              defaultValue={clientInfo.givenName}
+              defaultValue={props.clientInfo.givenName}
               labelPlacement="outside"
             />
 
@@ -51,7 +60,7 @@ export default async function GeneralDetails() {
               classNames={classNames}
               label="Apellido"
               placeholder="Apellido"
-              defaultValue={clientInfo.surname}
+              defaultValue={props.clientInfo.surname}
               labelPlacement="outside"
             />
 
@@ -59,7 +68,7 @@ export default async function GeneralDetails() {
               label="Correo"
               placeholder="Correo"
               classNames={classNames}
-              defaultValue={clientInfo.email}
+              defaultValue={props.clientInfo.email}
               labelPlacement="outside"
             />
             <div className="flex flex-grow gap-5 justify-end">

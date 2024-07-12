@@ -45,12 +45,14 @@ export async function clientInfoService(): Promise<ApiResponse | null> {
 }
 
 export async function updateUserInfo(user: User) {
+  const session = await auth();
+  
   try {
     const response = await fetch(`${process.env.API_URL}/client/update/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${session?.user.token}`,
       },
       body: JSON.stringify({
         id: user.id,
