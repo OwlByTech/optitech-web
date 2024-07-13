@@ -42,7 +42,7 @@ export function FolderAll({ directory, routeDirectory }: Props) {
 
   return (
     <div className="flex flex-col p- w-full h-full p-4">
-      <div className="grid grid-cols-6">
+      <div className="grid grid-cols-6 gap-4">
         {directory.parentId !== 0 && (
           <FolderView directory={{ id: directory.parentId, name: "..." }} />
         )}

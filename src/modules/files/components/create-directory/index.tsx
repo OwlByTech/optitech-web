@@ -34,6 +34,7 @@ export function CreateDirectoryModal(props: CreateDirectoryModalProps) {
     formData.set("name", nameRef.current);
     formData.set("institutionId", props.curDir.institutionId!.toString());
     dispatch(formData);
+    nameRef.current = "";
     props.onClose();
   };
 

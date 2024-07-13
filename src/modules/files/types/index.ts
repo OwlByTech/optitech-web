@@ -18,7 +18,7 @@ export type File = {
 export const CreateDirectoryReqValidator = z.object({
   parentId: z.number({ coerce: true }),
   institutionId: z.number({ coerce: true }),
-  name: z.string(),
+  name: z.string().min(1),
 });
 
 export type CreateDiretoryReq = {
