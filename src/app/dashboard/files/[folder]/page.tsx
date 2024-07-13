@@ -6,7 +6,6 @@ type Props = {
 }
 
 export default async function Page({ params }: Props) {
-
     const directory = await getDirectoryService(params.folder)
     const directory_route = await getDirectoryRouteService(params.folder)
     return <FolderAll directory={directory} routeDirectory={directory_route} />

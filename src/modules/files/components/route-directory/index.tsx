@@ -12,7 +12,7 @@ export function RouteDirectory() {
     const [directories, setDirectories] = useAtom(directoryRoute)
 
     return (
-        <div className="flex flex-row ">
+        <div className="flex flex-row p-2">
 
             {directories && directories.map((value, index) => (
                 <div

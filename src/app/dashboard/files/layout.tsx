@@ -9,9 +9,9 @@ export default async function RootLayout({
 }>) {
     const directoryTree = await getDirectoryChildService(23)
     return (
-        <section className="flex flex-grow h-full gap-5 flex-row px-5">
+        <section className="flex flex-grow h-full gap-5 flex-row">
             <DirectoryTree directoryTree={directoryTree} />
-            <div className="flex flex-grow h-full rounded-lg flex-col bg-white gap-8 md:gap-0 p-4 ">
+            <div className="flex flex-grow h-full rounded-lg flex-col bg-white gap-8 md:gap-0">
                 <RouteDirectory />
                 {children}
             </div>
