@@ -37,7 +37,7 @@ export function FolderAll({ directory, routeDirectory }: Props) {
   };
 
   const onSelectOption = (type: DocumentDiretoryType, index: number, action: string) => {
-    console.log(type, index, action);
+    // TODO: Add on select options
   };
 
   return (
