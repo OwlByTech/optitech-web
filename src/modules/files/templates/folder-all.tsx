@@ -1,6 +1,5 @@
 "use client";
 import { Directory, File } from "../types";
-import { FolderView } from "../components/folder-view";
 import { useAtom } from "jotai";
 import { directoryRoute, folderLayout } from "../context";
 import {
@@ -82,6 +81,7 @@ export function FolderAll(props: FolderAllProps) {
             directory={{ id: props.directory.parentId, name: "..." }}
           />
         )} */}
+
         {props.directory.directory?.map((value, index) => (
           <FolderDocumentOptions
             layout={layout}
@@ -91,6 +91,7 @@ export function FolderAll(props: FolderAllProps) {
             onSelectOption={(component) =>
               onSelectOption("document", index, component, value)
             }
+            onClosedOption={() => setIsOpenOptions(null)}
             type="directory"
             value={value}
           />
@@ -101,6 +102,7 @@ export function FolderAll(props: FolderAllProps) {
             key={index}
             onOpenOptions={() => onOpenOptions("document", index)}
             isOpenOptions={isOpenOptionsHandler("document", index)}
+            onClosedOption={() => setIsOpenOptions(null)}
             onSelectOption={(component) =>
               onSelectOption("document", index, component, value)
             }
