@@ -86,7 +86,7 @@ export async function deleteDiretoryForm(
   }
 
   const response = await deleteDiretoryService(validateFields.data);
-  
+
   if (!response) {
     return {
       errors: {},
@@ -95,6 +95,6 @@ export async function deleteDiretoryForm(
   }
 
   return {
-    message: `Directorio eliminado exitosamente.`,
+    message: `Directorio ${validateFields.data.id} eliminado exitosamente.`,
   };
 }

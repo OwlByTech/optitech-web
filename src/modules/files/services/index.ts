@@ -8,18 +8,23 @@ import {
   CreateDirectoryRes,
   DeleteDirectoryReq,
   DeleteDirectoryRes,
+  Directory,
 } from "../types";
 
-export async function getDirectoryService(id?: number) {
-  return await apiSecureGet(`/directory-tree/parent/${id}`);
+export async function getDirectoryService(
+  id?: number
+): Promise<Directory | null> {
+  return await apiSecureGet<Directory>(`/directory-tree/parent/${id}`);
 }
 
 export async function getDirectoryChildService(id?: number) {
   return await apiSecureGet(`/directory-tree/child/${id}`);
 }
 
-export async function getDirectoryRouteService(id?: number) {
-  return await apiSecureGet(`/directory-tree/route/${id}`);
+export async function getDirectoryRouteService(
+  id?: number
+): Promise<Directory[] | null> {
+  return await apiSecureGet<Directory[]>(`/directory-tree/route/${id}`);
 }
 
 export async function createDirectoryService(

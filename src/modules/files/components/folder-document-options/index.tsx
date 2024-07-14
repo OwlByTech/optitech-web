@@ -12,7 +12,9 @@ export type FolderDocumentOptionsProps = {
   value: Directory | File;
   isOpenOptions: boolean;
   onOpenOptions?: () => void;
-  onSelectOption?: (component: ReactElement) => void;
+  onSelectOption?: (
+    component: React.ComponentType<OptionComponentProps>
+  ) => void;
   onClosedOption?: () => void;
 };
 
@@ -22,7 +24,9 @@ export type OptionComponentProps = {
 };
 
 type FolderDocumentOptionProps = {
-  onSelectOption: ((component: ReactElement) => void) | undefined;
+  onSelectOption:
+    | ((component: React.ComponentType<OptionComponentProps>) => void)
+    | undefined;
   option: any;
   title: string;
 };

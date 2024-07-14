@@ -3,11 +3,11 @@ import { Directory, File } from "../types";
 import { FolderView } from "../components/folder-view";
 import { useAtom } from "jotai";
 import { directoryRoute } from "../context";
-import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import {
   FolderDocumentOptions,
   OptionComponentProps,
 } from "../components/folder-document-options";
+import { useEffect, useState } from "react";
 
 export type DocumentDirectoryType = "document" | "directory";
 
@@ -18,18 +18,19 @@ type OptionStateType = {
   value: Directory | File;
 } | null;
 
-type Props = {
-  directory: Directory;
-  routeDirectory: Directory[];
-};
-
 type DocumentDiretoryType = "document" | "directory";
 type IsOpenOptionsType = {
   type: DocumentDiretoryType;
   index: number;
 };
 
-export function FolderAll({ directory, routeDirectory }: Props) {
+export type FolderAllProps = {
+  // TODO: Add types from the services.
+  directory: Directory;
+  routeDirectory: Directory[];
+};
+
+export function FolderAll(props: FolderAllProps) {
   const [isOpenOptions, setIsOpenOptions] = useState<IsOpenOptionsType | null>(
     null
   );
@@ -37,8 +38,8 @@ export function FolderAll({ directory, routeDirectory }: Props) {
   const [_, setDirectories] = useAtom(directoryRoute);
 
   useEffect(() => {
-    setDirectories(routeDirectory);
-  }, [routeDirectory]);
+    setDirectories(props.routeDirectory);
+  }, [props.routeDirectory]);
 
   const onOpenOptions = (type: DocumentDiretoryType, index: number) => {
     if (type === isOpenOptions?.type && index === index) {
@@ -71,10 +72,12 @@ export function FolderAll({ directory, routeDirectory }: Props) {
           />
         )}
 
-        {directory.parentId !== 0 && (
-          <FolderView directory={{ id: directory.parentId, name: "..." }} />
+        {props.directory.parentId !== 0 && (
+          <FolderView
+            directory={{ id: props.directory.parentId, name: "..." }}
+          />
         )}
-        {directory.directory?.map((value, index) => (
+        {props.directory.directory?.map((value, index) => (
           <FolderDocumentOptions
             key={index}
             onOpenOptions={() => onOpenOptions("directory", index)}
@@ -86,7 +89,7 @@ export function FolderAll({ directory, routeDirectory }: Props) {
             value={value}
           />
         ))}
-        {directory.document?.map((value, index) => (
+        {props.directory.document?.map((value, index) => (
           <FolderDocumentOptions
             key={index}
             onOpenOptions={() => onOpenOptions("document", index)}
