@@ -45,5 +45,4 @@ export type DeleteDirectoryReq = {
 
 export type DeleteDirectoryRes = boolean;
 
-
-
+export type FolderLayout = "grid" | "list";

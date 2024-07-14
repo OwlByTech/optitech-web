@@ -7,10 +7,12 @@ import {
   FiChevronRight,
   FiFolder,
   FiFolderPlus,
+  FiGrid,
+  FiList,
   FiPauseCircle,
   FiUpload,
 } from "react-icons/fi";
-import { directoryRoute } from "../../context";
+import { directoryRoute, folderLayout } from "../../context";
 import { Button } from "@/modules/common/components/button";
 import { useDisclosure } from "@nextui-org/react";
 import { CreateDirectoryModal } from "../create-directory";
@@ -18,6 +20,7 @@ import { CreateDirectoryModal } from "../create-directory";
 export function RouteDirectory() {
   const pathname = usePathname();
 
+  const [layout, setLayout] = useAtom(folderLayout);
   const [directories, setDirectories] = useAtom(directoryRoute);
 
   const curParentDirectory = directories[directories.length - 1];
@@ -84,6 +87,29 @@ export function RouteDirectory() {
         >
           <span className="md:pl-2 hidden md:block">Subir archivo</span>
         </Button>
+
+        <div className="flex gap-2">
+          <Button
+            className={
+              layout === "list" ? "text-white bg-black" : "bg-white text-black"
+            }
+            onClick={() => setLayout("list")}
+            isIconOnly
+            radius="md"
+            size="md"
+            startContent={<FiList className="md:h-5 md:w-5 w-6 h-6" />}
+          />
+          <Button
+            className={
+              layout === "grid" ? "text-white bg-black" : "bg-white text-black"
+            }
+            onClick={() => setLayout("grid")}
+            isIconOnly
+            radius="md"
+            size="md"
+            startContent={<FiGrid className="md:h-5 md:w-5 w-6 h-6" />}
+          />
+        </div>
       </div>
     </div>
   );
