@@ -2,6 +2,7 @@ import {
   apiSecureDelete,
   apiSecureGet,
   apiSecurePost,
+  apiSecurePut,
 } from "@/modules/common/services";
 import {
   CreateDiretoryReq as CreateDirectoryReq,
@@ -9,6 +10,8 @@ import {
   DeleteDirectoryReq,
   DeleteDirectoryRes,
   Directory,
+  UpdateDirectoryReq,
+  UpdateDirectoryRes,
 } from "../types";
 
 export async function getDirectoryService(
@@ -28,18 +31,24 @@ export async function getDirectoryRouteService(
 }
 
 export async function createDirectoryService(
-  createDirectoryReq: CreateDirectoryReq
+  req: CreateDirectoryReq
 ): Promise<CreateDirectoryRes | null> {
-  return await apiSecurePost<CreateDirectoryRes>(
-    "/directory-tree",
-    createDirectoryReq
+  return await apiSecurePost<CreateDirectoryRes>("/directory-tree", req);
+}
+
+export async function updateDiretoryService(
+  req: UpdateDirectoryReq
+): Promise<DeleteDirectoryRes | null> {
+  return await apiSecurePut<UpdateDirectoryRes>(
+    `/directory-tree/update/${req.directoryId}`,
+    req
   );
 }
 
 export async function deleteDiretoryService(
-  DeleteDirectoryReq: DeleteDirectoryReq
+  req: DeleteDirectoryReq
 ): Promise<DeleteDirectoryRes | null> {
   return await apiSecureDelete<DeleteDirectoryRes>(
-    `/directory-tree/delete/${DeleteDirectoryReq.id}`
+    `/directory-tree/delete/${req.id}`
   );
 }

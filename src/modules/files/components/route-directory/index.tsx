@@ -23,7 +23,7 @@ export function RouteDirectory() {
   const [layout, setLayout] = useAtom(folderLayout);
   const [directories, setDirectories] = useAtom(directoryRoute);
 
-  const curParentDirectory = directories[directories.length - 1];
+  const curParentDirectory = directories?.length > 1 && directories[directories?.length - 1];
 
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 

@@ -82,7 +82,7 @@ export function FolderAll(props: FolderAllProps) {
           />
         )} */}
 
-        {props.directory.directory?.map((value, index) => (
+        {props.directory?.directory?.map((value, index) => (
           <FolderDocumentOptions
             layout={layout}
             key={index}
@@ -96,7 +96,7 @@ export function FolderAll(props: FolderAllProps) {
             value={value}
           />
         ))}
-        {props.directory.document?.map((value, index) => (
+        {props.directory?.document?.map((value, index) => (
           <FolderDocumentOptions
             layout={layout}
             key={index}

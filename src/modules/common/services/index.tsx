@@ -43,14 +43,14 @@ export async function apiSecureGet<T>(path: string): Promise<T | null> {
 
 export async function apiSecurePost<T>(
   path: string,
-  body: {}
+  body: {} = {}
 ): Promise<T | null> {
   return await apiSecureMethod<T>(path, body, "POST");
 }
 
 export async function apiSecurePut<T>(
   path: string,
-  body: {}
+  body: {} = {}
 ): Promise<T | null> {
   return await apiSecureMethod<T>(path, body, "PUT");
 }

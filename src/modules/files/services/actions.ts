@@ -6,11 +6,13 @@ import {
   deleteDiretoryService,
   getDirectoryChildService,
   getDirectoryService,
+  updateDiretoryService,
 } from ".";
 import {
   CreateDirectoryReqValidator,
   CreateDiretoryReq,
   DeleteDirectoryReqValidator,
+  UpdateDirectoryReqValidator,
 } from "../types";
 
 export async function getDirectoryAction(id?: number) {
@@ -96,5 +98,33 @@ export async function deleteDiretoryForm(
 
   return {
     message: `Directorio ${validateFields.data.id} eliminado exitosamente.`,
+  };
+}
+
+export async function updateDiretoryForm(
+  prevState: CommonActionState,
+  formData: FormData
+): Promise<CommonActionState> {
+  const entries = Object.fromEntries(formData.entries());
+  const validateFields = UpdateDirectoryReqValidator.safeParse(entries);
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error?.flatten().fieldErrors,
+      message: "Error",
+    };
+  }
+
+  const response = await updateDiretoryService(validateFields.data);
+
+  if (!response) {
+    return {
+      errors: {},
+      message: "Error",
+    };
+  }
+
+  return {
+    message: `Se ha renombrado directorio exitosamente.`,
   };
 }
