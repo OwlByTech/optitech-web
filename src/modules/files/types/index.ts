@@ -34,3 +34,16 @@ export type CreateDirectoryRes = {
   parentId: number;
   name: string;
 };
+
+export const DeleteDirectoryReqValidator = z.object({
+  id: z.number({ coerce: true }),
+});
+
+export type DeleteDirectoryReq = {
+  id: number;
+};
+
+export type DeleteDirectoryRes = boolean;
+
+
+

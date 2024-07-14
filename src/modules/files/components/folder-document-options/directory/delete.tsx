@@ -2,17 +2,38 @@ import Modal from "@/modules/common/components/modal";
 import { useDisclosure } from "@nextui-org/react";
 import { useEffect } from "react";
 import { OptionComponentProps } from "..";
+import { Directory } from "@/modules/files/types";
+import { toast } from "sonner";
+import { useFormState } from "react-dom";
+import { deleteDiretoryForm } from "@/modules/files/services/actions";
 
 export function DeleteFolderOption(props: OptionComponentProps) {
+  const [response, dispatch] = useFormState(deleteDiretoryForm, {
+    message: null,
+    errors: {},
+  });
+
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const value = props.value as Directory;
 
   useEffect(() => {
     onOpen();
   }, []);
 
-  const onAccept = () => {
+  useEffect(() => {
+    if (response.errors) {
+      return;
+    }
+
+    toast.success(response?.message);
     onClose();
     props.onClose();
+  }, [response]);
+
+  const onAccept = () => {
+    const formData = new FormData();
+    formData.set('id', value.id!.toString());
+    dispatch(formData);
   };
 
   return (
@@ -21,7 +42,7 @@ export function DeleteFolderOption(props: OptionComponentProps) {
       onOpenChange={onOpenChange}
       onClose={props.onClose}
       onAccept={onAccept}
-      title={`Eliminar directorio ${props.value.name}`}
+      title={`Eliminar directorio ${value.name}`}
     ></Modal>
   );
 }

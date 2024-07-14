@@ -3,11 +3,15 @@
 import { CommonActionState } from "@/modules/common/types/action";
 import {
   createDirectoryService,
+  deleteDiretoryService,
   getDirectoryChildService,
   getDirectoryService,
 } from ".";
-import { z } from "zod";
-import { CreateDirectoryReqValidator, CreateDiretoryReq } from "../types";
+import {
+  CreateDirectoryReqValidator,
+  CreateDiretoryReq,
+  DeleteDirectoryReqValidator,
+} from "../types";
 
 export async function getDirectoryAction(id?: number) {
   const response = await getDirectoryService(id);
@@ -64,5 +68,33 @@ export async function createDiretoryForm(
 
   return {
     message: `Directorio ${response.name} creado exitosamente.`,
+  };
+}
+
+export async function deleteDiretoryForm(
+  prevState: CommonActionState,
+  formData: FormData
+): Promise<CommonActionState> {
+  const entries = Object.fromEntries(formData.entries());
+  const validateFields = DeleteDirectoryReqValidator.safeParse(entries);
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error?.flatten().fieldErrors,
+      message: "Error",
+    };
+  }
+
+  const response = await deleteDiretoryService(validateFields.data);
+  
+  if (!response) {
+    return {
+      errors: {},
+      message: "Error",
+    };
+  }
+
+  return {
+    message: `Directorio eliminado exitosamente.`,
   };
 }

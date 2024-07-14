@@ -55,10 +55,17 @@ export async function apiSecurePut<T>(
   return await apiSecureMethod<T>(path, body, "PUT");
 }
 
+export async function apiSecureDelete<T>(
+  path: string,
+  body: {} = {}
+): Promise<T | null> {
+  return await apiSecureMethod<T>(path, body, "DELETE");
+}
+
 async function apiSecureMethod<T>(
   path: string,
   body: {},
-  method: "PUT" | "POST"
+  method: "PUT" | "POST" | "DELETE"
 ): Promise<T | null> {
   const session = await auth();
   try {
