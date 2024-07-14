@@ -15,6 +15,7 @@ type ModalProps = {
   title: string;
   children?: ReactNode;
   onAccept?: () => void;
+  onClose?: () => void;
 };
 
 export default function Modal(props: ModalProps) {
@@ -24,6 +25,7 @@ export default function Modal(props: ModalProps) {
       scrollBehavior="inside"
       size="3xl"
       isOpen={props.isOpen}
+      onClose={props.onClose}
       closeButton={
         <div className="flex justify-center items-center h-10 w-10">
           <FiX className="h-6 w-6" color="#000000" />

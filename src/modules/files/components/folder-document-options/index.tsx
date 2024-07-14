@@ -3,37 +3,42 @@ import { Directory, File } from "../../types";
 import { FolderView } from "../folder-view";
 import { FileView } from "../file-view";
 import { Button } from "@/modules/common/components/button";
+import { ReactElement } from "react";
+import { dirOptions } from "./directory";
+import { docOptions } from "./document";
 
 export type FolderDocumentOptionsProps = {
   type: "document" | "directory";
   value: Directory | File;
   isOpenOptions: boolean;
   onOpenOptions?: () => void;
-  onSelectOption?: (action: string) => void;
+  onSelectOption?: (component: ReactElement) => void;
   onClosedOption?: () => void;
 };
 
-const dirOptions = [
-  {
-    action: "rename",
-    title: "Renombrar",
-  },
-];
+export type OptionComponentProps = {
+  value: Directory | File;
+  onClose: () => void;
+};
 
-const docOptions = [
-  {
-    action: "rename",
-    title: "Renombrar",
-  },
-  {
-    action: "download",
-    title: "Descargar",
-  },
-];
+type FolderDocumentOptionProps = {
+  onSelectOption: ((component: ReactElement) => void) | undefined;
+  option: any;
+  title: string;
+};
+
+function FolderDocumentOption(props: FolderDocumentOptionProps) {
+  const onSelectOption = () => {
+    props.onSelectOption && props.onSelectOption(props.option.component);
+  };
+  return (
+    <Button onClick={onSelectOption} className="w-full bg-white text-black">
+      {props.option.title}
+    </Button>
+  );
+}
 
 export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
-  const buttonStyles = "w-full bg-white text-black";
-
   return (
     <div className="relative hover:bg-gray-50 flex flex-col items-center justify-between h-24 w-24 rounded-lg bg-white text-black font-light text-sm gap-2 border">
       {props.type === "directory" ? (
@@ -49,26 +54,20 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
         {props.isOpenOptions && (
           <div className="absolute right-2 top-6 bg-white border border-black">
             {props.type === "directory"
-              ? dirOptions.map((option) => {
-                  const onSelectOption = () => {
-                    props.onSelectOption && props.onSelectOption(option.action);
-                  };
-                  return (
-                    <Button onClick={onSelectOption} className={buttonStyles}>
-                      {option.title}
-                    </Button>
-                  );
-                })
-              : docOptions.map((option) => {
-                  const onSelectOption = () => {
-                    props.onSelectOption && props.onSelectOption(option.action);
-                  };
-                  return (
-                    <Button onClick={onSelectOption} className={buttonStyles}>
-                      {option.title}
-                    </Button>
-                  );
-                })}
+              ? dirOptions.map((option) => (
+                  <FolderDocumentOption
+                    onSelectOption={props.onSelectOption}
+                    option={option}
+                    title={option.title}
+                  />
+                ))
+              : docOptions.map((option) => (
+                  <FolderDocumentOption
+                    onSelectOption={props.onSelectOption}
+                    option={option}
+                    title={option.title}
+                  />
+                ))}
           </div>
         )}
       </div>

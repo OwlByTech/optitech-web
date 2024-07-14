@@ -126,7 +126,7 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                             <ul className="px-4">
                                 {selectedFiles.map((file, index) => (
                                     <li
-                                        key={file.name}
+                                        key={index}
                                         className="flex justify-between items-center border-b py-2"
                                     >
                                         <div className="flex items-center">

@@ -122,8 +122,8 @@ export function FolderViewTree({ directory, setDirectory, directoryRoot }: Props
                 <div className="flex flex-row pl-2 gap-1 w-full">
                     <span className="border-l-1 my-3 border-b-1    w-2" />
                     <div className="flex flex-col gap-2 w-full ">
-                        {directory?.directory?.map((value) => <FolderViewTree key={value.name} setDirectory={setDirectory} directory={value} directoryRoot={directoryRoot} />)}
-                        {directory?.document?.map((value) => < FileViewTree key={value.name} document={value} />)}
+                        {directory?.directory?.map((value, index) => <FolderViewTree key={index} setDirectory={setDirectory} directory={value} directoryRoot={directoryRoot} />)}
+                        {directory?.document?.map((value, index) => < FileViewTree key={index} document={value} />)}
                     </div>
                 </div>
             }
