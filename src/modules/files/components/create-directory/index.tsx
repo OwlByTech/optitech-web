@@ -5,6 +5,7 @@ import { createDiretoryForm } from "../../services/actions";
 import { useFormState } from "react-dom";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export type CreateDirectoryModalProps = {
   curDir: Directory;
@@ -14,6 +15,7 @@ export type CreateDirectoryModalProps = {
 };
 
 export function CreateDirectoryModal(props: CreateDirectoryModalProps) {
+  const router =  useRouter();
   const nameRef = useRef<string>("");
   const [response, dispatch] = useFormState(createDiretoryForm, {
     message: null,
@@ -36,6 +38,7 @@ export function CreateDirectoryModal(props: CreateDirectoryModalProps) {
     dispatch(formData);
     nameRef.current = "";
     props.onClose();
+    router.refresh();
   };
 
   return (

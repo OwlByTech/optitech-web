@@ -3,7 +3,6 @@ import { Directory, File } from "../../types";
 import { FolderView } from "../folder-view";
 import { FileView } from "../file-view";
 import { Button } from "@/modules/common/components/button";
-import { ReactElement } from "react";
 import { dirOptions } from "./directory";
 import { docOptions } from "./document";
 

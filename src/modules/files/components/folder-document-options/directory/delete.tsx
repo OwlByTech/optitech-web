@@ -6,8 +6,10 @@ import { Directory } from "@/modules/files/types";
 import { toast } from "sonner";
 import { useFormState } from "react-dom";
 import { deleteDiretoryForm } from "@/modules/files/services/actions";
+import { useRouter } from "next/navigation";
 
 export function DeleteFolderOption(props: OptionComponentProps) {
+  const router = useRouter();
   const [response, dispatch] = useFormState(deleteDiretoryForm, {
     message: null,
     errors: {},
@@ -27,12 +29,13 @@ export function DeleteFolderOption(props: OptionComponentProps) {
 
     toast.success(response?.message);
     onClose();
+    router.refresh();
     props.onClose();
   }, [response]);
 
   const onAccept = () => {
     const formData = new FormData();
-    formData.set('id', value.id!.toString());
+    formData.set("id", value.id!.toString());
     dispatch(formData);
   };
 
