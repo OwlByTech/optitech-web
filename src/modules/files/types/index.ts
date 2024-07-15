@@ -57,5 +57,16 @@ export type DeleteDirectoryReq = {
 
 export type DeleteDirectoryRes = boolean;
 
+export const UpdateDirectoryReqValidator = z.object({
+  directoryId: z.number({ coerce: true }),
+  name: z.string(),
+});
 
+export type UpdateDirectoryReq = {
+  directoryId: number;
+  name: string;
+};
 
+export type UpdateDirectoryRes = boolean;
+
+export type FolderLayout = "grid" | "list";

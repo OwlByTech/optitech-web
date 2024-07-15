@@ -5,12 +5,12 @@ import { useAtom } from "jotai";
 import { usePathname } from "next/navigation";
 import {
     FiChevronRight,
-    FiFolder,
     FiFolderPlus,
-    FiPauseCircle,
+    FiGrid,
+    FiList,
     FiUpload,
 } from "react-icons/fi";
-import { directoryRoute } from "../../context";
+import { directoryRoute, folderLayout } from "../../context";
 import { Button } from "@/modules/common/components/button";
 import { useDisclosure } from "@nextui-org/react";
 import { CreateDirectoryModal } from "../create-directory";
@@ -19,9 +19,11 @@ import { CreateDocumentModal } from "../create-document";
 export function RouteDirectory() {
     const pathname = usePathname();
 
+    const [layout, setLayout] = useAtom(folderLayout);
     const [directories, _] = useAtom(directoryRoute);
 
-    const curParentDirectory = directories[directories.length - 1];
+    const curParentDirectory =
+        directories?.length > 1 && directories[directories?.length - 1];
 
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
     const { isOpen: isOpenDocument, onOpen: onOpenDocument, onClose: onCloseDocument, onOpenChange: onOpenChangeDocument } = useDisclosure();
@@ -76,7 +78,6 @@ export function RouteDirectory() {
                     />
                 )}
 
-
                 <Button
                     onClick={() => {
                         onOpenDocument();
@@ -97,6 +98,28 @@ export function RouteDirectory() {
                         onClose={onCloseDocument}
                     />
                 )}
+                <div className="flex gap-2">
+                    <Button
+                        className={
+                            layout === "list" ? "text-white bg-black" : "bg-white text-black"
+                        }
+                        onClick={() => setLayout("list")}
+                        isIconOnly
+                        radius="md"
+                        size="md"
+                        startContent={<FiList className="md:h-5 md:w-5 w-6 h-6" />}
+                    />
+                    <Button
+                        className={
+                            layout === "grid" ? "text-white bg-black" : "bg-white text-black"
+                        }
+                        onClick={() => setLayout("grid")}
+                        isIconOnly
+                        radius="md"
+                        size="md"
+                        startContent={<FiGrid className="md:h-5 md:w-5 w-6 h-6" />}
+                    />
+                </div>
             </div>
         </div>
     );

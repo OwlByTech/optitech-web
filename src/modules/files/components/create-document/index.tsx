@@ -28,7 +28,6 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
         if (response.errors) {
             return;
         }
-
         toast.success(response?.message);
     }, [response]);
 
@@ -51,7 +50,7 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
                 <UploadFile
                     name="file"
                     required
-                    acceptedFileExtensions={[]}
+                    acceptedFileExtensions={["doc", "pdf"]}
                 />
                 <div className=" flex flex-row gap-2  justify-end">
                     <SubmitButton>Aceptar</SubmitButton>

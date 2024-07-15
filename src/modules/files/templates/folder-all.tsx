@@ -1,8 +1,7 @@
 "use client";
 import { Directory, File } from "../types";
-import { FolderView } from "../components/folder-view";
 import { useAtom } from "jotai";
-import { directoryRoute } from "../context";
+import { directoryRoute, folderLayout } from "../context";
 import {
   FolderDocumentOptions,
   OptionComponentProps,
@@ -31,6 +30,7 @@ export type FolderAllProps = {
 };
 
 export function FolderAll(props: FolderAllProps) {
+  const [layout, setLayout] = useAtom(folderLayout);
   const [isOpenOptions, setIsOpenOptions] = useState<IsOpenOptionsType | null>(
     null
   );
@@ -63,8 +63,12 @@ export function FolderAll(props: FolderAllProps) {
   };
 
   return (
-    <div className="flex flex-col p- w-full h-full p-4">
-      <div className="grid grid-cols-6 gap-4">
+    <div className="h-full p-4 overflow-auto">
+      <div
+        className={
+          layout === "grid" ? "grid grid-cols-4 gap-4" : "flex flex-col gap-4"
+        }
+      >
         {optionState && (
           <optionState.component
             value={optionState.value}
@@ -72,28 +76,33 @@ export function FolderAll(props: FolderAllProps) {
           />
         )}
 
-        {props.directory.parentId !== 0 && (
+        {/* {props.directory.parentId !== 0 && (
           <FolderView
             directory={{ id: props.directory.parentId, name: "..." }}
           />
-        )}
-        {props.directory.directory?.map((value, index) => (
+        )} */}
+
+        {props.directory?.directory?.map((value, index) => (
           <FolderDocumentOptions
+            layout={layout}
             key={index}
             onOpenOptions={() => onOpenOptions("directory", index)}
             isOpenOptions={isOpenOptionsHandler("directory", index)}
             onSelectOption={(component) =>
               onSelectOption("document", index, component, value)
             }
+            onClosedOption={() => setIsOpenOptions(null)}
             type="directory"
             value={value}
           />
         ))}
-        {props.directory.document?.map((value, index) => (
+        {props.directory?.document?.map((value, index) => (
           <FolderDocumentOptions
+            layout={layout}
             key={index}
             onOpenOptions={() => onOpenOptions("document", index)}
             isOpenOptions={isOpenOptionsHandler("document", index)}
+            onClosedOption={() => setIsOpenOptions(null)}
             onSelectOption={(component) =>
               onSelectOption("document", index, component, value)
             }

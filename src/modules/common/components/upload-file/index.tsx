@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FiFile, FiUpload, FiUploadCloud } from "react-icons/fi";
+import { FiFile, FiUpload } from "react-icons/fi";
 import { toast } from "sonner";
 
 type Props = {
@@ -52,10 +52,10 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
 
         filesArray.forEach((file: any) => {
             if (multiple && newSelectedFiles.some((f: any) => f.name === file.name)) {
-                toast("Archivos duplicados");
+                toast.info("Archivos duplicados");
                 hasError = true;
             } else if (!fileTypeRegex.test(file.name.split(".").pop())) {
-                toast(`Solo ${acceptedFileExtensions.join(", ")} son archivos  permitidos`);
+                toast.info(`Solo ${acceptedFileExtensions.join(", ")} son archivos  permitidos`);
                 hasError = true;
             } else if (multiple) {
                 newSelectedFiles.push(file);
@@ -112,8 +112,6 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                             <p className="text-xs font-light">{selectedFiles[0].name}</p>
                         </>
                     }
-
-
                     <input
                         type="file"
                         id="files"

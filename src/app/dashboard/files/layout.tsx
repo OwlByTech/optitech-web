@@ -7,9 +7,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="flex flex-grow h-full gap-5 flex-row">
+    <section className="flex h-full bg-red-50 gap-4">
       <DirectoryTree />
-      <div className="flex flex-grow h-full rounded-lg flex-col bg-white gap-8 md:gap-0">
+      <div className="flex w-full rounded-lg flex-col bg-white gap-8 md:gap-0">
         <RouteDirectory />
         {children}
       </div>
