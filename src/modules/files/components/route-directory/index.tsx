@@ -16,6 +16,8 @@ import { directoryRoute, folderLayout } from "../../context";
 import { Button } from "@/modules/common/components/button";
 import { useDisclosure } from "@nextui-org/react";
 import { CreateDirectoryModal } from "../create-directory";
+import { uploadFileHandler } from "@/modules/common/components/upload-file/handlers";
+import { toast } from "sonner";
 
 export function RouteDirectory() {
   const pathname = usePathname();
@@ -23,9 +25,20 @@ export function RouteDirectory() {
   const [layout, setLayout] = useAtom(folderLayout);
   const [directories, setDirectories] = useAtom(directoryRoute);
 
-  const curParentDirectory = directories?.length > 1 && directories[directories?.length - 1];
+  const curParentDirectory =
+    directories?.length > 1 && directories[directories?.length - 1];
 
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+
+  const uploadFile = async () => {
+    try {
+      const files: FileList = await uploadFileHandler(["pdf", "docx"], 10);
+      // TODO: send file to api
+    } catch (e) {
+      const error = e as Error;
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="flex flex-row p-2 justify-between">
@@ -83,6 +96,7 @@ export function RouteDirectory() {
           isIconOnly
           radius="md"
           size="md"
+          onClick={uploadFile}
           startContent={<FiUpload className="md:h-5 md:w-5 w-6 h-6" />}
         >
           <span className="md:pl-2 hidden md:block">Subir archivo</span>
