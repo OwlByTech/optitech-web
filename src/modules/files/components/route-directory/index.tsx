@@ -33,7 +33,7 @@ export function RouteDirectory() {
   const uploadFile = async () => {
     try {
       const files: FileList = await uploadFileHandler(["pdf", "docx"], 10);
-      // TODO: send file to api
+      // TODO: send file to api and reload the page with router refresh
     } catch (e) {
       const error = e as Error;
       toast.error(error.message);
