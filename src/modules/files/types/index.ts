@@ -55,6 +55,17 @@ export type UpdateDirectoryReq = {
   name: string;
 };
 
-export type UpdateDirectoryRes = boolean;
+export type UpdateDocumentRes = string;
+
+export type DownloadDocumentRes = string;
+
+export const DownloadDocumentReqValidator = z.object({
+  id: z.number({ coerce: true }),
+});
+
+export type DownloadDirectoryReq = {
+  id: number;
+};
+
 
 export type FolderLayout = "grid" | "list";

@@ -4,6 +4,7 @@ import { CommonActionState } from "@/modules/common/types/action";
 import {
   createDirectoryService,
   deleteDiretoryService,
+  downloadDocumentService,
   getDirectoryChildService,
   getDirectoryService,
   updateDiretoryService,
@@ -12,6 +13,8 @@ import {
   CreateDirectoryReqValidator,
   CreateDiretoryReq,
   DeleteDirectoryReqValidator,
+  DownloadDirectoryReqValidator,
+  DownloadDocumentReqValidator,
   UpdateDirectoryReqValidator,
 } from "../types";
 
@@ -126,5 +129,33 @@ export async function updateDiretoryForm(
 
   return {
     message: `Se ha renombrado directorio exitosamente.`,
+  };
+}
+
+export async function downloadDocumentForm(
+  prevState: CommonActionState,
+  formData: FormData
+): Promise<CommonActionState> {
+  const entries = Object.fromEntries(formData.entries());
+  const validateFields = DownloadDocumentReqValidator.safeParse(entries);
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error?.flatten().fieldErrors,
+      message: "Error",
+    };
+  }
+
+  const response = await downloadDocumentService(validateFields.data);
+
+  if (!response) {
+    return {
+      errors: {},
+      message: "Error",
+    };
+  }
+
+  return {
+    message: response,
   };
 }

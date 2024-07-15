@@ -10,6 +10,7 @@ import {
   DeleteDirectoryReq,
   DeleteDirectoryRes,
   Directory,
+  DownloadDocumentRes,
   UpdateDirectoryReq,
   UpdateDirectoryRes,
 } from "../types";
@@ -50,5 +51,13 @@ export async function deleteDiretoryService(
 ): Promise<DeleteDirectoryRes | null> {
   return await apiSecureDelete<DeleteDirectoryRes>(
     `/directory-tree/delete/${req.id}`
+  );
+}
+
+export async function downloadDocumentService(
+  req: DeleteDirectoryReq
+): Promise<DownloadDocumentRes | null> {
+  return await apiSecureGet<DownloadDocumentRes>(
+    `/document/download/${req.id}`
   );
 }
