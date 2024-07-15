@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { FiUpload, FiUploadCloud } from "react-icons/fi";
+import { FiFile, FiUpload, FiUploadCloud } from "react-icons/fi";
+import { toast } from "sonner";
 
 type Props = {
     separatedFiles?: boolean
@@ -51,10 +52,10 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
 
         filesArray.forEach((file: any) => {
             if (multiple && newSelectedFiles.some((f: any) => f.name === file.name)) {
-                setError("Archivos duplicados");
+                toast("Archivos duplicados");
                 hasError = true;
             } else if (!fileTypeRegex.test(file.name.split(".").pop())) {
-                setError(`Solo ${acceptedFileExtensions.join(", ")} son archivos  permitidos`);
+                toast(`Solo ${acceptedFileExtensions.join(", ")} son archivos  permitidos`);
                 hasError = true;
             } else if (multiple) {
                 newSelectedFiles.push(file);
@@ -97,12 +98,22 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                     onDrop={(e) => handleDrop(e)}
                     onClick={handleCustomButtonClick}
                 >
-                    {preview && previewLoad ? <img src={previewLoad} className="h-60 w-60" /> :
+                    {preview && previewLoad && <img src={previewLoad} className="h-60 w-60" />}
+
+                    {(selectedFiles.length === 0 || multiple) &&
                         <>
                             <FiUpload className="w-10 h-10" />
                             <p className="text-xs font-light">Drag and Drop the files</p>
                         </>
                     }
+                    {!multiple && !preview && selectedFiles.length > 0 &&
+                        <>
+                            <FiFile className="w-10 h-10" />
+                            <p className="text-xs font-light">{selectedFiles[0].name}</p>
+                        </>
+                    }
+
+
                     <input
                         type="file"
                         id="files"
@@ -120,21 +131,17 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                     />
                     {error && <p className="text-xs font-normal text-red-500">{error}</p>}
                 </button>
-                {multiple &&
-                    <div className="border-2 border-gray-300 rounded-3xl py-4 max-h-[23rem] overflow-auto">
-                        {selectedFiles.length > 0 ? (
+                {multiple && selectedFiles.length > 0 &&
+                    <div className="border-2 border-gray-300 rounded-lg py-4 max-h-[23rem] overflow-auto">
+                        {selectedFiles.length > 0 && (
                             <ul className="px-4">
                                 {selectedFiles.map((file, index) => (
                                     <li
                                         key={index}
                                         className="flex justify-between items-center border-b py-2"
                                     >
-                                        <div className="flex items-center">
-                                            <img
-                                                src="/assets/svg/image.svg"
-                                                alt="File Icon"
-                                                className="w-8 h-8 mr-2"
-                                            />
+                                        <div className="flex gap-2 items-center">
+                                            <FiFile className="h-6 w-6" />
                                             <span className="text-base">{file.name}</span>
                                         </div>
                                         *   <button
@@ -158,12 +165,6 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                                     </li>
                                 ))}
                             </ul>
-                        ) : (
-                            <div className="h-full flex justify-center items-center">
-                                <p className="text-lg font-semibold text-gray-500 text-center">
-                                    No Files Uploaded Yet
-                                </p>
-                            </div>
                         )}
                     </div>
                 }

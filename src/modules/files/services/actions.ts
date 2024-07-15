@@ -2,99 +2,135 @@
 
 import { CommonActionState } from "@/modules/common/types/action";
 import {
-  createDirectoryService,
-  deleteDiretoryService,
-  getDirectoryChildService,
-  getDirectoryService,
+    createDirectoryService,
+    createDocumentService,
+    deleteDiretoryService,
+    getDirectoryChildService,
+    getDirectoryService,
 } from ".";
 import {
-  CreateDirectoryReqValidator,
-  CreateDiretoryReq,
-  DeleteDirectoryReqValidator,
+    CreateDirectoryReqValidator,
+    CreateDiretoryReq,
+    CreateDocumentReqValidator,
+    DeleteDirectoryReqValidator,
 } from "../types";
 
 export async function getDirectoryAction(id?: number) {
-  const response = await getDirectoryService(id);
-  if (response) {
+    const response = await getDirectoryService(id);
+    if (response) {
+        return {
+            message: "Institución creada exitosamente",
+            directory: response,
+        };
+    }
     return {
-      message: "Institución creada exitosamente",
-      directory: response,
+        errors: {
+            api: "Error conexion servidor",
+        },
     };
-  }
-  return {
-    errors: {
-      api: "Error conexion servidor",
-    },
-  };
 }
 
 export async function getDirectoryChildAction(id?: number) {
-  const response = await getDirectoryChildService(id);
-  if (response) {
+    const response = await getDirectoryChildService(id);
+    if (response) {
+        return {
+            message: "Institución creada exitosamente",
+            directory: response,
+        };
+    }
     return {
-      message: "Institución creada exitosamente",
-      directory: response,
+        errors: {
+            api: "Error conexion servidor",
+        },
     };
-  }
-  return {
-    errors: {
-      api: "Error conexion servidor",
-    },
-  };
 }
 
 export async function createDiretoryForm(
-  prevState: CommonActionState,
-  formData: FormData
+    prevState: CommonActionState,
+    formData: FormData
 ): Promise<CommonActionState> {
-  const entries = Object.fromEntries(formData.entries());
-  const validateFields = CreateDirectoryReqValidator.safeParse(entries);
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = CreateDirectoryReqValidator.safeParse(entries);
 
-  if (!validateFields.success) {
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: "Error",
+        };
+    }
+
+    const response = await createDirectoryService(validateFields.data);
+
+    if (!response) {
+        return {
+            errors: {},
+            message: "Error",
+        };
+    }
+
     return {
-      errors: validateFields.error?.flatten().fieldErrors,
-      message: "Error",
+        message: `Directorio ${response.name} creado exitosamente.`,
     };
-  }
-
-  const response = await createDirectoryService(validateFields.data);
-
-  if (!response) {
-    return {
-      errors: {},
-      message: "Error",
-    };
-  }
-
-  return {
-    message: `Directorio ${response.name} creado exitosamente.`,
-  };
 }
 
 export async function deleteDiretoryForm(
-  prevState: CommonActionState,
-  formData: FormData
+    prevState: CommonActionState,
+    formData: FormData
 ): Promise<CommonActionState> {
-  const entries = Object.fromEntries(formData.entries());
-  const validateFields = DeleteDirectoryReqValidator.safeParse(entries);
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = DeleteDirectoryReqValidator.safeParse(entries);
 
-  if (!validateFields.success) {
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: "Error",
+        };
+    }
+
+    const response = await deleteDiretoryService(validateFields.data);
+
+    if (!response) {
+        return {
+            errors: {},
+            message: "Error",
+        };
+    }
+
     return {
-      errors: validateFields.error?.flatten().fieldErrors,
-      message: "Error",
+        message: `Directorio ${validateFields.data.id} eliminado exitosamente.`,
     };
-  }
+}
 
-  const response = await deleteDiretoryService(validateFields.data);
 
-  if (!response) {
+export async function createDocumentForm(
+    prevState: CommonActionState,
+    formData: FormData
+): Promise<CommonActionState> {
+    const entries = Object.fromEntries(formData.entries());
+
+    const validateFields = CreateDocumentReqValidator.safeParse(entries);
+
+    console.log(validateFields)
+
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: "Error",
+        };
+    }
+    const data = new FormData()
+    data.append('data', `{ "directoryId": ${validateFields.data.directoryId}, "status": "${validateFields.data.status}"}`);
+    data.append('file', validateFields.data.file)
+    const response = await createDocumentService(data);
+    if (!response) {
+        return {
+            errors: {},
+            message: "Error",
+        };
+    }
+
+
     return {
-      errors: {},
-      message: "Error",
+        message: `Directorio  creado exitosamente.`,
     };
-  }
-
-  return {
-    message: `Directorio ${validateFields.data.id} eliminado exitosamente.`,
-  };
 }
