@@ -4,6 +4,7 @@ import { CommonActionState } from "@/modules/common/types/action";
 import {
   createDirectoryService,
   deleteDiretoryService,
+  deleteDocumentService,
   downloadDocumentService,
   getDirectoryChildService,
   getDirectoryService,
@@ -13,6 +14,7 @@ import {
   CreateDirectoryReqValidator,
   CreateDiretoryReq,
   DeleteDirectoryReqValidator,
+  DeleteDocumentReqValidator,
   DownloadDirectoryReqValidator,
   DownloadDocumentReqValidator,
   UpdateDirectoryReqValidator,
@@ -157,5 +159,33 @@ export async function downloadDocumentForm(
 
   return {
     message: response,
+  };
+}
+
+export async function deleteDocumentForm(
+  prevState: CommonActionState,
+  formData: FormData
+): Promise<CommonActionState> {
+  const entries = Object.fromEntries(formData.entries());
+  const validateFields = DeleteDocumentReqValidator.safeParse(entries);
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error?.flatten().fieldErrors,
+      message: "Error",
+    };
+  }
+
+  const response = await deleteDocumentService(validateFields.data);
+
+  if (!response) {
+    return {
+      errors: {},
+      message: "Error",
+    };
+  }
+
+  return {
+    message: `Documento ${validateFields.data.id} eliminado exitosamente.`,
   };
 }

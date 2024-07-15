@@ -6,7 +6,6 @@ import { Directory } from "@/modules/files/types";
 import { toast } from "sonner";
 import { useFormState } from "react-dom";
 import { downloadDocumentForm } from "@/modules/files/services/actions";
-import { useRouter } from "next/navigation";
 
 export function DownloadDocumentOption(props: OptionComponentProps) {
   const [response, dispatch] = useFormState(downloadDocumentForm, {
