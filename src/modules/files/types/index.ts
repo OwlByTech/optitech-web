@@ -78,5 +78,17 @@ export type DeleteDocumentReq = {
 
 export type DeleteDocumentRes = boolean;
 
+export const RenameDocumentReqValidator = z.object({
+  id: z.number({ coerce: true }),
+  name: z.string()
+});
+
+export type RenameDocumentReq = {
+  id: number;
+  name: string;
+};
+
+export type RenameDocumentRes = boolean;
+
 
 export type FolderLayout = "grid" | "list";

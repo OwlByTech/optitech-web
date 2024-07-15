@@ -13,6 +13,8 @@ import {
   DeleteDocumentRes,
   Directory,
   DownloadDocumentRes,
+  RenameDocumentReq,
+  RenameDocumentRes,
   UpdateDirectoryReq,
   UpdateDirectoryRes,
 } from "../types";
@@ -59,9 +61,7 @@ export async function deleteDiretoryService(
 export async function deleteDocumentService(
   req: DeleteDocumentReq
 ): Promise<DeleteDocumentRes | null> {
-  return await apiSecureDelete<DeleteDocumentRes>(
-    `/document/${req.id}`
-  );
+  return await apiSecureDelete<DeleteDocumentRes>(`/document/${req.id}`);
 }
 
 export async function downloadDocumentService(
@@ -70,4 +70,10 @@ export async function downloadDocumentService(
   return await apiSecureGet<DownloadDocumentRes>(
     `/document/download/${req.id}`
   );
+}
+
+export async function renameDocumentService(
+  req: RenameDocumentReq
+): Promise<RenameDocumentRes | null> {
+  return await apiSecurePut<RenameDocumentRes>(`/document/name/`, req);
 }

@@ -8,6 +8,7 @@ import {
   downloadDocumentService,
   getDirectoryChildService,
   getDirectoryService,
+  renameDocumentService,
   updateDiretoryService,
 } from ".";
 import {
@@ -17,8 +18,10 @@ import {
   DeleteDocumentReqValidator,
   DownloadDirectoryReqValidator,
   DownloadDocumentReqValidator,
+  RenameDocumentReqValidator,
   UpdateDirectoryReqValidator,
 } from "../types";
+import { RenameDocumentOption } from "../components/folder-document-options/document/rename";
 
 export async function getDirectoryAction(id?: number) {
   const response = await getDirectoryService(id);
@@ -187,5 +190,33 @@ export async function deleteDocumentForm(
 
   return {
     message: `Documento ${validateFields.data.id} eliminado exitosamente.`,
+  };
+}
+
+export async function renameDocumentForm(
+  prevState: CommonActionState,
+  formData: FormData
+): Promise<CommonActionState> {
+  const entries = Object.fromEntries(formData.entries());
+  const validateFields = RenameDocumentReqValidator.safeParse(entries);
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error?.flatten().fieldErrors,
+      message: "Error",
+    };
+  }
+
+  const response = await renameDocumentService(validateFields.data);
+
+  if (!response) {
+    return {
+      errors: {},
+      message: "Error",
+    };
+  }
+
+  return {
+    message: `Documento ${validateFields.data.name} renombrado exitosamente.`,
   };
 }
