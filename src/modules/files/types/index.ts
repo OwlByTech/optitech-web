@@ -24,7 +24,7 @@ export const CreateDirectoryReqValidator = z.object({
 export const CreateDocumentReqValidator = z.object({
     directoryId: z.number({ coerce: true }),
     status: z.string(),
-    file: z.any()
+    files: z.any()
 });
 
 export type CreateDiretoryReq = {
@@ -58,13 +58,13 @@ export type DeleteDirectoryReq = {
 export type DeleteDirectoryRes = boolean;
 
 export const UpdateDirectoryReqValidator = z.object({
-  directoryId: z.number({ coerce: true }),
-  name: z.string(),
+    directoryId: z.number({ coerce: true }),
+    name: z.string(),
 });
 
 export type UpdateDirectoryReq = {
-  directoryId: number;
-  name: string;
+    directoryId: number;
+    name: string;
 };
 
 export type UpdateDirectoryRes = boolean;

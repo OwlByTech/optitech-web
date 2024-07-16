@@ -29,8 +29,8 @@ export function RouteDirectory() {
     const { isOpen: isOpenDocument, onOpen: onOpenDocument, onClose: onCloseDocument, onOpenChange: onOpenChangeDocument } = useDisclosure();
 
     return (
-        <div className="flex flex-row p-2 justify-between">
-            <div className="flex">
+        <div className="flex w-full max-w-full overflow-hidden flex-row p-2 justify-between">
+            <div className="flex w-[300px] overflow-hidden">
                 {directories &&
                     directories.map((value, index) => (
                         <div

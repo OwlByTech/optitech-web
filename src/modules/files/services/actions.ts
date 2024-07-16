@@ -1,6 +1,6 @@
 "use server";
 
-import { CommonActionState } from "@/modules/common/types/action";
+import { ActionStateUpload, CommonActionState } from "@/modules/common/types/action";
 import {
     createDirectoryService,
     createDocumentService,
@@ -104,11 +104,10 @@ export async function deleteDiretoryForm(
 
 
 export async function createDocumentForm(
-    prevState: CommonActionState,
+    prevState: ActionStateUpload,
     formData: FormData
-): Promise<CommonActionState> {
+): Promise<ActionStateUpload> {
     const entries = Object.fromEntries(formData.entries());
-
     const validateFields = CreateDocumentReqValidator.safeParse(entries);
     if (!validateFields.success) {
         return {
@@ -116,20 +115,29 @@ export async function createDocumentForm(
             message: "Error",
         };
     }
-    const data = new FormData()
-    data.append('data', `{ "directoryId": ${validateFields.data.directoryId}, "status": "${validateFields.data.status}"}`);
-    data.append('file', validateFields.data.file)
-    const response = await createDocumentService(data);
-    if (!response) {
-        return {
-            errors: {},
-            message: "Error",
-        };
+    const data = {
+        directoryId: validateFields.data.directoryId,
+        status: validateFields.data.status
     }
 
 
+    const files = formData.getAll("files")
+    const responses = await Promise.all(files.map(async (file) => {
+        const dataCreate = new FormData()
+        dataCreate.set("data", JSON.stringify(data))
+        dataCreate.set("file", file)
+        const response = await createDocumentService(dataCreate);
+        if (!response) {
+            return `Documento ${file.name} error al cargar`
+        }
+        dataCreate.delete("file")
+
+        return `Documento ${file.name} cargado exitosamente`
+    }))
+
+
     return {
-        message: `Directorio  creado exitosamente.`,
+        message: responses
     };
 }
 

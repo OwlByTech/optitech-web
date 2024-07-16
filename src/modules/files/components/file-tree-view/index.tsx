@@ -19,7 +19,7 @@ export function FileViewTree({ document }: Props) {
                     :
                     <FiFile strokeWidth={1} className="h-4 w-4" />
             }
-            <span>{document?.name}</span>
+            <p className="truncate text-ellipsis">{document?.name}</p>
         </LinkRef>
     )
 

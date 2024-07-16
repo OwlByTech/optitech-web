@@ -27,7 +27,7 @@ export function DirectoryTree() {
     if (pending)
         return <Loading className="bg-white w-[300px] rounded-lg" />
     return (
-        <div className="h-full flex flex-col bg-white gap-2 w-[300px] rounded-lg p-2 overflow-auto">
+        <div className="flex flex-col  bg-white gap-2 w-[340px] rounded-lg p-3 overflow-y-auto overflow-x-hidden">
             {directory && <FolderViewTree directory={directory} setDirectory={setDirectory} directoryRoot={directory} />}
         </div>
     )

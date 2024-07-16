@@ -1,14 +1,13 @@
-import { Input } from "@/modules/common/components/input";
 import Modal from "@/modules/common/components/modal";
 import { Directory } from "../../types";
-import { createDiretoryForm, createDocumentForm } from "../../services/actions";
 import { useFormState } from "react-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { UploadFile } from "@/modules/common/components/upload-file";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { Button } from "@/modules/common/components/button";
+import { createDocumentForm } from "../../services/actions";
 
 export type CreateDocumentModalProps = {
     curDir: Directory;
@@ -20,24 +19,39 @@ export type CreateDocumentModalProps = {
 export function CreateDocumentModal(props: CreateDocumentModalProps) {
     const router = useRouter();
     const [response, dispatch] = useFormState(createDocumentForm, {
-        message: null,
+        message: [],
         errors: {},
     });
 
+    const [selectedFiles, setSelectedFiles] = useState([]);
     useEffect(() => {
         if (response.errors) {
             return;
         }
-        toast.success(response?.message);
+        response.message?.map((data => {
+            toast.info(data);
+        }))
     }, [response]);
 
+
+    useEffect(() => {
+        setSelectedFiles([])
+    }, [props.onOpenChange]);
+
+
     const onSubmit = (formData: FormData) => {
-        formData.set("directoryId", props.curDir.id!.toString());
-        formData.set("status", "aprobado")
-        console.log(formData)
-        dispatch(formData);
-        props.onClose();
+        const data = new FormData()
+        data.set("directoryId", props.curDir.id!.toString());
+        data.set("status", "aprobado")
+        for (const file of selectedFiles) {
+            data.append("files", file)
+        }
+
+        console.log(data, formData)
+
+        dispatch(data)
         router.refresh();
+        props.onClose();
     };
 
     return (
@@ -48,9 +62,12 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
         >
             <form className="flex flex-col gap-4" action={onSubmit}>
                 <UploadFile
-                    name="file"
+                    name="files"
+                    multiple
                     required
                     acceptedFileExtensions={["doc", "pdf"]}
+                    selectedFiles={selectedFiles}
+                    setSelectedFiles={setSelectedFiles}
                 />
                 <div className=" flex flex-row gap-2  justify-end">
                     <SubmitButton>Aceptar</SubmitButton>

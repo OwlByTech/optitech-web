@@ -1,5 +1,6 @@
+import { m } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import { FiFile, FiUpload } from "react-icons/fi";
+import { FiFile, FiPlus, FiUpload } from "react-icons/fi";
 import { toast } from "sonner";
 
 type Props = {
@@ -9,10 +10,11 @@ type Props = {
     name: string
     preview?: boolean
     acceptedFileExtensions: string[]
+    selectedFiles: any,
+    setSelectedFiles: any
 }
 
-export function UploadFile({ required, multiple, name, preview, acceptedFileExtensions }: Props) {
-    const [selectedFiles, setSelectedFiles] = useState([]);
+export function UploadFile({ required, multiple, name, preview, acceptedFileExtensions, setSelectedFiles, selectedFiles }: Props) {
     const [error, setError] = useState("");
     const [previewLoad, setPreview] = useState(null);
 
@@ -86,88 +88,91 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
         updatedFiles.splice(index, 1);
         setSelectedFiles(updatedFiles);
     };
-
     return (
-        <div className="w-ful lbg-white ">
-            <div className="grid grid-cols-1 gap-4">
-                <button className=" flex flex-col justify-center border-dashed gap-4 items-center border-2 border-gray-300 hover:border-black rounded-lg  py-4 min-h-[20rem] overflow-auto focus:outline-none focus:border-none focus:ring-inset focus:ring-2 focus:ring-black"
-                    type="button"
-                    name={name}
-                    ref={buttonRef}
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => handleDrop(e)}
-                    onClick={handleCustomButtonClick}
-                >
-                    {preview && previewLoad && <img src={previewLoad} className="h-60 w-60" />}
+        <div className={`flex flex-grow  flex-col gap-4 ${(selectedFiles.length > 0 && multiple) && " items-end"}`}>
 
-                    {(selectedFiles.length === 0 || multiple) &&
-                        <>
-                            <FiUpload className="w-10 h-10" />
-                            <p className="text-xs font-light">Drag and Drop the files</p>
-                        </>
-                    }
-                    {!multiple && !preview && selectedFiles.length > 0 &&
-                        <>
-                            <FiFile className="w-10 h-10" />
-                            <p className="text-xs font-light">{selectedFiles[0].name}</p>
-                        </>
-                    }
-                    <input
-                        type="file"
-                        id="files"
-                        name={name}
-                        required={required}
-                        multiple={false}
-                        accept={acceptedFileTypesString}
-                        ref={fileInputRef}
-                        className="w-0 h-0"
-                        onChange={handleFileChange}
-                        onFocus={focusInput}
-                        onClick={(event) => {
-                            event.target.value = null;
-                        }}
-                    />
-                    {error && <p className="text-xs font-normal text-red-500">{error}</p>}
-                </button>
-                {multiple && selectedFiles.length > 0 &&
-                    <div className="border-2 border-gray-300 rounded-lg py-4 max-h-[23rem] overflow-auto">
-                        {selectedFiles.length > 0 && (
-                            <ul className="px-4">
-                                {selectedFiles.map((file, index) => (
-                                    <li
-                                        key={index}
-                                        className="flex justify-between items-center border-b py-2"
-                                    >
-                                        <div className="flex gap-2 items-center">
-                                            <FiFile className="h-6 w-6" />
-                                            <span className="text-base">{file.name}</span>
-                                        </div>
-                                        *   <button
-                                            type="button"
-                                            onClick={() => handleFileDelete(index)}
-                                            className="text-red-500 hover:text-red-700 focus:outline-none"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20"
-                                                fill="none"
-                                                className="w-6 h-6"
-                                            >
-                                                <path
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    d="M6 4l8 8M14 4l-8 8"
-                                                />
-                                            </svg>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
+            <button className={` flex justify-center border-2 rounded-lg ${(selectedFiles.length === 0 || !multiple) ? " flex-col border-dashed gap-4 items-center border-2  border-gray-300 hover:border-black rounded-lg  py-4 min-h-[20rem] overflow-auto focus:outline-none focus:border-none focus:ring-inset focus:ring-2 focus:ring-black" : "w-10 h-10 border-black "} `}
+                type="button"
+                name={name}
+                ref={buttonRef}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => handleDrop(e)}
+                onClick={handleCustomButtonClick}
+            >
+                {preview && previewLoad && <img src={previewLoad} className="h-60 w-60" />}
+
+                {(selectedFiles.length === 0) &&
+                    <>
+                        <FiUpload className="w-10 h-10" />
+                        <p className="text-xs font-light">Drag and Drop the files</p>
+                    </>
                 }
-            </div>
-
+                {(selectedFiles.length > 0) &&
+                    <>
+                        <FiPlus className="w-6 h-8" />
+                    </>
+                }
+                {!multiple && !preview && selectedFiles.length > 0 &&
+                    <>
+                        <FiFile className="w-10 h-10" />
+                        <p className="text-xs font-light">{selectedFiles[0].name}</p>
+                    </>
+                }
+                <input
+                    type="file"
+                    id="files"
+                    name={name}
+                    required={required}
+                    multiple={multiple}
+                    accept={acceptedFileTypesString}
+                    ref={fileInputRef}
+                    className="w-0 h-0"
+                    onChange={handleFileChange}
+                    onFocus={focusInput}
+                    onClick={(event) => {
+                        event.target.value = null;
+                    }}
+                />
+                {error && <p className="text-xs font-normal text-red-500">{error}</p>}
+            </button>
+            {multiple && selectedFiles.length > 0 &&
+                <div className=" w-full border-2 border-gray-300 rounded-lg py-4 max-h-[23rem] overflow-auto">
+                    {selectedFiles.length > 0 && (
+                        <ul className="px-4">
+                            {selectedFiles.map((file, index) => (
+                                <li
+                                    key={index}
+                                    className="flex justify-between items-center border-b py-2"
+                                >
+                                    <div className="flex gap-2 items-center">
+                                        <FiFile className="h-6 w-6" />
+                                        <span className="text-base">{file.name}</span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleFileDelete(index)}
+                                        className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="none"
+                                            className="w-6 h-6"
+                                        >
+                                            <path
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                d="M6 4l8 8M14 4l-8 8"
+                                            />
+                                        </svg>
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            }
         </div>
+
     );
 }
