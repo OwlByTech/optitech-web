@@ -3,7 +3,4 @@ export type CommonActionState = {
     message?: string | string[] | null;
 };
 
-export type ActionStateUpload = {
-    errors?: {} | null;
-    message?: string[] | null;
-};
+

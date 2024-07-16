@@ -1,20 +1,18 @@
 "use server";
 
-import { ActionStateUpload, CommonActionState } from "@/modules/common/types/action";
+import { CommonActionState } from "@/modules/common/types/action";
 import {
     createDirectoryService,
     createDocumentService,
     deleteDiretoryService,
+    deleteDocumentService,
+    downloadDocumentService,
     getDirectoryChildService,
     getDirectoryService,
+    renameDocumentService,
     updateDiretoryService,
 } from ".";
-import {
-    CreateDirectoryReqValidator,
-    CreateDocumentReqValidator,
-    DeleteDirectoryReqValidator,
-    UpdateDirectoryReqValidator,
-} from "../types";
+import { CreateDirectoryReqValidator, CreateDocumentReqValidator, DeleteDirectoryReqValidator, DeleteDocumentReqValidator, DownloadDocumentReqValidator, RenameDocumentReqValidator, UpdateDirectoryReqValidator } from "../types";
 
 export async function getDirectoryAction(id?: number) {
     const response = await getDirectoryService(id);
@@ -104,9 +102,9 @@ export async function deleteDiretoryForm(
 
 
 export async function createDocumentForm(
-    prevState: ActionStateUpload,
+    prevState: CommonActionState,
     formData: FormData
-): Promise<ActionStateUpload> {
+): Promise<CommonActionState> {
     const entries = Object.fromEntries(formData.entries());
     const validateFields = CreateDocumentReqValidator.safeParse(entries);
     if (!validateFields.success) {
@@ -141,6 +139,7 @@ export async function createDocumentForm(
     };
 }
 
+
 export async function updateDiretoryForm(
     prevState: CommonActionState,
     formData: FormData
@@ -165,5 +164,89 @@ export async function updateDiretoryForm(
 
     return {
         message: `Se ha renombrado directorio exitosamente.`,
+    };
+}
+
+export async function downloadDocumentForm(
+    prevState: CommonActionState,
+    formData: FormData
+): Promise<CommonActionState> {
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = DownloadDocumentReqValidator.safeParse(entries);
+
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: "Error",
+        };
+    }
+
+    const response = await downloadDocumentService(validateFields.data);
+
+    if (!response) {
+        return {
+            errors: {},
+            message: "Error",
+        };
+    }
+
+    return {
+        message: response,
+    };
+}
+
+export async function deleteDocumentForm(
+    prevState: CommonActionState,
+    formData: FormData
+): Promise<CommonActionState> {
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = DeleteDocumentReqValidator.safeParse(entries);
+
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: "Error",
+        };
+    }
+
+    const response = await deleteDocumentService(validateFields.data);
+
+    if (!response) {
+        return {
+            errors: {},
+            message: "Error",
+        };
+    }
+
+    return {
+        message: `Documento ${validateFields.data.id} eliminado exitosamente.`,
+    };
+}
+
+export async function renameDocumentForm(
+    prevState: CommonActionState,
+    formData: FormData
+): Promise<CommonActionState> {
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = RenameDocumentReqValidator.safeParse(entries);
+
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: "Error",
+        };
+    }
+
+    const response = await renameDocumentService(validateFields.data);
+
+    if (!response) {
+        return {
+            errors: {},
+            message: "Error",
+        };
+    }
+
+    return {
+        message: `Documento ${validateFields.data.name} renombrado exitosamente.`,
     };
 }

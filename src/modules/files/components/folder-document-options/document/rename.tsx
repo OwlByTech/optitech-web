@@ -1,22 +1,21 @@
 import Modal from "@/modules/common/components/modal";
 import { useDisclosure } from "@nextui-org/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { OptionComponentProps } from "..";
-import { File } from "@/modules/files/types";
-import { useFormState } from "react-dom";
-import { deleteDocumentForm } from "@/modules/files/services/actions";
+import { Input } from "@/modules/common/components/input";
 import { useRouter } from "next/navigation";
+import { useFormState } from "react-dom";
+import { renameDocumentForm, updateDiretoryForm } from "@/modules/files/services/actions";
 import { toast } from "sonner";
 
-export function DeleteDocumentOption(props: OptionComponentProps) {
+export function RenameDocumentOption(props: OptionComponentProps) {
   const router = useRouter();
-  const [response, dispatch] = useFormState(deleteDocumentForm, {
+  const [response, dispatch] = useFormState(renameDocumentForm, {
     message: null,
     errors: {},
   });
-
+  const nameRef = useRef<string>(props.value.name!);
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-  const value = props.value as File;
 
   useEffect(() => {
     onOpen();
@@ -31,11 +30,13 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
     onClose();
     router.refresh();
     props.onClose();
+    nameRef.current = "";
   }, [response]);
 
   const onAccept = () => {
     const formData = new FormData();
-    formData.set("id", value.id!.toString());
+    formData.set("id", props.value.id!.toString());
+    formData.set("name", nameRef.current);
     dispatch(formData);
   };
 
@@ -45,7 +46,12 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
       onOpenChange={onOpenChange}
       onClose={props.onClose}
       onAccept={onAccept}
-      title={`Eliminar directorio ${value.name}`}
-    ></Modal>
+      title={`Renombrar directorio ${props.value.name}`}
+    >
+      <Input
+        defaultValue={props.value.name}
+        onChange={(e) => (nameRef.current = e.target.value)}
+      ></Input>
+    </Modal>
   );
 }

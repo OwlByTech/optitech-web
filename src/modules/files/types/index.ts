@@ -67,6 +67,40 @@ export type UpdateDirectoryReq = {
     name: string;
 };
 
-export type UpdateDirectoryRes = boolean;
+
+
+export type DownloadDocumentRes = string;
+
+export const DownloadDocumentReqValidator = z.object({
+  id: z.number({ coerce: true }),
+});
+
+export type DownloadDocumentReq = {
+  id: number;
+};
+
+
+export const DeleteDocumentReqValidator = z.object({
+  id: z.number({ coerce: true }),
+});
+
+export type DeleteDocumentReq = {
+  id: number;
+};
+
+export type DeleteDocumentRes = boolean;
+
+export const RenameDocumentReqValidator = z.object({
+  id: z.number({ coerce: true }),
+  name: z.string()
+});
+
+export type RenameDocumentReq = {
+  id: number;
+  name: string;
+};
+
+export type RenameDocumentRes = boolean;
+
 
 export type FolderLayout = "grid" | "list";
