@@ -12,10 +12,10 @@ export function FileView({ document }: Props) {
     return (
         <LinkRef
             href={`${ROUTES_SIDEBAR.FILES}/document/${document?.id}`}
-            className={`flex justify-start items-center w-full  h-full py-2 pr-2 gap-2`}
+            className="flex flex-row overflow-hidden h-full p-2 gap-2"
         >
             <div>
-                <AiFillFile className="h-4 w-4" color="#FFC754" strokeWidth={1} />
+                <AiFillFile className="h-5 w-5" color="#FFC754" strokeWidth={1} />
             </div>
             <p className=" truncate text-ellipsis">{document.name}</p>
         </LinkRef>

@@ -45,7 +45,7 @@ function FolderDocumentOption(props: FolderDocumentOptionProps) {
 
 export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
     return (
-        <div className="relative hover:bg-gray-50 flex flex-col items-center justify-between rounded-lg bg-white text-black font-light text-sm gap-2 border">
+        <div className="relative hover:bg-gray-50 flex flex-row items-center justify-between rounded-lg bg-white text-black font-light text-sm border">
             {props.type === "directory" ? (
                 <FolderView
                     layout={props.layout}
@@ -57,14 +57,14 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
 
             <div
                 onClick={props.onOpenOptions}
-                className="absolute top-2 right-1 cursor-pointer hover:bg-gray-200 rounded-full p-1"
+                className="cursor-pointer hover:bg-gray-200 rounded-full p-1"
             >
                 <FiMoreVertical />
                 {props.isOpenOptions && (
                     <ClickOutside
                         onClick={() => props.onClosedOption && props.onClosedOption()}
-                    >
-                        <div className="absolute z-10 right-2 top-6 bg-white border border-black">
+                        className="absolute z-10 right-2 top-8 w-24 bg-white ">
+                        <div className="bg-white border border-black">
                             {props.type === "directory"
                                 ? dirOptions.map((option) => (
                                     <FolderDocumentOption

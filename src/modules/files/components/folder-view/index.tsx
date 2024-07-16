@@ -14,10 +14,10 @@ export function FolderView(props: Props) {
     return (
         <LinkRef
             href={`${ROUTES_SIDEBAR.FILES}/${props.directory?.id}`}
-            className="flex flex-row w-10/12 h-full p-2 gap-2"
+            className="flex flex-row overflow-hidden h-full py-2 pl-2 gap-2"
         >
             <div>
-                <AiFillFolder color="#FFC754" strokeWidth={1} />
+                <AiFillFolder color="#FFC754" className="h-5 w-5" strokeWidth={1} />
             </div>
 
             <p className="truncate text-ellipsis">{name}</p>
