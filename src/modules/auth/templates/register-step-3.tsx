@@ -15,13 +15,13 @@ export default function Step3() {
       </div>
       <div className="flex flex-col gap-3 w-full">
         <Link
-          href=""
+          href="mailto:support@owlbytech.com"
           className="text-xs text-center font-bold bg-black text-white p-3 border border-black rounded-xl hover:bg-white hover:text-black"
         >
           Correo Electronico
         </Link>
         <Link
-          href=""
+          href="https://wa.me/573213214390"
           className="text-xs text-center font-bold bg-black text-white p-3 border border-black rounded-xl hover:bg-white hover:text-black"
         >
           WhatsApp
