@@ -53,6 +53,7 @@ export function CreateDirectoryModal(props: OptionComponentProps) {
       onOpenChange={onOpenChange}
       title={`Crear carpeta en ${props.value.name}`}
       onAccept={onAccept}
+      onClose={props.onClose}
       classNames={{
         header: "text-sm  ",
         backdrop: "bg-white/80 backdrop-opacity-80",
