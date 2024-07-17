@@ -107,7 +107,7 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                         <p className="text-xs font-light">Drag and Drop the files</p>
                     </>
                 }
-                {(selectedFiles.length > 0) &&
+                {(selectedFiles.length > 0 && multiple) &&
                     <>
                         <FiPlus className="w-6 h-8" />
                     </>
