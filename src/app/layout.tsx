@@ -4,6 +4,7 @@ import "../styles/index.css"
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { Toaster } from "sonner";
+import { ContextMenu } from "@/modules/common/components/context-menu";
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -19,6 +20,7 @@ export default async function RootLayout({
                 <SessionProvider basePath={"/"} session={session}>
                     <NextUIProvider>
                         {children}
+                        <ContextMenu/>
                     </NextUIProvider>
                     <Toaster position="top-right" closeButton />
                 </SessionProvider>
