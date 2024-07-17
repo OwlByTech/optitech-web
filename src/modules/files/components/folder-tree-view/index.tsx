@@ -135,12 +135,12 @@ export function FolderViewTree({
                             <div>
                                 <AiFillFolderOpen
                                     strokeWidth={1}
-                                    className="h-4 w-4 fill-orange-400"
+                                    className="h-4 w-4 fill-sky-600"
                                 />
                             </div>
                         ) : (
                             <div>
-                                <AiFillFolder strokeWidth={1} className="h-4 w-4 fill-orange-400" />
+                                <AiFillFolder strokeWidth={1} className="h-4 w-4 fill-sky-600" />
                             </div>
                         )}
                         <p className="truncate text-ellipsis">{directory?.name}</p>

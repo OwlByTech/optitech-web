@@ -17,7 +17,7 @@ export function FolderView(props: Props) {
             className="flex flex-row  items-center font-normal text-xs overflow-hidden h-full py-2 pl-2 gap-2"
         >
             <div>
-                <AiFillFolder className="h-5 w-5 fill-orange-400" strokeWidth={1} />
+                <AiFillFolder className="h-5 w-5 fill-sky-600" strokeWidth={1} />
             </div>
 
             <p className="truncate text-ellipsis">{name}</p>
