@@ -8,14 +8,15 @@ import {
 } from "../components/folder-document-options";
 import { useEffect, useState } from "react";
 import { contextMenuStorage } from "@/modules/global/context-menu/context";
+import { CreateDirectoryModal } from "../components/create-directory";
 
 export type DocumentDirectoryType = "document" | "directory";
 
 type OptionStateType = {
-  type: DocumentDirectoryType;
-  index: number;
-  component: React.ComponentType<OptionComponentProps>;
-  value: Directory | File;
+  type?: DocumentDirectoryType;
+  index?: number;
+  component?: React.ComponentType<OptionComponentProps>;
+  value?: Directory | File;
 } | null;
 
 type DocumentDiretoryType = "document" | "directory";
@@ -47,16 +48,18 @@ export function FolderAll(props: FolderAllProps) {
         attribute: CONTEXT_MENU_ATTRIBUTE,
         items: [
           {
-            key: "new-directory",
+            key: "folder:new",
             title: "Crear carpeta",
             handler: () => {
-              console.log(props.directory);
+              setOptionState({
+                component: CreateDirectoryModal,
+                value: props.directory,
+              });
             },
           },
         ],
       },
     ]);
-    console.log("settled");
   }, []);
 
   useEffect(() => {
