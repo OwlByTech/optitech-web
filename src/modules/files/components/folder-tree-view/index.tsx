@@ -14,12 +14,11 @@ import { getDirectoryAction } from "../../services/actions";
 import { FileViewTree } from "../file-tree-view";
 import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
 import { ROUTES_SIDEBAR } from "@/modules/dashboard/types";
-import Spinner from "@/modules/common/icons/Spinner";
 import { usePathname } from "next/navigation";
 import { useAtom } from "jotai";
 import { changeDirecotry, directoryRoute } from "../../context";
 import { clx } from "@/utils/clx";
-import { Tooltip } from "@nextui-org/react";
+import { Spinner, Tooltip } from "@nextui-org/react";
 
 type Props = {
     directoryRoot: Directory;
@@ -147,7 +146,7 @@ export function FolderViewTree({
                     </LinkRef>
                     <>
                         {pending ? (
-                            <Spinner />
+                            <Spinner size="sm" />
                         ) : directory?.open ? (
                             <FiChevronDown
                                 onClick={() => {
