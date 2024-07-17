@@ -63,6 +63,9 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
             isOpen={props.isOpen}
             onOpenChange={props.onOpenChange}
             title={`Subir archivo en ${props.curDir.name}`}
+            classNames={{
+                backdrop: "bg-white/80 backdrop-opacity-80"
+            }}
         >
             <form className="flex flex-col gap-4" action={onSubmit}>
                 <UploadFile

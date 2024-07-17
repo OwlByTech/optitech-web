@@ -47,9 +47,27 @@ export function DeleteFolderOption(props: OptionComponentProps) {
         <Modal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
+            size="sm"
+            placement="top-center"
             onClose={props.onClose}
             onAccept={onAccept}
-            title={`Eliminar directorio ${value.name}`}
-        ></Modal>
+            className="border-none"
+            classNamesOwn={
+                {
+
+                    buttonOk: "bg-red-700 text-white text-xs",
+                    buttonClose: " text-xs"
+                }
+            }
+            classNames={{
+                footer: "flex flex-row justify-center",
+                body: "flex flex-row text-sm  justify-center items-center py-6 font-normal",
+                backdrop: "bg-white/80 backdrop-opacity-80"
+            }}
+        >
+            {` Eliminar directorio `}
+
+            <span className="text-red-700 font-bold">{value.name} </span>{"?"}
+        </Modal>
     );
 }
