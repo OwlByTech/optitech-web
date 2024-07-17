@@ -14,9 +14,13 @@ export function FileView({ document }: Props) {
             href={`${ROUTES_SIDEBAR.FILES}/document/${document?.id}`}
             className="flex flex-row overflow-hidden h-full p-2 gap-2"
         >
-            <div>
-                <AiFillFile className="h-5 w-5" color="#FFC754" strokeWidth={1} />
-            </div>
+            {document.name.includes(".pdf") ?
+                <img src="/pdf.svg" className="h-5 w-5" />
+                : document.name.includes(".doc") ?
+                    <img src="/doc.svg" className="h-5 w-5" />
+                    :
+                    <AiFillFile className="h-5 w-5" color="#FFC754" strokeWidth={1} />
+            }
             <p className=" truncate text-ellipsis">{document.name}</p>
         </LinkRef>
     );

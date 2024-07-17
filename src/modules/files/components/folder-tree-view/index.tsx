@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import { useAtom } from "jotai";
 import { changeDirecotry, directoryRoute } from "../../context";
 import { clx } from "@/utils/clx";
+import { Tooltip } from "@nextui-org/react";
 
 type Props = {
     directoryRoot: Directory;
@@ -118,65 +119,66 @@ export function FolderViewTree({
     }
     return (
         <>
-            <button
-                className={clx(
-                    "hover:bg-gray-50 flex flex-row w-full max-h-full items-center justify-between h-8 p-2 border  rounded-lg bg-white text-black   text-xs gap-2",
-                    directory?.open && "bg-gray-100 border-none ",
-                    Number(pathname.split("/")[3]) === directory.id && "bg-gray-300"
-                )}
-            >
-                <LinkRef
-                    className="flex w-full flex-row overflow-hidden gap-2"
-                    href={`${ROUTES_SIDEBAR.FILES}/${directory?.id}`}
+            <Tooltip showArrow placement="right-start" color="foreground" delay={1000} className="text-xs rounded-lg" content={directory.name}>
+                <button
+                    className={clx(
+                        "hover:bg-gray-50 flex flex-row w-full max-h-full items-center justify-between h-8 p-2 border  rounded-lg bg-white text-black   text-xs gap-2",
+                        directory?.open && "bg-gray-100 border-none ",
+                        Number(pathname.split("/")[3]) === directory.id && "bg-gray-300"
+                    )}
                 >
-                    {directory.directory && directory.open ? (
-                        <div>
-                            <AiFillFolderOpen
-                                color="#FFC754"
+                    <LinkRef
+                        className="flex w-full flex-row overflow-hidden gap-2"
+                        href={`${ROUTES_SIDEBAR.FILES}/${directory?.id}`}
+                    >
+                        {directory.directory && directory.open ? (
+                            <div>
+                                <AiFillFolderOpen
+                                    strokeWidth={1}
+                                    className="h-4 w-4 fill-orange-400"
+                                />
+                            </div>
+                        ) : (
+                            <div>
+                                <AiFillFolder strokeWidth={1} className="h-4 w-4 fill-orange-400" />
+                            </div>
+                        )}
+                        <p className="truncate text-ellipsis">{directory?.name}</p>
+                    </LinkRef>
+                    <>
+                        {pending ? (
+                            <Spinner />
+                        ) : directory?.open ? (
+                            <FiChevronDown
+                                onClick={() => {
+                                    const directory_node = { ...directoryRoot };
+                                    handleDirectory(directory_node, { ...directory, open: false });
+                                    setDirectory(directory_node);
+                                }}
                                 strokeWidth={1}
                                 className="h-4 w-4"
+                                color="#000000"
                             />
-                        </div>
-                    ) : (
-                        <div>
-                            <AiFillFolder color="#FFC754" strokeWidth={1} className="h-4 w-4" />
-                        </div>
-                    )}
-                    <p className="truncate text-ellipsis">{directory?.name}</p>
-                </LinkRef>
-                <>
-                    {pending ? (
-                        <Spinner />
-                    ) : directory?.open ? (
-                        <FiChevronDown
-                            onClick={() => {
-                                const directory_node = { ...directoryRoot };
-                                handleDirectory(directory_node, { ...directory, open: false });
-                                setDirectory(directory_node);
-                            }}
-                            strokeWidth={1}
-                            className="h-4 w-4"
-                            color="#000000"
-                        />
-                    ) : (
-                        <FiChevronRight
-                            className="h-4 w-4 cursor-pointer"
-                            onClick={() => {
-                                if (!directory.directory) {
-                                    setPeding(true);
-                                    dispatch();
-                                } else {
-                                    const directory_node = { ...directoryRoot };
-                                    handleDirectoryOpenParent(directory_node, directory.id);
-                                    setDirectory(directory_node);
-                                }
-                            }}
-                            strokeWidth={1}
-                            color="#000000"
-                        />
-                    )}
-                </>
-            </button>
+                        ) : (
+                            <FiChevronRight
+                                className="h-4 w-4 cursor-pointer"
+                                onClick={() => {
+                                    if (!directory.directory) {
+                                        setPeding(true);
+                                        dispatch();
+                                    } else {
+                                        const directory_node = { ...directoryRoot };
+                                        handleDirectoryOpenParent(directory_node, directory.id);
+                                        setDirectory(directory_node);
+                                    }
+                                }}
+                                strokeWidth={1}
+                                color="#000000"
+                            />
+                        )}
+                    </>
+                </button>
+            </Tooltip>
             {!pending &&
                 directory?.open &&
                 ((directory?.directory && directory.directory.length > 0) ||

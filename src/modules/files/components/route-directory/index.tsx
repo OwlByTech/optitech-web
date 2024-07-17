@@ -12,7 +12,7 @@ import {
 } from "react-icons/fi";
 import { directoryRoute, folderLayout } from "../../context";
 import { Button } from "@/modules/common/components/button";
-import { useDisclosure } from "@nextui-org/react";
+import { Tooltip, useDisclosure } from "@nextui-org/react";
 import { CreateDirectoryModal } from "../create-directory";
 import { CreateDocumentModal } from "../create-document";
 
@@ -33,43 +33,49 @@ export function RouteDirectory() {
             <div className="flex w-[300px] overflow-hidden">
                 {directories &&
                     directories.map((value, index) => (
-                        <div
-                            className={` flex flex-row items-center text-gray-500 font-light text-sm `}
-                        >
-                            <LinkRef
-                                href={`${ROUTES_SIDEBAR.FILES}/${value?.id}`}
-                                className={`hover:bg-gray-50 p-2 ${Number(pathname.split("/")[3]) === value.id && "font-medium"
-                                    } `}
+
+                        <Tooltip placement="top" showArrow color="default" delay={1000} className="text-xs rounded-lg" content={value.name}>
+                            <div
+                                className={` max-w-28 flex flex-row items-center text-gray-500 font-light text-sm `}
                             >
-                                {value.name}
-                            </LinkRef>
+                                <LinkRef
+                                    href={`${ROUTES_SIDEBAR.FILES}/${value?.id}`}
+                                    className={`truncate text-ellipsis hover:bg-gray-50 p-2 ${Number(pathname.split("/")[3]) === value.id && "font-medium"
+                                        } `}
+                                >
+                                    {value.name}
+                                </LinkRef>
 
 
-                            {index < directories.length - 1 && (
-                                <FiChevronRight
-                                    color="#B5B5B5"
-                                    strokeWidth={1}
-                                    className="h-6 w-6 "
-                                />
-                            )}
-                        </div>
+                                {index < directories.length - 1 && (
+                                    <FiChevronRight
+                                        color="#B5B5B5"
+                                        strokeWidth={1}
+                                        className="h-6 w-6 "
+                                    />
+                                )}
+                            </div>
+                        </Tooltip>
                     ))}
+
             </div>
 
             <div className="flex gap-2">
-                <Button
-                    onClick={() => {
-                        onOpen();
-                    }}
-                    className="bg-white border text-xs text-black h-10 md:w-32"
-                    isIconOnly
-                    radius="md"
-                    size="md"
-                    startContent={<FiFolderPlus className="md:h-5 md:w-5 w-6 h-6" />}
-                >
-                    <span className="md:pl-2 hidden md:block">Crear carpeta</span>
-                </Button>
 
+                <Tooltip placement="bottom-start" color="foreground" className="text-xs rounded-lg" content="Crear carpeta">
+                    <Button
+                        onClick={() => {
+                            onOpen();
+                        }}
+                        className="bg-white border text-xs text-black h-10 md:w-32"
+                        isIconOnly
+                        radius="md"
+                        size="md"
+                        startContent={<FiFolderPlus className="md:h-5 md:w-5 w-6 h-6" />}
+                    >
+                        <span className="md:pl-2 hidden md:block">Crear carpeta</span>
+                    </Button>
+                </Tooltip>
                 {curParentDirectory && (
                     <CreateDirectoryModal
                         curDir={curParentDirectory}
