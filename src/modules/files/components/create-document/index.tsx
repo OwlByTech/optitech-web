@@ -8,6 +8,8 @@ import { UploadFile } from "@/modules/common/components/upload-file";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { Button } from "@/modules/common/components/button";
 import { createDocumentForm } from "../../services/actions";
+import { changeDirecotry } from "../../context";
+import { useAtom } from "jotai";
 
 export type CreateDocumentModalProps = {
     curDir: Directory;
@@ -23,6 +25,7 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
         errors: {},
     });
 
+    const [change, setChange] = useAtom(changeDirecotry);
     const [selectedFiles, setSelectedFiles] = useState([]);
     useEffect(() => {
         if (response.errors) {
@@ -31,6 +34,7 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
         response.message?.map((data => {
             toast.info(data);
         }))
+        setChange({ id: props.curDir.id, action: "create" })
     }, [response]);
 
 

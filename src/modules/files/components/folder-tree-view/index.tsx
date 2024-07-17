@@ -17,7 +17,7 @@ import { ROUTES_SIDEBAR } from "@/modules/dashboard/types";
 import Spinner from "@/modules/common/icons/Spinner";
 import { usePathname } from "next/navigation";
 import { useAtom } from "jotai";
-import { directoryRoute } from "../../context";
+import { changeDirecotry, directoryRoute } from "../../context";
 import { clx } from "@/utils/clx";
 
 type Props = {
@@ -32,7 +32,9 @@ export function FolderViewTree({
     directoryRoot,
 }: Props) {
     const [pending, setPeding] = useState(false);
+    const [id, setId] = useState(0);
     const pathname = usePathname();
+    const [change, setChange] = useAtom(changeDirecotry);
     const directoryTreeAction = getDirectoryAction.bind(null, directory.id);
     const [response, dispatch] = useFormState(directoryTreeAction, {
         directory: null,
@@ -53,6 +55,20 @@ export function FolderViewTree({
         }
     }, [response]);
 
+
+    useEffect(() => {
+        if (change?.action === "delete-directory" && change.id === directory.id) {
+            console.log(change)
+            setChange({ id: directory.parentId, action: "delete" })
+        }
+        if (change?.id === directory.id) {
+            setPeding(true);
+            dispatch()
+
+        }
+
+
+    }, [change]);
     useEffect(() => {
         if (response.directory) {
             setPeding(false);

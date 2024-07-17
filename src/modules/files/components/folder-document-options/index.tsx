@@ -33,6 +33,7 @@ type FolderDocumentOptionProps = {
 };
 
 function FolderDocumentOption(props: FolderDocumentOptionProps) {
+
     const onSelectOption = () => {
         props.onSelectOption && props.onSelectOption(props.option.component);
     };

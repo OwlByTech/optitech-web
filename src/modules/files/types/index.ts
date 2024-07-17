@@ -14,6 +14,11 @@ export type File = {
     id: number;
     name: string;
 };
+export type ChangeDirectory = {
+    id?: number;
+    action?: "delete-directory" | "delete" | "rename" | "create" | "upload";
+};
+
 
 export const CreateDirectoryReqValidator = z.object({
     parentId: z.number({ coerce: true }),
@@ -72,32 +77,32 @@ export type UpdateDirectoryReq = {
 export type DownloadDocumentRes = string;
 
 export const DownloadDocumentReqValidator = z.object({
-  id: z.number({ coerce: true }),
+    id: z.number({ coerce: true }),
 });
 
 export type DownloadDocumentReq = {
-  id: number;
+    id: number;
 };
 
 
 export const DeleteDocumentReqValidator = z.object({
-  id: z.number({ coerce: true }),
+    id: z.number({ coerce: true }),
 });
 
 export type DeleteDocumentReq = {
-  id: number;
+    id: number;
 };
 
 export type DeleteDocumentRes = boolean;
 
 export const RenameDocumentReqValidator = z.object({
-  id: z.number({ coerce: true }),
-  name: z.string()
+    id: z.number({ coerce: true }),
+    name: z.string()
 });
 
 export type RenameDocumentReq = {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
 };
 
 export type RenameDocumentRes = boolean;
