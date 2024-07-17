@@ -1,5 +1,5 @@
 "use client";
-
+import { SignOut } from "@/modules/auth/components/sign-out";
 import Link from "next/link";
 
 export default function Step3() {
@@ -26,12 +26,8 @@ export default function Step3() {
         >
           WhatsApp
         </Link>
-        <Link
-          href=""
-          className="text-xs text-center font-bold bg-black text-white p-3 border border-black rounded-xl hover:bg-white hover:text-black"
-        >
-          Cerrar sesión
-        </Link>
+
+        <SignOut className="text-xs text-center font-bold bg-black text-white p-3 border border-black rounded-xl hover:bg-white hover:text-black w-full" />
       </div>
     </section>
   );
