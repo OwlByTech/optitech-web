@@ -6,6 +6,7 @@ import { Button } from "@/modules/common/components/button";
 import { dirOptions } from "./directory";
 import { docOptions } from "./document";
 import ClickOutside from "@/modules/common/components/click-outside";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 
 export type FolderDocumentOptionsProps = {
     type: "document" | "directory";
@@ -38,7 +39,7 @@ function FolderDocumentOption(props: FolderDocumentOptionProps) {
         props.onSelectOption && props.onSelectOption(props.option.component);
     };
     return (
-        <Button onClick={onSelectOption} className="w-full bg-white text-black">
+        <Button onClick={onSelectOption} className="w-full bg-transparent hover:bg-none h-5 text-xs p-0 text-black">
             {props.option.title}
         </Button>
     );
@@ -56,35 +57,43 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                 <FileView layout={props.layout} document={props.value as File} />
             )}
 
-            <div
-                onClick={props.onOpenOptions}
-                className="cursor-pointer hover:bg-gray-200 rounded-full p-1"
+            <Dropdown
+                classNames={{
+                    content: "rounded-none shadow-none border border-black"
+
+                }}
             >
-                <FiMoreVertical />
-                {props.isOpenOptions && (
-                    <ClickOutside
-                        onClick={() => props.onClosedOption && props.onClosedOption()}
-                        className="absolute z-10 right-2 top-8 w-24 bg-white ">
-                        <div className="bg-white border border-black">
-                            {props.type === "directory"
-                                ? dirOptions.map((option) => (
-                                    <FolderDocumentOption
-                                        onSelectOption={props.onSelectOption}
-                                        option={option}
-                                        title={option.title}
-                                    />
-                                ))
-                                : docOptions.map((option) => (
-                                    <FolderDocumentOption
-                                        onSelectOption={props.onSelectOption}
-                                        option={option}
-                                        title={option.title}
-                                    />
-                                ))}
-                        </div>
-                    </ClickOutside>
-                )}
-            </div>
+                <DropdownTrigger>
+                    <button>
+                        <FiMoreVertical
+                            className="cursor-pointer fill-black h-5 w-5 hover:bg-gray-200 rounded-full p-1"
+                        />
+                    </button>
+                </DropdownTrigger>
+                <DropdownMenu className="rounded-lg">
+
+                    {props.type === "directory"
+                        ? dirOptions.map((option) => (
+                            <DropdownItem key={option.action}>
+                                <FolderDocumentOption
+                                    title={option.title}
+                                    option={option}
+                                    onSelectOption={props.onSelectOption}
+                                />
+                            </DropdownItem>
+
+                        ))
+                        : docOptions.map((option) => (
+                            <DropdownItem key={option.action}>
+                                <FolderDocumentOption
+                                    title={option.title}
+                                    option={option}
+                                    onSelectOption={props.onSelectOption}
+                                />
+                            </DropdownItem>
+                        ))}
+                </DropdownMenu>
+            </Dropdown>
         </div>
     );
 }
