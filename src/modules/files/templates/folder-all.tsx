@@ -97,9 +97,9 @@ export function FolderAll(props: FolderAllProps) {
           layout === "grid" ? "grid grid-cols-4 gap-4" : "flex flex-col gap-4"
         }
       >
-        {optionState && (
+        {optionState?.component && (
           <optionState.component
-            value={optionState.value}
+            value={optionState.value!}
             onClose={() => setOptionState(null)}
           />
         )}

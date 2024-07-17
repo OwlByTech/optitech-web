@@ -43,6 +43,7 @@ export function CreateDirectoryModal(props: OptionComponentProps) {
     nameRef.current = "";
     onClose();
     router.refresh();
+    props.onClose();
   };
 
   return (
