@@ -58,33 +58,48 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
             )}
 
             <Dropdown
+                showArrow
                 classNames={{
-                    content: "rounded-none shadow-none border border-black"
+                    content: " p-0 border rounded-lg max-w-36 min-w-36 "
+
 
                 }}
             >
                 <DropdownTrigger>
-                    <button>
+                    <button className="hover:bg-none">
                         <FiMoreVertical
                             className="cursor-pointer fill-black h-5 w-5 hover:bg-gray-200 rounded-full p-1"
                         />
                     </button>
                 </DropdownTrigger>
-                <DropdownMenu className="rounded-lg">
+                <DropdownMenu
+                    itemClasses={{
+                        base: [
+                            "rounded-md",
+                            "text-default-500",
+                            "transition-opacity",
+                            "data-[hover=true]:text-foreground",
+                            "data-[hover=true]:bg-default-100",
+                            "dark:data-[hover=true]:bg-default-50",
+                            "data-[selectable=true]:focus:bg-default-50",
+                            "data-[pressed=true]:opacity-70",
+                            "data-[focus-visible=true]:ring-default-500",
+                        ],
+                    }}
 
+                >
                     {props.type === "directory"
                         ? dirOptions.map((option) => (
-                            <DropdownItem key={option.action}>
+                            <DropdownItem startContent={option.icon} key={option.action}>
                                 <FolderDocumentOption
                                     title={option.title}
                                     option={option}
                                     onSelectOption={props.onSelectOption}
                                 />
                             </DropdownItem>
-
                         ))
                         : docOptions.map((option) => (
-                            <DropdownItem key={option.action}>
+                            <DropdownItem startContent={option.icon} key={option.action}>
                                 <FolderDocumentOption
                                     title={option.title}
                                     option={option}

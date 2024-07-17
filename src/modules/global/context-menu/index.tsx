@@ -34,6 +34,7 @@ export function ContextMenu() {
   };
 
   useEffect(() => {
+    console.log("hero");
     document.addEventListener("contextmenu", handler);
     return () => {
       document.removeEventListener("contextmenu", handler);

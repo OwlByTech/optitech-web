@@ -49,10 +49,14 @@ export function CreateDirectoryModal(props: OptionComponentProps) {
   return (
     <Modal
       isOpen={isOpen}
+      size="lg"
       onOpenChange={onOpenChange}
-      onClose={props.onClose}
       title={`Crear carpeta en ${props.value.name}`}
       onAccept={onAccept}
+      classNames={{
+        header: "text-sm  ",
+        backdrop: "bg-white/80 backdrop-opacity-80",
+      }}
     >
       <Input onChange={(e) => (nameRef.current = e.target.value)}></Input>
     </Modal>
