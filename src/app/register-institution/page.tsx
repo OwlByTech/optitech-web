@@ -2,9 +2,6 @@ import RegisterInstitution from "@/modules/institution/templates/register-instit
 export const metadata = {
     title: "Registrar institución",
 };
-
-
-
 export default function Page() {
     return <RegisterInstitution />;
 }
