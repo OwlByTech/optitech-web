@@ -20,5 +20,4 @@ export function FileViewTree({ document }: Props) {
             <span>{document?.name}</span>
         </LinkRef>
     )
-
 }
