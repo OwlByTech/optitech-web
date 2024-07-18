@@ -16,7 +16,6 @@ export default async function Page({ params }: Props) {
     // TODO: Add logic if there isn't response, or is always get back?
     if (directory || directory_route) {
         return <FolderAll directory={directory!} routeDirectory={directory_route!} />;
-
     }
     return
 }
