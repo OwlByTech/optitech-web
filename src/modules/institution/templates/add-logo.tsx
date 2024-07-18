@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { institutionStorage } from "../context";
 import { ROUTES_INSTITUTION } from "../types";
 import { createInstitution } from "../services/actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { ContainerRegister } from "../components/container-register";
@@ -23,8 +23,10 @@ export default function AddLogo() {
     }
     const institutionAction = createInstitution.bind(null, institution?.name, institution?.description, institution?.services)
     const [response, dispatch] = useFormState(institutionAction, { errors: {}, message: null });
+    const [selectedFiles, setSelectedFiles] = useState([]);
     useEffect(() => {
         if (!response?.errors) {
+            setSelectedFiles([])
             toast.success(response?.message)
             router.replace(ROUTES_SIDEBAR.DASHBOARD)
         }
@@ -39,8 +41,12 @@ export default function AddLogo() {
                 action={dispatch}
                 buttonName="Crear"
             >
-                <UploadFile name="logo" required preview acceptedFileExtensions={["jpg", "png", "jpeg"]} />
-
+                <UploadFile
+                    name="logo"
+                    required preview
+                    acceptedFileExtensions={["jpg", "png", "jpeg"]}
+                    setSelectedFiles={setSelectedFiles}
+                    selectedFiles={selectedFiles} />
             </ContainerRegister>
         </ImageSection>
     );

@@ -33,7 +33,7 @@ export default function Services({ servicesData, institution, setInstitution }: 
 
             <ServicesView onOpen={onOpen} services={services} servicesData={servicesData} />
 
-            <Modal key={1} isOpen={isOpen} onOpenChange={onOpenChange} title="Servicios" onClick={() => {
+            <Modal key={1} isOpen={isOpen} onOpenChange={onOpenChange} title="Servicios" onAccept={() => {
                 if (selectedKeys === "all") {
                     setServices(servicesData.map(data => data.id))
                 } else {
