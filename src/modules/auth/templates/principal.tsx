@@ -1,11 +1,12 @@
 "use client";
-import { SignOut } from "../components/sign-out";
 import { Button } from "@/modules/common/components/button";
+import { SignOut } from "../components/sign-out";
 import { ROUTES_AUTH } from "../types/auth";
+import { LinkRef } from "@/modules/common/components/link-ref";
 
 export type PrincipalProps = {
-  // TODO: Add type to clientInfo
   clientInfo: any;
+  // TODO: Add type to clientInfo
 };
 
 export default function Principal(props: PrincipalProps) {
