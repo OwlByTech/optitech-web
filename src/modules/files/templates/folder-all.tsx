@@ -7,14 +7,16 @@ import {
   OptionComponentProps,
 } from "../components/folder-document-options";
 import { useEffect, useState } from "react";
+import { contextMenuStorage } from "@/modules/global/context-menu/context";
+import { CreateDirectoryModal } from "../components/create-directory";
 
 export type DocumentDirectoryType = "document" | "directory";
 
 type OptionStateType = {
-  type: DocumentDirectoryType;
-  index: number;
-  component: React.ComponentType<OptionComponentProps>;
-  value: Directory | File;
+  type?: DocumentDirectoryType;
+  index?: number;
+  component?: React.ComponentType<OptionComponentProps>;
+  value?: Directory | File;
 } | null;
 
 type DocumentDiretoryType = "document" | "directory";
@@ -29,13 +31,36 @@ export type FolderAllProps = {
   routeDirectory: Directory[];
 };
 
+const CONTEXT_MENU_ATTRIBUTE = "folder-all";
+
 export function FolderAll(props: FolderAllProps) {
   const [layout, setLayout] = useAtom(folderLayout);
+  const [contextMenuItems, setContextMenuItems] = useAtom(contextMenuStorage);
   const [isOpenOptions, setIsOpenOptions] = useState<IsOpenOptionsType | null>(
     null
   );
   const [optionState, setOptionState] = useState<OptionStateType>();
   const [_, setDirectories] = useAtom(directoryRoute);
+
+  useEffect(() => {
+    setContextMenuItems([
+      {
+        attribute: CONTEXT_MENU_ATTRIBUTE,
+        items: [
+          {
+            key: "folder:new",
+            title: "Crear carpeta",
+            handler: () => {
+              setOptionState({
+                component: CreateDirectoryModal,
+                value: props.directory,
+              });
+            },
+          },
+        ],
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     setDirectories(props.routeDirectory);
@@ -63,15 +88,18 @@ export function FolderAll(props: FolderAllProps) {
   };
 
   return (
-    <div className="h-full p-4 overflow-auto">
+    <div
+      data-contextmenu={CONTEXT_MENU_ATTRIBUTE}
+      className="h-full p-4 overflow-auto"
+    >
       <div
         className={
           layout === "grid" ? "grid grid-cols-4 gap-4" : "flex flex-col gap-4"
         }
       >
-        {optionState && (
+        {optionState?.component && (
           <optionState.component
-            value={optionState.value}
+            value={optionState.value!}
             onClose={() => setOptionState(null)}
           />
         )}

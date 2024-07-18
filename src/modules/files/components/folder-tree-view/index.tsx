@@ -84,6 +84,47 @@ export function FolderViewTree({
     });
   }, [directories]);
 
+  useEffect(() => {
+    if (response.directory?.directory || response.directory?.document) {
+      const data: Directory = {
+        ...response.directory,
+        open: true,
+      };
+      const directory_node = { ...directoryRoot };
+      handleDirectory(directory_node, data);
+      setDirectory(directory_node);
+    }
+  }, [response]);
+
+  useEffect(() => {
+    if (change?.action === "delete-directory" && change.id === directory.id) {
+      setChange({ id: directory.parentId, action: "delete" });
+    }
+    if (change?.id === directory.id) {
+      setPeding(true);
+      dispatch();
+    }
+  }, [change]);
+  useEffect(() => {
+    if (response.directory) {
+      setPeding(false);
+    }
+  }, [response]);
+
+  useEffect(() => {
+    directories.map((value) => {
+      if (directory.id === value.id && !directory.directory) {
+        setPeding(true);
+        dispatch();
+      }
+      if (directory.id === value.id && directory.directory) {
+        const directory_node = { ...directoryRoot };
+        handleDirectoryOpenParent(directory_node, value.id);
+        setDirectory(directory_node);
+      }
+    });
+  }, [directories]);
+
   function handleDirectory(
     directory_node: Directory,
     current_directory: Directory
@@ -93,6 +134,11 @@ export function FolderViewTree({
       directory_node.document = current_directory.document;
       directory_node.directory = current_directory.directory;
       return;
+    }
+    if (directory_node.directory) {
+      for (const subDir of directory_node.directory) {
+        handleDirectory(subDir, current_directory);
+      }
     }
     if (directory_node.directory) {
       for (const subDir of directory_node.directory) {

@@ -8,56 +8,58 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { changeDirecotry } from "../../context";
+import { useDisclosure } from "@nextui-org/react";
+import { OptionComponentProps } from "../folder-document-options";
 
-export type CreateDirectoryModalProps = {
-    curDir: Directory;
-    isOpen: boolean;
-    onClose?: any;
-    onOpenChange?: any;
-};
+export function CreateDirectoryModal(props: OptionComponentProps) {
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const router = useRouter();
+  const nameRef = useRef<string>("");
+  const [change, setChange] = useAtom(changeDirecotry);
+  const [response, dispatch] = useFormState(createDiretoryForm, {
+    message: null,
+    errors: {},
+  });
 
-export function CreateDirectoryModal(props: CreateDirectoryModalProps) {
-    const router = useRouter();
-    const nameRef = useRef<string>("");
-    const [change, setChange] = useAtom(changeDirecotry);
-    const [response, dispatch] = useFormState(createDiretoryForm, {
-        message: null,
-        errors: {},
-    });
+  useEffect(() => {
+    onOpen();
+  }, []);
 
-    useEffect(() => {
-        if (response.errors) {
-            return;
-        }
+  useEffect(() => {
+    if (response.errors) {
+      return;
+    }
 
-        setChange({ id: props.curDir.id, action: "create" })
-        toast.success(response?.message);
-    }, [response]);
+    setChange({ id: props.value.id, action: "create" });
+    toast.success(response?.message);
+  }, [response]);
 
-    const onAccept = () => {
-        const formData = new FormData();
-        formData.set("parentId", props.curDir.id!.toString());
-        formData.set("name", nameRef.current);
-        formData.set("institutionId", props.curDir.institutionId!.toString());
-        dispatch(formData);
-        nameRef.current = "";
-        props.onClose();
-        router.refresh();
-    };
+  const onAccept = () => {
+    const formData = new FormData();
+    formData.set("parentId", props.value.id!.toString());
+    formData.set("name", nameRef.current);
+    formData.set("institutionId", props.value.institutionId!.toString());
+    dispatch(formData);
+    nameRef.current = "";
+    onClose();
+    router.refresh();
+    props.onClose();
+  };
 
-    return (
-        <Modal
-            isOpen={props.isOpen}
-            size="lg"
-            onOpenChange={props.onOpenChange}
-            title={`Crear carpeta en ${props.curDir.name}`}
-            onAccept={onAccept}
-            classNames={{
-                header: "text-sm  ",
-                backdrop: "bg-white/80 backdrop-opacity-80"
-            }}
-        >
-            <Input onChange={(e) => (nameRef.current = e.target.value)}></Input>
-        </Modal>
-    );
+  return (
+    <Modal
+      isOpen={isOpen}
+      size="lg"
+      onOpenChange={onOpenChange}
+      title={`Crear carpeta en ${props.value.name}`}
+      onAccept={onAccept}
+      onClose={props.onClose}
+      classNames={{
+        header: "text-sm  ",
+        backdrop: "bg-white/80 backdrop-opacity-80",
+      }}
+    >
+      <Input onChange={(e) => (nameRef.current = e.target.value)}></Input>
+    </Modal>
+  );
 }

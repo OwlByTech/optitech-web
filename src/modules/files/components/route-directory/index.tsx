@@ -15,17 +15,17 @@ import { Button } from "@/modules/common/components/button";
 import { Tooltip, useDisclosure } from "@nextui-org/react";
 import { CreateDirectoryModal } from "../create-directory";
 import { CreateDocumentModal } from "../create-document";
+import { useState } from "react";
 
 export function RouteDirectory() {
   const pathname = usePathname();
 
   const [layout, setLayout] = useAtom(folderLayout);
   const [directories, _] = useAtom(directoryRoute);
+  const [createDir, setCreateDir] = useState(false);
 
   const curParentDirectory =
     directories?.length > 1 && directories[directories?.length - 1];
-
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const {
     isOpen: isOpenDocument,
     onOpen: onOpenDocument,
@@ -79,7 +79,7 @@ export function RouteDirectory() {
         >
           <Button
             onClick={() => {
-              onOpen();
+              setCreateDir(true);
             }}
             className="bg-white border text-xs text-black h-10 md:w-32"
             isIconOnly
@@ -90,12 +90,10 @@ export function RouteDirectory() {
             <span className="md:pl-2 hidden md:block">Crear carpeta</span>
           </Button>
         </Tooltip>
-        {curParentDirectory && (
+        {curParentDirectory && createDir && (
           <CreateDirectoryModal
-            curDir={curParentDirectory}
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            onClose={onClose}
+            value={curParentDirectory}
+            onClose={() => setCreateDir(false)}
           />
         )}
 
