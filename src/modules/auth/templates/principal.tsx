@@ -1,10 +1,9 @@
 "use client";
 import { SignOut } from "../components/sign-out";
-import { Button } from "@/modules/common/components/button";
 import { ROUTES_AUTH } from "../types/auth";
+import { LinkRef } from "@/modules/common/components/link-ref";
 
 export type PrincipalProps = {
-    // TODO: Add type to clientInfo
     clientInfo: any;
 };
 
@@ -27,19 +26,19 @@ export default function Principal(props: PrincipalProps) {
                         <SignOut />
                     </>
                 ) : (
-                    <div className="flex justify-between">
-                        <Button
+                    <div className="flex justify-between gap-2">
+                        <LinkRef
                             className="bg-black text-white p-1 border border-black rounded-md hover:bg-white hover:text-black text-xs"
                             href={ROUTES_AUTH.LOGIN}
                         >
                             Iniciar sesión
-                        </Button>
-                        <Button
+                        </LinkRef>
+                        <LinkRef
                             className="bg-white p-1 border border-black rounded-md hover:bg-black hover:text-white text-xs"
                             href={ROUTES_AUTH.SIGN_UP}
                         >
                             Registrarse
-                        </Button>
+                        </LinkRef>
                     </div>
                 )}
             </div>
