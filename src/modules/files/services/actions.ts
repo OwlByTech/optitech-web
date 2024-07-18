@@ -35,7 +35,6 @@ export async function getDirectoryChildAction(
             directory: response
 
         }
-
     }
     return {
         errors: {
