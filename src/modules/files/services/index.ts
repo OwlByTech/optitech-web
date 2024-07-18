@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-
 export async function getDirectoryService(id?: number) {
     const session = await auth();
     try {
