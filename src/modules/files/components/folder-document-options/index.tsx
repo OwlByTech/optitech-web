@@ -62,7 +62,6 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                 classNames={{
                     content: " p-0 border rounded-lg max-w-36 min-w-36 "
 
-
                 }}
             >
                 <DropdownTrigger>
