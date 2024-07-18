@@ -51,7 +51,6 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
             data.append("files", file)
         }
 
-
         dispatch(data)
         router.refresh();
         props.onClose();
