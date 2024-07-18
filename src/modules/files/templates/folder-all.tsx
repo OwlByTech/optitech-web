@@ -32,7 +32,5 @@ export function FolderAll({ directory, routeDirectory }: Props) {
                 ))}
             </div>
         </div>
-
     )
-
 }
