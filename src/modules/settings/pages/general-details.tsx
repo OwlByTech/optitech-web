@@ -46,7 +46,7 @@ export default function GeneralDetails(props: GeneralDetailsProps) {
           <hr className="w-full border-t" />
         </div>
 
-        <div className="flex flex-grow gap-x-[20px]">
+        <div className="flex flex-col items-center md:items-start md:flex-row md:flex-grow gap-x-[20px]">
           <div className="flex flex-col w-[250px] gap-y-[20px] pt-1: ">
             <h1 className="font-bold text-md">Imagen de Perfil</h1>
             <img className="h-[250px] w-[250px]" src="/profile.png" />

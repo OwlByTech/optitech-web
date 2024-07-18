@@ -1,93 +1,88 @@
-
 import {
-    apiSecureDelete,
-    apiSecureGet,
-    apiSecureMethodPostFile,
-    apiSecurePost,
-    apiSecurePut,
+  apiSecureDelete,
+  apiSecureGet,
+  apiSecureMethodPostFile,
+  apiSecurePost,
+  apiSecurePut,
 } from "@/modules/common/services";
 import {
-    CreateDiretoryReq as CreateDirectoryReq,
-    CreateDirectoryRes,
-    DeleteDirectoryReq,
-    DeleteDirectoryRes,
-    Directory,
-    UpdateDirectoryReq,
-    DeleteDocumentReq,
-    DeleteDocumentRes,
-    DownloadDocumentRes,
-    RenameDocumentReq,
-    RenameDocumentRes,
+  CreateDiretoryReq as CreateDirectoryReq,
+  CreateDirectoryRes,
+  DeleteDirectoryReq,
+  DeleteDirectoryRes,
+  Directory,
+  UpdateDirectoryReq,
+  DeleteDocumentReq,
+  DeleteDocumentRes,
+  DownloadDocumentRes,
+  RenameDocumentReq,
+  RenameDocumentRes,
 } from "../types";
 
 export async function getDirectoryService(
-    id?: number
+  id?: number
 ): Promise<Directory | null> {
-    return await apiSecureGet<Directory>(`/directory-tree/parent/${id}`);
+  return await apiSecureGet<Directory>(`/directory-tree/parent/${id}`);
 }
 
 export async function getDirectoryChildService(id?: number) {
-    return await apiSecureGet(`/directory-tree/child/${id}`);
+  return await apiSecureGet(`/directory-tree/child/${id}`);
 }
 
 export async function getDirectoryRouteService(
-    id?: number
+  id?: number
 ): Promise<Directory[] | null> {
-    return await apiSecureGet<Directory[]>(`/directory-tree/route/${id}`);
+  return await apiSecureGet<Directory[]>(`/directory-tree/route/${id}`);
 }
 
 export async function createDirectoryService(
-    createDirectoryReq: CreateDirectoryReq
+  createDirectoryReq: CreateDirectoryReq
 ): Promise<CreateDirectoryRes | null> {
-    return await apiSecurePost<CreateDirectoryRes>(
-        "/directory-tree",
-        createDirectoryReq
-    );
+  return await apiSecurePost<CreateDirectoryRes>(
+    "/directory-tree",
+    createDirectoryReq
+  );
 }
 
 export async function deleteDiretoryService(
-    DeleteDirectoryReq: DeleteDirectoryReq
+  DeleteDirectoryReq: DeleteDirectoryReq
 ): Promise<DeleteDirectoryRes | null> {
-    return await apiSecureDelete<DeleteDirectoryRes>(
-        `/directory-tree/delete/${DeleteDirectoryReq.id}`
-    );
+  return await apiSecureDelete<DeleteDirectoryRes>(
+    `/directory-tree/delete/${DeleteDirectoryReq.id}`
+  );
 }
 
 export async function createDocumentService(
-    createDocument: FormData
+  createDocument: FormData
 ): Promise<any | null> {
-    return await apiSecureMethodPostFile<any>(
-        "/document",
-        createDocument
-    );
+  return await apiSecureMethodPostFile<any>("/document", createDocument);
 }
 
 export async function updateDiretoryService(
-    req: UpdateDirectoryReq
+  req: UpdateDirectoryReq
 ): Promise<DeleteDirectoryRes | null> {
-    return await apiSecurePut<any>(
-        `/directory-tree/update/${req.directoryId}`,
-        req
-    );
+  return await apiSecurePut<any>(
+    `/directory-tree/update/${req.directoryId}`,
+    req
+  );
 }
 
-
 export async function deleteDocumentService(
-    req: DeleteDocumentReq
+  req: DeleteDocumentReq
 ): Promise<DeleteDocumentRes | null> {
-    return await apiSecureDelete<DeleteDocumentRes>(`/document/${req.id}`);
+  return await apiSecureDelete<DeleteDocumentRes>(`/document/${req.id}`);
 }
 
 export async function downloadDocumentService(
-    req: DeleteDocumentReq
+  req: DeleteDocumentReq
 ): Promise<DownloadDocumentRes | null> {
-    return await apiSecureGet<DownloadDocumentRes>(
-        `/document/download/${req.id}`
-    );
+  return await apiSecureGet<DownloadDocumentRes>(
+    `/document/download/${req.id}`
+  );
 }
 
 export async function renameDocumentService(
-    req: RenameDocumentReq
+  req: RenameDocumentReq
 ): Promise<RenameDocumentRes | null> {
-    return await apiSecurePut<RenameDocumentRes>(`/document/name/`, req);
+  return await apiSecurePut<RenameDocumentRes>(`/document/name/`, req);
 }

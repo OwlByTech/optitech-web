@@ -50,7 +50,6 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
         for (const file of selectedFiles) {
             data.append("files", file)
         }
-
         dispatch(data)
         router.refresh();
         props.onClose();
