@@ -34,7 +34,6 @@ export function DeleteFolderOption(props: OptionComponentProps) {
         onClose();
         router.refresh();
         setChange({ id: props.value.id, action: "delete-directory" })
-        props.onClose();
     }, [response]);
 
     const onAccept = () => {
@@ -61,13 +60,13 @@ export function DeleteFolderOption(props: OptionComponentProps) {
             }
             classNames={{
                 footer: "flex flex-row justify-center",
-                body: "flex flex-row text-sm  justify-center items-center py-6 font-normal",
+                body: "flex flex-col text-sm  justify-center items-center py-6 font-normal",
                 backdrop: "bg-white/80 backdrop-opacity-80"
             }}
         >
-            {` Eliminar directorio `}
+            <span>{`Desea eliminar directorio`}</span>
 
-            <span className="text-red-700 font-bold">{value.name} </span>{"?"}
+            <span className="text-red-700 font-bold">{value.name} </span>
         </Modal>
     );
 }

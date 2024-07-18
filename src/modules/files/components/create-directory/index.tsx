@@ -26,12 +26,11 @@ export function CreateDirectoryModal(props: OptionComponentProps) {
     }, []);
 
     useEffect(() => {
-        console.log(response)
         if (response.errors) {
             return;
         }
-
         onClose();
+        props.onClose && props.onClose()
         setChange({ id: props.value.id, action: "create" });
         toast.success(response?.message);
         router.refresh()

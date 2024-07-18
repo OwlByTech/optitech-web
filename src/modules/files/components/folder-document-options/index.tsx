@@ -5,7 +5,6 @@ import { FileView } from "../file-view";
 import { Button } from "@/modules/common/components/button";
 import { dirOptions } from "./directory";
 import { docOptions } from "./document";
-import ClickOutside from "@/modules/common/components/click-outside";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 
 export type FolderDocumentOptionsProps = {
@@ -22,7 +21,8 @@ export type FolderDocumentOptionsProps = {
 
 export type OptionComponentProps = {
     value: Directory | File;
-    onClose: () => void;
+    directory?: number
+    onClose?: () => void;
 };
 
 type FolderDocumentOptionProps = {
