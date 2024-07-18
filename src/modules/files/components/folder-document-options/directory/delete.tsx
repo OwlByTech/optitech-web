@@ -12,7 +12,7 @@ import { changeDirecotry } from "@/modules/files/context";
 
 export function DeleteFolderOption(props: OptionComponentProps) {
     const router = useRouter();
-    const [change, setChange] = useAtom(changeDirecotry);
+    const [_, setChange] = useAtom(changeDirecotry);
     const [response, dispatch] = useFormState(deleteDiretoryForm, {
         message: null,
         errors: {},
