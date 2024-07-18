@@ -8,7 +8,6 @@ export function Button({
     title,
     type,
     children,
-    href,
     ...props
 }: ButtonProps) {
     return (
