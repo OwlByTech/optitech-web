@@ -32,7 +32,6 @@ export async function getDirectoryChildAction(
         return {
             message: "Institución creada exitosamente",
             directory: response
-
         }
     }
     return {
