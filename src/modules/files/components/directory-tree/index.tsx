@@ -16,7 +16,6 @@ export function DirectoryTree() {
     const [response, dispatch] = useFormState(directoryTreeAction, { directory: null, errors: {}, message: null });
     useEffect(() => {
         dispatch()
-
     }, [])
     useEffect(() => {
         if (response.directory) {
