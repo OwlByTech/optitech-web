@@ -39,7 +39,7 @@ export async function getDirectoryChildAction(id?: number) {
     }
     return {
         errors: {
-            api: "Error conexion servidor",
+            api: "Error en la conexión del servidor",
         },
     };
 }
