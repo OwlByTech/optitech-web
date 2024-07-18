@@ -2,9 +2,9 @@ import { SideBar } from "@/modules/dashboard/templates/sidebar";
 import { TopBar } from "@/modules/dashboard/templates/topbar";
 
 export default async function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
     return (
         <section className="flex flex-row h-screen w-screen overflow-hidden">
@@ -17,4 +17,5 @@ export default async function RootLayout({
             </div>
         </section>
     );
+
 }
