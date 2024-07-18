@@ -58,7 +58,6 @@ export function FolderViewTree({
 
     useEffect(() => {
         if (change?.action === "delete-directory" && change.id === directory.id) {
-            console.log(change)
             setChange({ id: directory.parentId, action: "delete" })
         }
         if (change?.id === directory.id) {

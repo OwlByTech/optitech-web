@@ -101,8 +101,6 @@ export async function apiSecureMethodPostFile<T>(
             },
             body: body,
         });
-        console.log(body)
-        console.log(response)
         if (!response.ok) {
             console.error("Response failed");
             return null;
