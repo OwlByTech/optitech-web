@@ -11,7 +11,7 @@ export default async function RootLayout({
             <SideBar />
             <div className="flex h-full w-full flex-col bg-gray-100 gap-8 md:gap-0 md:px-4 md:pb-4">
                 <TopBar />
-                <div className="h-full bg-gray-100 rounded-md">
+                <div className="w-full max-w-full h-full rounded-md overflow-hidden">
                     {children}
                 </div>
             </div>

@@ -1,4 +1,4 @@
 export type CommonActionState = {
-  errors?: {} | null;
-  message?: string | null;
+    errors?: {} | null;
+    message?: string | string[] | null;
 };

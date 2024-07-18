@@ -7,51 +7,56 @@ import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
 import { updateDiretoryForm } from "@/modules/files/services/actions";
 import { toast } from "sonner";
+import { useAtom } from "jotai";
+import { changeDirecotry } from "@/modules/files/context";
 
 export function RenameFolderOption(props: OptionComponentProps) {
-  const router = useRouter();
-  const [response, dispatch] = useFormState(updateDiretoryForm, {
-    message: null,
-    errors: {},
-  });
-  const nameRef = useRef<string>(props.value.name!);
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+    const router = useRouter();
+    const [change, setChange] = useAtom(changeDirecotry);
+    const [response, dispatch] = useFormState(updateDiretoryForm, {
+        message: null,
+        errors: {},
+    });
+    const nameRef = useRef<string>(props.value.name!);
+    const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  useEffect(() => {
-    onOpen();
-  }, []);
+    useEffect(() => {
+        onOpen();
+    }, []);
 
-  useEffect(() => {
-    if (response.errors) {
-      return;
-    }
+    useEffect(() => {
+        if (response.errors) {
+            return;
+        }
 
-    toast.success(response?.message);
-    onClose();
-    router.refresh();
-    props.onClose();
-    nameRef.current = "";
-  }, [response]);
+        toast.success(response?.message);
+        onClose();
+        router.refresh();
 
-  const onAccept = () => {
-    const formData = new FormData();
-    formData.set("directoryId", props.value.id!.toString());
-    formData.set("name", nameRef.current);
-    dispatch(formData);
-  };
+        setChange({ id: props.value.id, action: "rename" })
+        props.onClose();
+        nameRef.current = "";
+    }, [response]);
 
-  return (
-    <Modal
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      onClose={props.onClose}
-      onAccept={onAccept}
-      title={`Renombrar directorio ${props.value.name}`}
-    >
-      <Input
-        defaultValue={props.value.name}
-        onChange={(e) => (nameRef.current = e.target.value)}
-      ></Input>
-    </Modal>
-  );
+    const onAccept = () => {
+        const formData = new FormData();
+        formData.set("directoryId", props.value.id!.toString());
+        formData.set("name", nameRef.current);
+        dispatch(formData);
+    };
+
+    return (
+        <Modal
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            onClose={props.onClose}
+            onAccept={onAccept}
+            title={`Renombrar directorio ${props.value.name}`}
+        >
+            <Input
+                defaultValue={props.value.name}
+                onChange={(e) => (nameRef.current = e.target.value)}
+            ></Input>
+        </Modal>
+    );
 }
