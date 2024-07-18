@@ -8,7 +8,6 @@ import { directoryRoute } from "../../context"
 
 export function RouteDirectory() {
     const pathname = usePathname()
-
     const [directories, setDirectories] = useAtom(directoryRoute)
 
     return (
@@ -31,5 +30,4 @@ export function RouteDirectory() {
             }
         </div >
     )
-
 }
