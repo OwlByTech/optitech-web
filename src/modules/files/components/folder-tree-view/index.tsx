@@ -19,8 +19,6 @@ type Props = {
     directory: Directory,
     setDirectory: any
 }
-
-
 export function FolderViewTree({ directory, setDirectory, directoryRoot }: Props) {
 
     const [pending, setPeding] = useState(false);
