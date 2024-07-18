@@ -51,7 +51,6 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
             data.append("files", file)
         }
 
-        console.log(data, formData)
 
         dispatch(data)
         router.refresh();
