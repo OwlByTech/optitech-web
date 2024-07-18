@@ -13,7 +13,6 @@ export async function getDirectoryAction(
         return {
             message: "Institución creada exitosamente",
             directory: response
-
         }
 
     }
