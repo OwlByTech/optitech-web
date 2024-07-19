@@ -34,6 +34,8 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
         response.message?.map((data => {
             toast.info(data);
         }))
+        router.refresh();
+        props.onClose();
         setChange({ id: props.curDir.id, action: "create" })
     }, [response]);
 
@@ -51,8 +53,7 @@ export function CreateDocumentModal(props: CreateDocumentModalProps) {
             data.append("files", file)
         }
         dispatch(data)
-        router.refresh();
-        props.onClose();
+
     };
 
     return (

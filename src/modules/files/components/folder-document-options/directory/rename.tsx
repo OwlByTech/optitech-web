@@ -44,18 +44,24 @@ export function RenameFolderOption(props: OptionComponentProps) {
         dispatch(formData);
     };
 
+
     return (
         <Modal
             isOpen={isOpen}
+            size="lg"
             onOpenChange={onOpenChange}
-            onClose={props.onClose}
-            onAccept={onAccept}
             title={`Renombrar directorio ${props.value.name}`}
+            onAccept={onAccept}
+            onClose={props.onClose}
+            classNames={{
+                header: "text-sm  ",
+                backdrop: "bg-white/80 backdrop-opacity-80",
+            }}
         >
             <Input
+
                 defaultValue={props.value.name}
-                onChange={(e) => (nameRef.current = e.target.value)}
-            ></Input>
+                onChange={(e) => (nameRef.current = e.target.value)}></Input>
         </Modal>
     );
 }
