@@ -1,6 +1,6 @@
-import { m } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import { FiFile, FiPlus, FiUpload } from "react-icons/fi";
+import { AiFillFile } from "react-icons/ai";
+import { FiFile, FiPlus, FiUpload, FiX } from "react-icons/fi";
 import { toast } from "sonner";
 
 type Props = {
@@ -89,9 +89,9 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
         setSelectedFiles(updatedFiles);
     };
     return (
-        <div className={`flex flex-grow  flex-col gap-4 ${(selectedFiles.length > 0 && multiple) && " items-end"}`}>
+        <div className={`flex flex-grow  flex-col gap-4 `}>
 
-            <button className={` flex justify-center border-2 rounded-lg ${(selectedFiles.length === 0 || !multiple) ? " flex-col border-dashed gap-4 items-center border-2  border-gray-300 hover:border-black rounded-lg  py-4 min-h-[20rem] overflow-auto focus:outline-none focus:border-none focus:ring-inset focus:ring-2 focus:ring-black" : "w-10 h-10 border-black "} `}
+            <button className={` flex justify-center border-2 rounded-lg flex-col border-dashed gap-4 items-center hover:border-black py-4 ${!multiple ? "min-h-[20rem]" : " min-h-16"} overflow-auto focus:outline-none focus:border-none focus:ring-inset focus:ring-2 focus:ring-black `}
                 type="button"
                 name={name}
                 ref={buttonRef}
@@ -101,21 +101,11 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
             >
                 {preview && previewLoad && <img src={previewLoad} className="h-60 w-60" />}
 
-                {(selectedFiles.length === 0) &&
+                {!preview &&
+
                     <>
-                        <FiUpload className="w-10 h-10" />
+                        <FiUpload className={`${multiple ? "w-6 h-6" : "w-10 h-10"}`} />
                         <p className="text-xs font-light">Drag and Drop the files</p>
-                    </>
-                }
-                {(selectedFiles.length > 0 && multiple) &&
-                    <>
-                        <FiPlus className="w-6 h-8" />
-                    </>
-                }
-                {!multiple && !preview && selectedFiles.length > 0 &&
-                    <>
-                        <FiFile className="w-10 h-10" />
-                        <p className="text-xs font-light">{selectedFiles[0].name}</p>
                     </>
                 }
                 <input
@@ -136,35 +126,31 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                 {error && <p className="text-xs font-normal text-red-500">{error}</p>}
             </button>
             {multiple && selectedFiles.length > 0 &&
-                <div className=" w-full border-2 border-gray-300 rounded-lg py-4 max-h-[23rem] overflow-auto">
+                <div className=" w-full py-4 max-h-[23rem] overflow-auto">
                     {selectedFiles.length > 0 && (
-                        <ul className="px-4">
+                        <ul className="flex flex-col gap-2 ">
                             {selectedFiles.map((file, index) => (
                                 <li
                                     key={index}
-                                    className="flex justify-between items-center border-b py-2"
+                                    className="flex justify-between items-center bg-gray-100 rounded-lg py-4 px-2"
                                 >
                                     <div className="flex gap-2 items-center">
-                                        <FiFile className="h-6 w-6" />
-                                        <span className="text-base">{file.name}</span>
+                                        {file.name.includes(".pdf") ? (
+                                            <img src="/pdf.svg" className="h-6 w-6" />
+                                        ) : file.name.includes(".doc") ? (
+                                            <img src="/doc.svg" className="h-6 w-6" />
+                                        ) : (
+                                            <AiFillFile className="h-6 w-6" strokeWidth={1} />
+                                        )}
+                                        <span className="text-sm">{file.name}</span>
                                     </div>
                                     <button
                                         type="button"
                                         onClick={() => handleFileDelete(index)}
-                                        className="text-red-500 hover:text-red-700 focus:outline-none"
+                                        className=" hover:text-red-700 focus:outline-none"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="none"
-                                            className="w-6 h-6"
-                                        >
-                                            <path
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                d="M6 4l8 8M14 4l-8 8"
-                                            />
-                                        </svg>
+
+                                        <FiX className={"h-5 w-5"} strokeWidth={1} />
                                     </button>
                                 </li>
                             ))}
