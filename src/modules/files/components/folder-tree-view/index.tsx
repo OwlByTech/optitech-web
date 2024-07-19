@@ -83,7 +83,6 @@ export function FolderViewTree({
         });
     }, [directories]);
 
-
     function handleDirectory(
         directory_node: Directory,
         current_directory: Directory
