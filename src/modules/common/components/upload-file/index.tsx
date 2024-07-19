@@ -102,7 +102,6 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                 {preview && previewLoad && <img src={previewLoad} className="h-60 w-60" />}
 
                 {!preview &&
-
                     <>
                         <FiUpload className={`${multiple ? "w-6 h-6" : "w-10 h-10"}`} />
                         <p className="text-xs font-light">Drag and Drop the files</p>
