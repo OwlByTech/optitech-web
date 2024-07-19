@@ -148,7 +148,6 @@ export function UploadFile({ required, multiple, name, preview, acceptedFileExte
                                         onClick={() => handleFileDelete(index)}
                                         className=" hover:text-red-700 focus:outline-none"
                                     >
-
                                         <FiX className={"h-5 w-5"} strokeWidth={1} />
                                     </button>
                                 </li>
