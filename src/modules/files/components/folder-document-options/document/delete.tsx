@@ -30,10 +30,11 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
             return;
         }
 
+        setChange({ id: props.directory, action: "delete" })
         toast.success(response?.message);
         onClose();
         router.refresh();
-        setChange({ id: props.directory, action: "delete" })
+        props.onClose()
     }, [response]);
 
     const onAccept = () => {
