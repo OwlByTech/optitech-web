@@ -32,9 +32,9 @@ export function DeleteFolderOption(props: OptionComponentProps) {
 
         toast.success(response?.message);
         onClose();
-        router.refresh();
         setChange({ id: props.value.id, action: "delete-directory" })
         props.onClose();
+        router.refresh();
     }, [response]);
 
     const onAccept = () => {

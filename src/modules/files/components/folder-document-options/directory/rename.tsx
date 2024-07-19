@@ -30,10 +30,9 @@ export function RenameFolderOption(props: OptionComponentProps) {
         }
 
         toast.success(response?.message);
+        setChange({ id: props.value.id, action: "rename" })
         onClose();
         router.refresh();
-
-        setChange({ id: props.value.id, action: "rename" })
         props.onClose();
         nameRef.current = "";
     }, [response]);
