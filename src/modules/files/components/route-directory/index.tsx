@@ -26,12 +26,6 @@ export function RouteDirectory() {
 
     const curParentDirectory =
         directories?.length > 0 && directories[directories?.length - 1];
-    const {
-        isOpen: isOpenDocument,
-        onOpen: onOpenDocument,
-        onClose: onCloseDocument,
-        onOpenChange: onOpenChangeDocument,
-    } = useDisclosure();
 
     return (
         <div className="flex w-full max-w-full overflow-hidden flex-row p-2 justify-between">
@@ -96,24 +90,10 @@ export function RouteDirectory() {
                     />
                 )}
 
-                <Button
-                    onClick={() => {
-                        onOpenDocument();
-                    }}
-                    className="bg-white border text-xs text-black h-10 md:w-32"
-                    isIconOnly
-                    radius="md"
-                    size="md"
-                    startContent={<FiUpload className="md:h-5 md:w-5 w-6 h-6" />}
-                >
-                    <span className="md:pl-2 hidden md:block">Subir archivo</span>
-                </Button>
+
                 {curParentDirectory && (
                     <CreateDocumentModal
                         curDir={curParentDirectory}
-                        isOpen={isOpenDocument}
-                        onOpenChange={onOpenChangeDocument}
-                        onClose={onCloseDocument}
                     />
                 )}
                 <div className="flex gap-2">
