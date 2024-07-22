@@ -1,7 +1,8 @@
 import { NextAuthConfig } from "next-auth";
-import { NextResponse } from "next/server";
 import { ROUTES_AUTH } from "./modules/auth/types/auth";
-import { ROUTES_CONFIG, ROUTES_SIDEBAR } from "./modules/dashboard/types";
+import { ROUTES_SIDEBAR } from "./modules/dashboard/types";
+
+const isProd = process.env.ENV === 'prod';
 
 export const authConfig: NextAuthConfig = {
     pages: {
@@ -23,4 +24,5 @@ export const authConfig: NextAuthConfig = {
     debug: process.env.NODE_ENV !== "production",
     basePath: ROUTES_SIDEBAR.DASHBOARD,
     providers: [],
+    trustHost: isProd ? true : undefined,
 } satisfies NextAuthConfig;
