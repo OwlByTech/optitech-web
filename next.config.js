@@ -17,7 +17,7 @@ const nextConfig = withStoreConfig({
     },
     env: {
         AUTH_SECRET: process.env.AUTH_SECRET,
-        //NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+        NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         ENV: process.env.ENV,
         API_URL: process.env.API_URL
     },
