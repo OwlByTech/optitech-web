@@ -19,7 +19,7 @@ const nextConfig = withStoreConfig({
         AUTH_SECRET: process.env.AUTH_SECRET,
         NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         ENV: process.env.ENV,
-        API_URL: process.env.API_URL
+        //API_URL: process.env.API_URL
     },
     reactStrictMode: true,
     transpilePackages: ['next-auth'],
