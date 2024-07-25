@@ -29,7 +29,7 @@ export function RenameDocumentOption(props: OptionComponentProps) {
         toast.success(response?.message);
         onClose();
         router.refresh();
-        props.onClose();
+        props.onClose && props.onClose();
         nameRef.current = "";
     }, [response]);
 
