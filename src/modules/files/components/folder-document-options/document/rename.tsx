@@ -35,7 +35,6 @@ export function RenameDocumentOption(props: OptionComponentProps) {
 
     const onAccept = () => {
         const formData = new FormData();
-        console.log(props.value);
         formData.set("id", props.value.id!.toString());
         formData.set("name", nameRef.current);
         dispatch(formData);
