@@ -26,14 +26,20 @@ export function DeleteFolderOption(props: OptionComponentProps) {
     }, []);
 
     useEffect(() => {
-        if (response.errors) {
+        if (response.errors && !response.message) {
             return;
         }
-
+        if (response.errors) {
+            toast.error(response?.message);
+            onClose();
+            props.onClose();
+            return;
+        }
         toast.success(response?.message);
         onClose();
-        router.refresh();
         setChange({ id: props.value.id, action: "delete-directory" })
+        props.onClose();
+        router.refresh();
     }, [response]);
 
     const onAccept = () => {

@@ -96,8 +96,9 @@ export async function deleteDiretoryForm(
 
     if (!response) {
         return {
-            errors: {},
-            message: "Error",
+            errors: {
+            },
+            message: "Error al eliminar directorio",
         };
     }
 

@@ -39,7 +39,8 @@ function FolderDocumentOption(props: FolderDocumentOptionProps) {
         props.onSelectOption && props.onSelectOption(props.option.component);
     };
     return (
-        <Button onClick={onSelectOption} className="w-full bg-transparent hover:bg-none h-5 text-xs p-0 text-black">
+        <Button onClick={onSelectOption} className="w-full flex h-7 flex-row gap-2 bg-transparent hover:bg-none  text-xs text-black">
+            {props.option.icon}
             {props.option.title}
         </Button>
     );
@@ -75,6 +76,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                     itemClasses={{
                         base: [
                             "rounded-md",
+                            "p-0",
                             "text-default-500",
                             "transition-opacity",
                             "data-[hover=true]:text-foreground",
@@ -89,7 +91,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                 >
                     {props.type === "directory"
                         ? dirOptions.map((option) => (
-                            <DropdownItem startContent={option.icon} key={option.action}>
+                            <DropdownItem key={option.action}>
                                 <FolderDocumentOption
                                     title={option.title}
                                     option={option}
@@ -98,7 +100,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                             </DropdownItem>
                         ))
                         : docOptions.map((option) => (
-                            <DropdownItem startContent={option.icon} key={option.action}>
+                            <DropdownItem key={option.action}>
                                 <FolderDocumentOption
                                     title={option.title}
                                     option={option}
