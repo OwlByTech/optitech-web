@@ -97,7 +97,8 @@ export function FolderAll(props: FolderAllProps) {
 
   const onDropDocuments = useCallback((e: DragEvent<HTMLDivElement>) => {
     try {
-      uploadDocumentsRef.current?.openWithFiles(e.dataTransfer.files);
+      const files = e.dataTransfer.files;
+      files.length > 0 && uploadDocumentsRef.current?.openWithFiles(files);
     } catch (e: any) {
       toast.error(e.toString());
     }

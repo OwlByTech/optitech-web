@@ -69,7 +69,7 @@ export const CreateDocumentModal = forwardRef<
 
     files.current.forEach((file) => data.append("files", file));
     files.current = [];
-    
+
     dispatch(data);
   };
 
