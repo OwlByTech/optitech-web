@@ -14,3 +14,4 @@ export enum ROUTES_AUTH {
     STEP2 = "/sign-up/step-two",
     STEP3 = "/sign-up/step-three",
 }
+
