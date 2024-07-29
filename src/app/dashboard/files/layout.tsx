@@ -1,6 +1,10 @@
 import { DirectoryTree } from "@/modules/files/components/directory-tree";
 import { RouteDirectory } from "@/modules/files/components/route-directory";
 
+export const metadata = {
+    title: "Directorios",
+};
+
 export default async function RootLayout({
     children,
 }: Readonly<{
