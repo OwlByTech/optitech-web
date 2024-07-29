@@ -8,6 +8,11 @@ import { StatusClient } from './modules/auth/types';
 import { ROUTES_INSTITUTION } from './modules/institution/types';
 import { getInstitutionService } from './modules/institution/services';
 import { parse } from 'path';
+import { ROLES } from './modules/auth/context/signup';
+import { handleSignOut } from './modules/auth/actions';
+import { signOut } from './auth';
+import { getAsesorService } from './modules/asesor/services';
+import { ROUTES_ASESOR } from './modules/asesor/types';
 
 const publicRoutes = new Set<string>([
     ROUTES_AUTH.LOGIN,
@@ -33,20 +38,38 @@ export default NextAuth(authConfig).auth(async (req) => {
         return NextResponse.redirect(new URL('/', req.nextUrl));
     }
     const client = await clientInfoService()
+
+
     if (client?.status === StatusClient.INACTIVE && (pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD) || pathname.startsWith(ROUTES_INSTITUTION.REGISTER_INSTITUTION))) {
         const newUrl = new URL(ROUTES_CONFIG.ACTIVATE_ACCOUNT, req.nextUrl.origin)
         return Response.redirect(newUrl)
     }
-    const institution = await getInstitutionService()
-    if (!institution && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
-        const newUrl = new URL(ROUTES_INSTITUTION.REGISTER_INSTITUTION, req.nextUrl.origin)
-        return Response.redirect(newUrl)
+
+    if (client?.roles && client?.roles.length > 0) {
+        if (client?.roles[0]?.roleName === ROLES.INSTITUTION) {
+            const institution = await getInstitutionService()
+            if (!institution && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
+                const newUrl = new URL(ROUTES_INSTITUTION.REGISTER_INSTITUTION, req.nextUrl.origin)
+                return Response.redirect(newUrl)
+            }
+
+            if (institution && pathname.startsWith(ROUTES_INSTITUTION.REGISTER_INSTITUTION)) {
+                const newUrl = new URL(ROUTES_SIDEBAR.DASHBOARD, req.nextUrl.origin)
+                return Response.redirect(newUrl)
+            }
+        }
+
+        if (client?.roles[0]?.roleName === ROLES.ASSESOR) {
+            const asesor = await getAsesorService(client.id)
+            console.log(asesor)
+            if (!asesor && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
+                const newUrl = new URL(ROUTES_ASESOR.REGISTER_ASESOR, req.nextUrl.origin)
+                return Response.redirect(newUrl)
+            }
+        }
+
     }
 
-    if (institution && pathname.startsWith(ROUTES_INSTITUTION.REGISTER_INSTITUTION)) {
-        const newUrl = new URL(ROUTES_SIDEBAR.DASHBOARD, req.nextUrl.origin)
-        return Response.redirect(newUrl)
-    }
 
     if (isLoggedIn && publicRoutes.has(pathname)) {
         return NextResponse.redirect(new URL(ROUTES_SIDEBAR.DASHBOARD, req.nextUrl));
