@@ -8,9 +8,9 @@ import { createInstitution } from "../services/actions";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
-import { ContainerRegister } from "../components/container-register";
 import { ROUTES_SIDEBAR } from "@/modules/dashboard/types/types";
 import { ImageSection } from "@/modules/common/layouts/image-section";
+import { ContainerRegister } from "@/modules/common/components/container-register";
 
 export default function AddLogo() {
     const router = useRouter()
@@ -45,7 +45,9 @@ export default function AddLogo() {
                     name="logo"
                     required preview
                     acceptedFileExtensions={["jpg", "png", "jpeg"]}
-                    setSelectedFiles={setSelectedFiles}
+                    onSelectedFile={(files) => {
+                        setSelectedFiles(files)
+                    }}
                     selectedFiles={selectedFiles} />
             </ContainerRegister>
         </ImageSection>
