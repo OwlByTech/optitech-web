@@ -4,13 +4,9 @@ import { ROUTES_AUTH } from './modules/auth/types/auth';
 import { ROUTES_CONFIG, ROUTES_SIDEBAR } from './modules/dashboard/types';
 import { NextResponse } from 'next/server';
 import { clientInfoService } from './modules/dashboard/services';
-import { StatusClient } from './modules/auth/types';
+import { ROLES, StatusClient } from './modules/auth/types';
 import { ROUTES_INSTITUTION } from './modules/institution/types';
 import { getInstitutionService } from './modules/institution/services';
-import { parse } from 'path';
-import { ROLES } from './modules/auth/context/signup';
-import { handleSignOut } from './modules/auth/actions';
-import { signOut } from './auth';
 import { getAsesorService } from './modules/asesor/services';
 import { ROUTES_ASESOR } from './modules/asesor/types';
 

@@ -1,6 +1,6 @@
 import { getAsesorService } from "@/modules/asesor/services";
 import { Asesor } from "@/modules/asesor/types";
-import { ROLES } from "@/modules/auth/context/signup";
+import { ROLES } from "@/modules/auth/types";
 import { clientInfoService } from "@/modules/dashboard/services";
 import GeneralDetails from "@/modules/settings/pages/general-details";
 import { getPhotoUserService } from "@/modules/settings/services";
