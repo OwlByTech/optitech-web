@@ -15,7 +15,6 @@ export function RoutesSidebar(props: RoutesSidebarProps) {
         if (props.path === routePath) return true
 
         const routePathSplit = routePath.split(ROUTES_SIDEBAR.DASHBOARD).join("")
-        console.log(props.path, routePathSplit)
         return Boolean(routePathSplit) && props.path.includes(routePathSplit)
     }
     return <div className="flex flex-col gap-2">

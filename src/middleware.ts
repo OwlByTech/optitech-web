@@ -57,7 +57,6 @@ export default NextAuth(authConfig).auth(async (req) => {
 
         if (client?.roles[0]?.roleName === ROLES.ASSESOR) {
             const asesor = await getAsesorService(client.id)
-            console.log(asesor)
             if (!asesor && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
                 const newUrl = new URL(ROUTES_ASESOR.REGISTER_ASESOR, req.nextUrl.origin)
                 return Response.redirect(newUrl)
