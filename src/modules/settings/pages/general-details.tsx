@@ -5,13 +5,16 @@ import { Input } from "@/modules/common/components/input";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { ClientInfoRes } from "@/modules/dashboard/types";
 import { useFormState } from "react-dom";
-import { FiDelete, FiEdit, FiTrash, FiTrash2 } from "react-icons/fi";
 import { updateUserForm } from "../services/actions";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { Asesor } from "@/modules/asesor/types";
+import { Textarea } from "@/modules/common/components/text-area";
+import PhotoUser from "../components/user-photo";
 
 export type GeneralDetailsProps = {
     clientInfo: ClientInfoRes;
+    asesor?: Asesor
 };
 
 export default function GeneralDetails(props: GeneralDetailsProps) {
@@ -19,8 +22,6 @@ export default function GeneralDetails(props: GeneralDetailsProps) {
         message: null,
         errors: {},
     });
-
-
 
     useEffect(() => {
         if (response.errors) {
@@ -37,34 +38,17 @@ export default function GeneralDetails(props: GeneralDetailsProps) {
 
     return (
         <section className="flex flex-col">
-            <div className="flex flex-col gap-[30px]">
+            <form className="flex flex-col gap-4"
+                action={handleSubmit}
+            >
                 <div className="flex flex-col gap-[10px]">
                     <h1 className="text-xl pt-1">Detalles generales</h1>
                     <hr className="w-full border-t" />
                 </div>
 
-                <div className="flex flex-col items-center md:items-start md:flex-row md:flex-grow gap-x-[20px]">
-                    <div className="flex flex-col w-[250px] gap-y-[20px] pt-1: ">
-                        <h1 className="font-bold text-sm">Imagen de Perfil</h1>
-                        <img className="h-[250px] w-[250px]" src="/profile.png" />
-                        <div className="flex flex-grow justify-between">
-                            <Button
-                                startContent={<FiEdit />}
-                                className="rounded-lg bg-gray-200 text-black hover:bg-white hover:border hover:border-gray-300"
-                            >
-                                Cambiar
-                            </Button>
-                            <Button
-                                startContent={<FiTrash2 />}
-                                className="rounded-lg bg-gray-200 text-black hover:bg-white hover:border hover:border-gray-300"
-                            >
-                                Borrar
-                            </Button>
-                        </div>
-                    </div>
-
-                    <form
-                        action={handleSubmit}
+                <div className="flex flex-col md:items-start md:flex-row md:flex-grow gap-x-[20px]">
+                    <PhotoUser clientInfo={props.clientInfo} />
+                    <div
                         className="flex  flex-col gap-y-[20px] pt-10 flex-grow"
                     >
                         <Input
@@ -87,22 +71,33 @@ export default function GeneralDetails(props: GeneralDetailsProps) {
                             placeholder="Correo"
                             defaultValue={props.clientInfo.email}
                         />
-                        <div className="flex flex-grow gap-5 justify-end">
-                            <Button className="rounded-lg bg-black hover:bg-gray-200 hover:text-black">
-                                Restablecer
-                            </Button>
-                            <SubmitButton className="rounded-lg bg-gray-200 text-black hover:bg-black hover:text-white">
-                                Actualizar
-                            </SubmitButton>
-                        </div>
-                    </form>
+
+                    </div>
                 </div>
-                <div>
-                    <h1 className="text-xl pt-1">Biografia</h1>
-                    <hr className="w-full border-t" />
+                {props.clientInfo.asesor &&
+                    <div className="flex flex-col gap-4">
+                        <h1 className=" pb-2 w-full text-sm font-bold border-b">Descripcion personal</h1>
+                        <Textarea
+                            name="description"
+                            placeholder="Escribe una descripción personal"
+                            defaultValue={props.clientInfo.asesor.about}
+                        />
+                    </div>
+                }
+                <div className="flex flex-grow gap-5 justify-end">
+                    <Button
+                        type="reset"
+                        className="rounded-lg bg-gray-200 text-black hover:bg-black hover:text-white"
+                    >
+                        Restablecer
+                    </Button>
+                    <SubmitButton
+                        className="rounded-lg bg-black hover:bg-gray-200 hover:text-black"
+                    >
+                        Actualizar
+                    </SubmitButton>
                 </div>
-                <div>Biografia ?</div>
-            </div>
+            </form>
         </section>
     );
 }
