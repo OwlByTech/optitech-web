@@ -1,20 +1,13 @@
 "use server"
 
-import { z } from "zod"
-import { StateUpdateUser } from '../types'
-import { updateUserInfo } from ".";
-
-const UserInfo = z.object({
-    id: z.string(),
-    givenName: z.string(),
-    surname: z.string(),
-    email: z.string().email()
-})
+import { CommonActionState } from '@/modules/common/types/action';
+import { updatePhotoUserService, updateUserInfoService } from '.';
+import { UserInfo, UserPhoto } from '../types'
 
 export async function updateUserForm(
-    prevState: StateUpdateUser,
+    prevState: CommonActionState,
     formData: FormData,
-): Promise<StateUpdateUser> {
+): Promise<CommonActionState> {
     const entries = Object.fromEntries(formData.entries());
     const validateFields = UserInfo.safeParse(entries);
 
@@ -25,8 +18,34 @@ export async function updateUserForm(
             message: 'Error'
         }
     }
-    
-    const response = await updateUserInfo(validateFields.data)
+
+    const response = await updateUserInfoService(validateFields.data)
+    if (!response) {
+        return {
+            errors: {},
+            message: 'Error'
+        }
+    }
+
+    return {
+        message: 'Informacion Actualizada'
+    }
+}
+
+export async function updateUserPhoto(
+    prevState: CommonActionState,
+    formData: FormData,
+): Promise<CommonActionState> {
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = UserPhoto.safeParse(entries);
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: 'Error'
+        }
+    }
+
+    const response = await updatePhotoUserService(validateFields.data.id, validateFields.data.photo)
     if (!response) {
         return {
             errors: {},

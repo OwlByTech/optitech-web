@@ -3,7 +3,7 @@ import { atom } from "jotai";
 export enum SignUpRoleType {
     // TODO: Find a way to create enum with number and use zod to received string and convert to int
     ASSESOR = '1',
-    INSTITUTION ='2'
+    INSTITUTION = '2'
 };
 
 export type signUpReq = {
@@ -21,3 +21,5 @@ export const signUpAtom = atom<signUpReq>({
     password: "",
     role: SignUpRoleType.ASSESOR
 });
+
+

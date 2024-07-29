@@ -39,3 +39,8 @@ declare module "next-auth" {
 
     }
 }
+
+export enum ROLES {
+    ASSESOR = 'asesor',
+    INSTITUTION = 'institución'
+};

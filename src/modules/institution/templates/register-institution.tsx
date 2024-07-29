@@ -5,7 +5,7 @@ import { ROUTES_INSTITUTION } from "../types";
 import { Textarea } from "@/modules/common/components/text-area";
 import { useAtom } from "jotai";
 import { institutionStorage } from "../context";
-import { ContainerRegister } from "../components/container-register";
+import { ContainerRegister } from "@/modules/common/components/container-register";
 import { ImageSection } from "@/modules/common/layouts/image-section";
 
 export default function RegisterInstitution() {
