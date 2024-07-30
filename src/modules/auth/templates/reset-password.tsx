@@ -10,18 +10,12 @@ import { useFormResponse } from "@/modules/common/hooks/use-form-response";
 import { useRouter } from "next/navigation";
 
 export default function ResetPassword() {
-  const router = useRouter();
   const [response, dispatch] = useFormState(resetPassword, {
     message: null,
     errors: [],
   });
 
-  useFormResponse({
-    response,
-    onSuccess: () => {
-      console.log("sucess");
-    },
-  });
+  useFormResponse({response});
 
   return (
     <section className="flex flex-col justify-between  gap-20 md:gap-[114px] py-16 mx-5 md:mx-20 lg:mx-96">

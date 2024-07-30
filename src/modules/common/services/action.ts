@@ -20,7 +20,6 @@ export async function BaseFormActionService(
 
   const res = await service(validateFields.data);
   if (res.errors) {
-    console.log(res.errors);
     return {
       errors: res.errors,
     };

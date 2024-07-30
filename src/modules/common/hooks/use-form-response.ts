@@ -9,7 +9,6 @@ export type UseFormResponseProps = {
 
 export function useFormResponse(props: UseFormResponseProps) {
   useEffect(() => {
-    console.log(props.response);
     const errors = props.response.errors;
     if (errors?.length == 0) return;
 
