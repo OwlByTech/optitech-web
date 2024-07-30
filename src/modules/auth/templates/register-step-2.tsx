@@ -13,28 +13,23 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ROUTES_AUTH } from "../types/auth";
+import { useFormResponse } from "@/modules/common/hooks/use-form-response";
 
 export default function Step2() {
+  const [signUpData, setSignUpData] = useAtom(signUpAtom);
+  const router = useRouter();
+
   const [response, dispatch] = useFormState(registerFormAction, {
     message: null,
     errors: [],
   });
 
-  const [signUpData, setSignUpData] = useAtom(signUpAtom);
-  const router = useRouter();
-
-  useEffect(() => {
-    const errors = response.errors;
-    if (errors?.length == 0) return;
-
-    if (errors && errors.length > 0) {
-      errors.forEach((error) => error?.forEach((e) => toast.error(e)));
-      return;
-    }
-
-    toast.success(response?.message);
-    //router.replace(ROUTES_AUTH.DASHBOARD);
-  }, [response]);
+  useFormResponse({
+    response,
+    onSuccess: () => {
+      router.replace(ROUTES_AUTH.DASHBOARD);
+    },
+  });
 
   const handleSubmit = () => {
     const formData = new FormData();

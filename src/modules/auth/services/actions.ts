@@ -7,11 +7,7 @@ import {
   resetPasswordService,
 } from ".";
 import { z } from "zod";
-import {
-  StateChangePasword,
-  StateRegister,
-  StateResetPassword,
-} from "../types/";
+import { StateChangePasword, StateResetPassword } from "../types/";
 import { SignUpRoleType } from "../context/signup";
 import { CommonActionState } from "@/modules/common/types/action";
 import { BaseFormActionService } from "@/modules/common/services/action";
@@ -53,31 +49,15 @@ export async function authenticate(
 }
 
 export async function resetPassword(
-  prevState: StateResetPassword,
-  formData: FormData
-): Promise<StateResetPassword> {
-  const validateFields = ResetPassword.safeParse({
-    email: formData.get("email"),
-  });
-
-  if (validateFields.success) {
-    const response = await resetPasswordService(validateFields.data.email);
-    if (response) {
-      return {
-        message:
-          "Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña",
-      };
-    } else {
-      return {
-        errors: {},
-        message: "Error",
-      };
-    }
-  }
-  return {
-    errors: validateFields.error.flatten().fieldErrors,
-    message: "Error",
-  };
+  state: CommonActionState,
+  payload: FormData
+): Promise<CommonActionState> {
+  return await BaseFormActionService(
+    state,
+    payload,
+    ResetPassword,
+    resetPasswordService
+  );
 }
 
 export async function changePassword(
@@ -119,5 +99,5 @@ export async function registerFormAction(
   state: CommonActionState,
   payload: FormData
 ) {
-  return BaseFormActionService(state, payload, Register, registerService);
+  return await BaseFormActionService(state, payload, Register, registerService);
 }

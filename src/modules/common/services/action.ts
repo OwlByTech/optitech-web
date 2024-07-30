@@ -27,6 +27,6 @@ export async function BaseFormActionService(
   }
 
   return {
-    message: res.success,
+    message: res.message,
   };
 }
