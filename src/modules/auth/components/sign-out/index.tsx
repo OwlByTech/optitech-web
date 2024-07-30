@@ -1,7 +1,7 @@
 "use client";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { useRouter } from "next/navigation";
-import { handleSignOut } from "../../services/actions";
+import { signOutAction } from "../../services/actions";
 
 type SignOutProps = {
   className?: string;
@@ -11,7 +11,7 @@ export function SignOut({ className }: SignOutProps) {
   const router = useRouter();
 
   const handleClieck = async () => {
-    await handleSignOut();
+    await signOutAction();
     router.push("/");
   };
 

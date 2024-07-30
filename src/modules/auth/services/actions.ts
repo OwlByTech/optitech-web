@@ -70,6 +70,6 @@ export async function registerFormAction(
   );
 }
 
-export async function handleSignOut() {
+export async function signOutAction() {
   await signOut();
 }

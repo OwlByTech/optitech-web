@@ -7,7 +7,9 @@ export async function clientInfoService(): Promise<
 > {
   try {
     const res = await apiSecureGet<ClientInfoRes>("/client");
-    if (!res) {
+    // TODO: Implement endpoints error handling
+    // @ts-ignore
+    if (res.error) {
       return {
         errors: [[""]],
       };
@@ -16,8 +18,9 @@ export async function clientInfoService(): Promise<
       data: res,
     };
   } catch (e) {
+    const error = e as Error;
     return {
-      errors: [[""]],
+      errors: [[error.message]],
     };
   }
 }
