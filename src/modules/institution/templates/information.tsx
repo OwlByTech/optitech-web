@@ -3,22 +3,20 @@
 import { Button } from "@/modules/common/components/button";
 import { Input } from "@/modules/common/components/input";
 import { SubmitButton } from "@/modules/common/components/submit-button";
-import { ClientInfoRes } from "@/modules/dashboard/types";
-import { useFormState } from "react-dom";
-import { updateUserForm } from "../services/actions";
-import { useEffect } from "react";
-import { toast } from "sonner";
-import { Asesor } from "@/modules/asesor/types";
 import { Textarea } from "@/modules/common/components/text-area";
-import PhotoUser from "../components/user-photo";
+import LogoInstitution from "../components/logo-institution";
+import Services from "../components/services-institution";
+import { useAtom } from "jotai";
+import { institutionStorage } from "../context";
+import { InstitutionRes } from "../types";
 
-export type GeneralDetailsProps = {
-    clientInfo: ClientInfoRes;
-    asesor?: Asesor
+export type InformationInstitutionProps = {
+    institution: InstitutionRes
 };
 
-export default function GeneralDetails(props: GeneralDetailsProps) {
-    const [response, dispatch] = useFormState(updateUserForm, {
+export default function InformationInstitution(props: InformationInstitutionProps) {
+    /*
+    const [response, dispatch] = useFormState(, {
         message: null,
         errors: {},
     });
@@ -32,58 +30,40 @@ export default function GeneralDetails(props: GeneralDetailsProps) {
     }, [response]);
 
     const handleSubmit = (formData: FormData) => {
-        formData.set("id", props.clientInfo.id.toString());
+        formData.set("id", props.institution.id.toString());
         dispatch(formData);
     };
-
+*/
+    const [institution, setInstitution] = useAtom(institutionStorage)
     return (
-        <section className="flex flex-col">
+        <section className="flex flex-col m-4 p-4 bg-white shadow-md rounded-lg ">
             <form className="flex flex-col gap-4"
-                action={handleSubmit}
             >
                 <div className="flex flex-col gap-[10px]">
-                    <h1 className="text-xl pt-1">Detalles generales</h1>
+                    <h1 className="text-xl pt-1">Informacion</h1>
                     <hr className="w-full border-t" />
                 </div>
 
                 <div className="flex flex-col md:items-start md:flex-row md:flex-grow gap-x-[20px]">
-                    <PhotoUser clientInfo={props.clientInfo} />
+                    <LogoInstitution institution={props.institution} />
                     <div
                         className="flex  flex-col gap-y-[20px] pt-10 flex-grow"
                     >
                         <Input
-                            name="givenName"
+                            name="institutionName"
                             label="Nombre"
                             placeholder="Nombre"
-                            defaultValue={props.clientInfo.givenName}
+                            defaultValue={props.institution.institutionName}
                         />
 
-                        <Input
-                            name="surname"
-                            label="Apellido"
-                            placeholder="Apellido"
-                            defaultValue={props.clientInfo.surname}
-                        />
-
-                        <Input
-                            name="email"
-                            label="Correo"
-                            placeholder="Correo"
-                            defaultValue={props.clientInfo.email}
+                        <Textarea
+                            name="description"
+                            placeholder="Escribe una descripción personal"
+                            defaultValue={props.institution.description}
                         />
 
                     </div>
                 </div>
-                {props.clientInfo.asesor &&
-                    <div className="flex flex-col gap-4">
-                        <h1 className=" pb-2 w-full text-sm font-bold border-b">Descripcion personal</h1>
-                        <Textarea
-                            name="description"
-                            placeholder="Escribe una descripción personal"
-                            defaultValue={props.clientInfo.asesor.about}
-                        />
-                    </div>
-                }
                 <div className="flex flex-grow gap-5 justify-end">
                     <Button
                         type="reset"

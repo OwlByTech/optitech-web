@@ -1,35 +1,18 @@
 "use server"
 
-import { string, z } from "zod";
-import { createInstitutionService } from ".";
-import { Institution } from "../types";
-const CreateInstitution = z.object({
-    name: z.string(),
-    description: z.string(),
-    services: z.number().array().min(1)
-})
-
-type StateCreateInstitution = {
-    institution?: Institution
-    errors?: {
-        api?: string
-        name?: string[];
-        description?: string[];
-        services?: string[];
-    };
-    message?: string | null;
-};
-
-
+import { createInstitutionService, updateLogoInstitutionService } from ".";
+import { CommonActionState } from "@/modules/common/types/action";
+import { CreateInstitution, InstitutionLogo } from "../types";
 
 export async function createInstitution(
     name?: string,
     description?: string,
     services?: number[],
-    prevState: StateCreateInstitution,
+    prevState: CommonActionState,
     formData: FormData,
 
-): Promise<StateCreateInstitution> {
+): Promise<CommonActionState> {
+
     const validateFields = CreateInstitution.safeParse({
         name: name,
         description: description,
@@ -44,7 +27,6 @@ export async function createInstitution(
 
             return {
                 message: "Institución creada exitosamente",
-                institution: response
             }
 
         } else {
@@ -60,6 +42,32 @@ export async function createInstitution(
         message: 'Error'
     }
 
+}
+
+export async function updateLogoInstitution(
+    prevState: CommonActionState,
+    formData: FormData,
+): Promise<CommonActionState> {
+    const entries = Object.fromEntries(formData.entries());
+    const validateFields = InstitutionLogo.safeParse(entries);
+    if (!validateFields.success) {
+        return {
+            errors: validateFields.error?.flatten().fieldErrors,
+            message: 'Error'
+        }
+    }
+
+    const response = await updateLogoInstitutionService(validateFields.data.id, validateFields.data.photo)
+    if (!response) {
+        return {
+            errors: {},
+            message: 'Error'
+        }
+    }
+
+    return {
+        message: 'Informacion Actualizada'
+    }
 }
 
 

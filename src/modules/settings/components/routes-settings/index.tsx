@@ -11,7 +11,7 @@ type Props = {
 export function RoutesSettings() {
     const path = usePathname();
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex md:flex-col gap-2">
             {routesSettings.map((route) => (
                 <Link
                     href={route.route}
