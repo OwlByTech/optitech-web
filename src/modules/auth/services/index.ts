@@ -1,5 +1,6 @@
 import { signIn } from "@/auth";
 import { signUpReq } from "../context/signup";
+import { CommonServiceRes } from "@/modules/common/types";
 
 export async function resetPasswordService(email: string): Promise<boolean> {
     try {
@@ -41,7 +42,7 @@ export async function loginService(email: string, password: string): Promise<{ t
     }
 }
 
-export async function registerService(signUpReq: signUpReq) {
+export async function registerService(signUpReq: signUpReq): Promise<CommonServiceRes> {
     try {
         const response = await fetch(`${process.env.API_URL}/client`, {
             method: 'POST',
@@ -52,20 +53,26 @@ export async function registerService(signUpReq: signUpReq) {
         });
         if (response.ok) {
             const data = await response.json();
-            if (!data.token) return null;
+            if (!data.token) return { errors: [["El usuario no ha sido registrado."]] };
 
             const credentials = {
                 email: signUpReq.email,
                 password: signUpReq.password
             };
-            return await signIn('credentials', { redirect: false, ...credentials });
+            const resData = await signIn('credentials', { redirect: false, ...credentials });
+            return {
+                data: resData,
+                message: "Inicio de sesión exitoso."
+            };
         } else {
             console.error('Login failed:', response.statusText);
-            return null;
+            return {
+                errors: [["TODO: Implement error message"]]
+            };
         }
     } catch (e) {
-        console.error('Login error:', e);
-        return null;
+        const error = e as Error;
+        return { errors: [[error.message]] }
     }
 }
 

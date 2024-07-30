@@ -13,6 +13,8 @@ import {
   StateResetPassword,
 } from "../types/";
 import { SignUpRoleType } from "../context/signup";
+import { CommonActionState } from "@/modules/common/types/action";
+import { BaseFormActionService } from "@/modules/common/services/action";
 
 const ChangePassword = z.object({
   token: z.string(),
@@ -113,29 +115,9 @@ export async function changePassword(
   };
 }
 
-export async function registerForm(
-  prevState: StateRegister,
-  formData: FormData
-): Promise<StateRegister> {
-  const entries = Object.fromEntries(formData.entries());
-  const validateFields = Register.safeParse(entries);
-
-  if (!validateFields.success) {
-    return {
-      errors: validateFields.error?.flatten().fieldErrors,
-      message: "Error",
-    };
-  }
-
-  const response = await registerService(validateFields.data);
-  if (!response) {
-    return {
-      errors: {},
-      message: "Error",
-    };
-  }
-
-  return {
-    message: "Te has registrado",
-  };
+export async function registerFormAction(
+  state: CommonActionState,
+  payload: FormData
+) {
+  return BaseFormActionService(state, payload, Register, registerService);
 }
