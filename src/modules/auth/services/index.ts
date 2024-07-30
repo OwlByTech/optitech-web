@@ -1,9 +1,18 @@
-import { signIn } from "@/auth";
-import { signUpReq } from "../context/signup";
+import { apiGet, apiPost } from "@/modules/common/services";
 import { CommonServiceRes } from "@/modules/common/types";
-import { apiPost } from "@/modules/common/services";
+import {
+  ChangePasswordReq,
+  ChangePasswordRes,
+  LoginReq,
+  LoginRes,
+  RegisterReq,
+  RegisterRes,
+} from "../types/services";
+import { signIn } from "@/auth";
 
-export async function resetPasswordService(req: {}): Promise<CommonServiceRes> {
+export async function resetPasswordService(
+  req: any
+): Promise<CommonServiceRes<boolean>> {
   try {
     const res = await apiPost("/client/reset-password", req);
     if (!res) {
@@ -16,7 +25,7 @@ export async function resetPasswordService(req: {}): Promise<CommonServiceRes> {
       };
     }
     return {
-      data: res,
+      data: !!res,
       message:
         "Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña",
     };
@@ -27,64 +36,45 @@ export async function resetPasswordService(req: {}): Promise<CommonServiceRes> {
 }
 
 export async function loginService(
-  email: string,
-  password: string
-): Promise<{ token: string } | null> {
+  req: LoginReq
+): Promise<CommonServiceRes<LoginRes>> {
   try {
-    const response = await fetch(`${process.env.API_URL}/client/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await apiPost<RegisterRes>("/client/login", req);
+
+    return {
+      data: {
+        token: res?.token,
       },
-      body: JSON.stringify({ email, password }),
-    });
-    if (response.ok) {
-      const data = await response.json();
-      return data.token;
-    } else {
-      console.error("Login failed:", response.statusText);
-      return null;
-    }
+      message: "inicio de sesión exitosamente",
+    };
   } catch (e) {
-    console.error("Login error:", e);
-    return null;
+    const error = e as Error;
+    return { errors: [[error.message]] };
   }
 }
 
 export async function registerService(
-  signUpReq: signUpReq
-): Promise<CommonServiceRes> {
+  req: RegisterReq
+): Promise<CommonServiceRes<RegisterRes>> {
   try {
-    const response = await fetch(`${process.env.API_URL}/client`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...signUpReq, role: parseInt(signUpReq.role) }),
+    const data = await apiPost<RegisterRes>("/client", {
+      ...req,
+      role: parseInt(req.role),
     });
-    if (response.ok) {
-      const data = await response.json();
-      if (!data.token)
-        return { errors: [["El usuario no ha sido registrado."]] };
 
-      const credentials = {
-        email: signUpReq.email,
-        password: signUpReq.password,
-      };
-      const resData = await signIn("credentials", {
-        redirect: false,
-        ...credentials,
-      });
-      return {
-        data: resData,
-        message: "Inicio de sesión exitoso.",
-      };
-    } else {
-      console.error("Login failed:", response.statusText);
-      return {
-        errors: [["TODO: Implement error message"]],
-      };
-    }
+    if (!data?.token)
+      return { errors: [["El usuario no ha sido registrado."]] };
+
+    const resData = await signIn("credentials", {
+      redirect: false,
+      email: req.email,
+      password: req.password,
+    });
+
+    return {
+      data: resData,
+      message: "El usuario ha sido registrado exitosamente.",
+    };
   } catch (e) {
     const error = e as Error;
     return { errors: [[error.message]] };
@@ -92,23 +82,27 @@ export async function registerService(
 }
 
 export async function changePasswordService(
-  token: string,
-  password: string
-): Promise<boolean> {
+  req: ChangePasswordReq
+): Promise<CommonServiceRes<ChangePasswordRes>> {
+  if (req.password !== req.passwordReply) {
+    return { errors: [["Contrasena no coincide."]] };
+  }
   try {
-    const response = await fetch(
+    const res = await apiPost(
       `${process.env.API_URL}/client/reset-password-token`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: token, password: password }),
-      }
+      { token: req.token, password: req.password }
     );
-    return await response.json();
+
+    if (!res)
+      return {
+        data: true,
+        message: "Se ha Cambio de contrasena.",
+      };
+
+    return { errors: [["No se ha cambio contrasena."]] };
   } catch (e) {
-    return false;
+    const error = e as Error;
+    return { errors: [[error.message]] };
   }
 }
 
@@ -116,10 +110,11 @@ export async function validateTokenPasswordResetService(
   token: string
 ): Promise<boolean> {
   try {
-    const response = await fetch(
+    const res = await apiGet(
       `${process.env.API_URL}/client/validate/reset-password-token/?token=${token}`
     );
-    return await response.json();
+    if (!res) return false;
+    return true;
   } catch (e) {
     return false;
   }

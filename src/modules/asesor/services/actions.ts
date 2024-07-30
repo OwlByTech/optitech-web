@@ -2,44 +2,21 @@
 import { CommonActionState } from "@/modules/common/types/action";
 import { createAsesorService } from ".";
 import { CreateAsesorReqValidator } from "../types";
+import { BaseFormActionService } from "@/modules/common/services/action";
 import { clientInfoService } from "@/modules/dashboard/services";
 
-
-
-
-
-
 export async function createAsesorForm(
-    prevState: CommonActionState,
-    formData: FormData
+  state: CommonActionState,
+  payload: FormData
 ): Promise<CommonActionState> {
-    const entries = Object.fromEntries(formData.entries());
-    const validateFields = CreateAsesorReqValidator.safeParse(entries);
+  const clientInfo = await clientInfoService();
+  if (clientInfo.errors || !clientInfo.data) return clientInfo;
 
-    if (!validateFields.success) {
-        return {
-            errors: validateFields.error?.flatten().fieldErrors,
-            message: "Error",
-        };
-    }
-    const client = await clientInfoService()
-    if (!client) {
-        return {
-            errors: {},
-            message: "Error",
-        };
-
-    }
-
-    const response = await createAsesorService({ clientId: client?.id, about: validateFields.data.about });
-    if (!response) {
-        return {
-            errors: {},
-            message: "Error",
-        };
-    }
-
-    return {
-        message: "Bienvenido",
-    };
+  payload.set('clientId', clientInfo.data.id.toString());
+  return await BaseFormActionService(
+    state,
+    payload,
+    CreateAsesorReqValidator,
+    createAsesorService
+  );
 }

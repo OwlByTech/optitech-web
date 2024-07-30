@@ -4,18 +4,17 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { Input } from "@/modules/common/components/input";
 import { SubmitButton } from "@/modules/common/components/submit-button";
-import { resetPassword } from "../services/actions";
+import { resetPasswordAction } from "../services/actions";
 import { ROUTES_AUTH } from "../types/auth";
 import { useFormResponse } from "@/modules/common/hooks/use-form-response";
-import { useRouter } from "next/navigation";
 
 export default function ResetPassword() {
-  const [response, dispatch] = useFormState(resetPassword, {
+  const [response, dispatch] = useFormState(resetPasswordAction, {
     message: null,
     errors: [],
   });
 
-  useFormResponse({response});
+  useFormResponse({ response });
 
   return (
     <section className="flex flex-col justify-between  gap-20 md:gap-[114px] py-16 mx-5 md:mx-20 lg:mx-96">

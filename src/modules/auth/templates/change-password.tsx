@@ -3,7 +3,7 @@ import { FiArrowLeftCircle } from "react-icons/fi";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { SubmitButton } from "@/modules/common/components/submit-button";
-import { changePassword } from "../services/actions";
+import { changePasswordAction } from "../services/actions";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { InputPassword } from "@/modules/common/components/input-password";
@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { ROUTES_AUTH } from "../types/auth";
 
 export default function ChangePassword({ token }: { token: string }) {
-    const change = changePassword.bind(null, token)
+    const change = changePasswordAction.bind(null, token)
     const router = useRouter()
     const [response, dispatch] = useFormState(change, { errors: {}, message: null });
 

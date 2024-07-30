@@ -1,8 +1,7 @@
 "use client";
-import { handleSignOut } from "@/modules/auth/actions";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { useRouter } from "next/navigation";
-import { ROUTES_AUTH } from "../../types/auth";
+import { handleSignOut } from "../../services/actions";
 
 type SignOutProps = {
   className?: string;

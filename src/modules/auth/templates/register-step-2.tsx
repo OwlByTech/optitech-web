@@ -3,17 +3,16 @@
 import { ButtonCard } from "@/modules/common/components/button-card";
 import { useAtom } from "jotai";
 import { FiGlobe, FiPackage } from "react-icons/fi";
-import { signUpAtom, SignUpRoleType } from "../context/signup";
 import { Button } from "@/modules/common/components/button";
 import { BackButton } from "@/modules/common/components/back-button";
 import { ImageSection } from "@/modules/common/layouts/image-section";
 import { registerFormAction } from "../services/actions";
 import { useFormState } from "react-dom";
-import { useEffect } from "react";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ROUTES_AUTH } from "../types/auth";
 import { useFormResponse } from "@/modules/common/hooks/use-form-response";
+import { signUpAtom } from "../context/signup";
+import { REGISTER_ROLE } from "../types/enum";
 
 export default function Step2() {
   const [signUpData, setSignUpData] = useAtom(signUpAtom);
@@ -53,18 +52,18 @@ export default function Step2() {
         </div>
         <div className="flex flex-col md:flex-row gap-6">
           <ButtonCard
-            active={signUpData.role === SignUpRoleType.ASSESOR}
+            active={signUpData.role === REGISTER_ROLE.ASSESOR}
             onClick={() =>
-              setSignUpData({ ...signUpData, role: SignUpRoleType.ASSESOR })
+              setSignUpData({ ...signUpData, role: REGISTER_ROLE.ASSESOR })
             }
             title="Asesor"
             icon={<FiGlobe size={24} />}
             description="Si te encargas de revisar documentos"
           />
           <ButtonCard
-            active={signUpData.role === SignUpRoleType.INSTITUTION}
+            active={signUpData.role === REGISTER_ROLE.INSTITUTION}
             onClick={() =>
-              setSignUpData({ ...signUpData, role: SignUpRoleType.INSTITUTION })
+              setSignUpData({ ...signUpData, role: REGISTER_ROLE.INSTITUTION })
             }
             title="Institución / Independiente"
             icon={<FiPackage size={24} />}

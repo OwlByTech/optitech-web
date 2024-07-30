@@ -32,7 +32,7 @@ export default function GeneralDetails(props: GeneralDetailsProps) {
     }, [response]);
 
     const handleSubmit = (formData: FormData) => {
-        formData.set("id", props.clientInfo.id.toString());
+        formData.set("clientId", props.clientInfo.id.toString());
         dispatch(formData);
     };
 
