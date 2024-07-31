@@ -12,7 +12,7 @@ export default function RegisterAsesor() {
   const router = useRouter();
   const [response, dispatch] = useFormState(createAsesorForm, {
     errors: [],
-    message: null,
+    messages: [],
   });
 
   useFormResponse({

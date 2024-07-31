@@ -19,8 +19,8 @@ export default function Step2() {
   const router = useRouter();
 
   const [response, dispatch] = useFormState(registerFormAction, {
-    message: null,
     errors: [],
+    messages: [],
   });
 
   useFormResponse({

@@ -1,31 +1,26 @@
 "use client";
 
-import { Button } from "@/modules/common/components/button";
 import { ClientInfoRes } from "@/modules/dashboard/types";
 import { useFormState } from "react-dom";
-import { useEffect } from "react";
-import { toast } from "sonner";
 import { updateUserPhoto } from "../../services/actions";
 import ProfileImage from "@/modules/common/components/profile-image";
 import { useRouter } from "next/navigation";
+import { useFormResponse } from "@/modules/common/hooks/use-form-response";
 
 export type ProfileImageProps = {
     clientInfo: ClientInfoRes;
 };
 
 export default function PhotoUser(props: ProfileImageProps) {
-    const [response, dispatch] = useFormState(updateUserPhoto, {
-        message: null,
-        errors: {},
-    });
     const router = useRouter()
-    useEffect(() => {
-        if (response.errors) {
-            return;
-        }
-        toast.success(response?.message);
-        router.refresh()
-    }, [response]);
+    const [response, dispatch] = useFormState(updateUserPhoto, {
+        messages: [],
+        errors: [],
+    });
+
+    useFormResponse({response, onSuccess: () => {
+        router.refresh();
+    }});
 
     const handleSubmit = (file: File) => {
         const formData = new FormData()

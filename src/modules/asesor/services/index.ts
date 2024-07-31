@@ -12,7 +12,7 @@ export async function createAsesorService(
     }
     return {
       data,
-      message: "Bienvenido",
+      messages: ["Bienvenido"],
     };
   } catch (e) {
     const error = e as Error;

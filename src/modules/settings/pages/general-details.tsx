@@ -5,12 +5,12 @@ import { Input } from "@/modules/common/components/input";
 import { SubmitButton } from "@/modules/common/components/submit-button";
 import { ClientInfoRes } from "@/modules/dashboard/types";
 import { useFormState } from "react-dom";
-import { updateUserForm } from "../services/actions";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { updateUserForm } from "../services/actions";;
 import { Asesor } from "@/modules/asesor/types";
 import { Textarea } from "@/modules/common/components/text-area";
 import PhotoUser from "../components/user-photo";
+import { useFormResponse } from "@/modules/common/hooks/use-form-response";
+import { useRouter } from "next/navigation";
 
 export type GeneralDetailsProps = {
     clientInfo: ClientInfoRes;
@@ -18,21 +18,18 @@ export type GeneralDetailsProps = {
 };
 
 export default function GeneralDetails(props: GeneralDetailsProps) {
+    const router = useRouter();
     const [response, dispatch] = useFormState(updateUserForm, {
-        message: null,
-        errors: {},
+        messages: [],
+        errors: [],
     });
 
-    useEffect(() => {
-        if (response.errors) {
-            return;
-        }
-
-        toast.success(response?.message);
-    }, [response]);
+    useFormResponse({response, onEnd: () => {
+       router.refresh();
+    }});
 
     const handleSubmit = (formData: FormData) => {
-        formData.set("clientId", props.clientInfo.id.toString());
+        formData.set("id", props.clientInfo.id.toString());
         dispatch(formData);
     };
 

@@ -1,14 +1,33 @@
 import { z } from "zod";
 import { CommonActionState } from "../types/action";
 
+function formDataToObject(formData: FormData) {
+  // Converts FormData to a plain object.
+  // If there are multiple values for the same key in FormData, they are collected into an array.
+  const entries: Record<string, any> = {};
+
+  formData.forEach((v: any, k: string) => {
+    if (!entries[k]) {
+      entries[k] = v;
+      return;
+    }
+
+    if (!Array.isArray(entries[k])) {
+      entries[k] = [entries[k]];
+    }
+    entries[k].push(v);
+  });
+
+  return entries;
+}
+
 export async function BaseFormActionService(
   state: CommonActionState,
   payload: FormData,
   validator: z.ZodObject<any>,
   service: (req: any) => null | any
 ): Promise<CommonActionState> {
-  const entries = Object.fromEntries(payload.entries());
-  const validateFields = validator.safeParse(entries);
+  const validateFields = validator.safeParse(formDataToObject(payload));
 
   if (validateFields.error) {
     return {
@@ -18,14 +37,5 @@ export async function BaseFormActionService(
     };
   }
 
-  const res = await service(validateFields.data);
-  if (res.errors) {
-    return {
-      errors: res.errors,
-    };
-  }
-
-  return {
-    message: res.message,
-  };
+  return await service(validateFields.data);
 }

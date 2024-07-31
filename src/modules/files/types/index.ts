@@ -1,4 +1,5 @@
 import { coerce, z } from "zod";
+import { DOCUMENT_STATUS } from "./enum";
 
 export type Directory = {
     id?: number;
@@ -31,17 +32,18 @@ export const CreateDocumentReqValidator = z.object({
     files: z.any(),
 });
 
+export type CreateDocumentReq = {
+    directoryId: number;
+    status: DOCUMENT_STATUS.APROBADO,
+    files: File[];
+};
+
 export type CreateDiretoryReq = {
     parentId: number;
     institutionId: number;
     name: string;
 };
 
-export type CreateDOcumentReq = {
-    directoryId: number;
-    name: string;
-    file: File;
-};
 export type CreateDirectoryRes = {
     id: number;
     directoryId: number;

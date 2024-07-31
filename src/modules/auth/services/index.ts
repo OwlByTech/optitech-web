@@ -26,8 +26,9 @@ export async function resetPasswordService(
     }
     return {
       data: !!res,
-      message:
+      messages: [
         "Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña",
+      ],
     };
   } catch (e) {
     const error = e as Error;
@@ -45,7 +46,7 @@ export async function loginService(
       data: {
         token: res?.token,
       },
-      message: "inicio de sesión exitosamente",
+      messages: ["inicio de sesión exitosamente"],
     };
   } catch (e) {
     const error = e as Error;
@@ -73,7 +74,7 @@ export async function registerService(
 
     return {
       data: resData,
-      message: "El usuario ha sido registrado exitosamente.",
+      messages: ["El usuario ha sido registrado exitosamente."],
     };
   } catch (e) {
     const error = e as Error;
@@ -96,7 +97,7 @@ export async function changePasswordService(
     if (!res)
       return {
         data: true,
-        message: "Se ha Cambio de contrasena.",
+        messages: ["Se ha Cambio de contrasena."],
       };
 
     return { errors: [["No se ha cambio contrasena."]] };

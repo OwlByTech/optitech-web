@@ -16,6 +16,7 @@ import { createDocumentForm } from "../../services/actions";
 import { changeDirecotry } from "../../context";
 import { useAtom } from "jotai";
 import { useDisclosure } from "@nextui-org/react";
+import { useFormResponse } from "@/modules/common/hooks/use-form-response";
 
 export type CreateDocumentModalProps = {
   curDir: Directory;
@@ -31,30 +32,25 @@ export const CreateDocumentModal = forwardRef<
   CreateDocumentModalProps
 >((props, ref) => {
   const router = useRouter();
-
   const files = useRef<File[]>([]);
-  const [response, dispatch] = useFormState(createDocumentForm, {
-    message: [],
-    errors: {},
-  });
-
   const [_, setChange] = useAtom(changeDirecotry);
-
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const [pending, setPending] = useState(false);
 
-  useEffect(() => {
-    if (response.errors) {
-      return;
-    }
-    setPending(false);
-    response.message?.map((data) => {
-      toast.info(data);
-    });
-    router.refresh();
-    onClose();
-    setChange({ id: props.curDir.id, action: "create" });
-  }, [response]);
+  const [response, dispatch] = useFormState(createDocumentForm, {
+    messages: [],
+    errors: [],
+  });
+  
+  useFormResponse({
+    response,
+    onSuccess: () => {
+      setPending(false);
+      onClose();
+      setChange({ id: props.curDir.id, action: "create" });
+      router.refresh();
+    },
+  });
 
   useEffect(() => {
     files.current = [];

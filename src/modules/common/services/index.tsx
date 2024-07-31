@@ -82,7 +82,7 @@ async function apiSecureMethod<T>(
       body: JSON.stringify(body),
     });
     if (!response.ok) {
-      console.error("Response failed");
+      console.error(await response.text());
       return null;
     }
     return await response.json();

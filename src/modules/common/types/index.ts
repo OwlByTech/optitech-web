@@ -1,5 +1,5 @@
 export type CommonServiceRes<T> = {
   data?: T;
-  message?: string;
+  messages?: string[];
   errors?: [string[]];
 };

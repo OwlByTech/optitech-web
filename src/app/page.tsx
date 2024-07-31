@@ -7,7 +7,6 @@ export const metadata = {
 
 export default async function Page() {
   const clientInfo = (await clientInfoService()).data;
-  console.log(clientInfo);
-
+  
   return <Principal clientInfo={clientInfo} />;
 }

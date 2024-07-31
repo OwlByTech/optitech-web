@@ -7,34 +7,35 @@ import { useRouter } from "next/navigation";
 import { InstitutionRes } from "../../types";
 import ProfileImage from "@/modules/common/components/profile-image";
 import { updateLogoInstitution } from "../../services/actions";
+import { useFormResponse } from "@/modules/common/hooks/use-form-response";
 
 export type LogoProps = {
-    institution: InstitutionRes;
+  institution: InstitutionRes;
 };
 
 export default function LogoInstitution(props: LogoProps) {
-    const [response, dispatch] = useFormState(updateLogoInstitution, {
-        message: null,
-        errors: {},
-    });
-    const router = useRouter()
-    useEffect(() => {
-        if (response.errors) {
-            return;
-        }
+  const router = useRouter();
 
-        toast.success(response?.message);
-        router.refresh()
-    }, [response]);
+  const [response, dispatch] = useFormState(updateLogoInstitution, {
+    messages: [],
+    errors: [],
+  });
 
-    const handleSubmit = (file: File) => {
-        const formData = new FormData()
-        formData.set("id", props.institution.id.toString());
-        formData.set("photo", file)
-        dispatch(formData);
-    };
+  useFormResponse({
+    response,
+    onEnd: () => {
+      router.refresh();
+    },
+  });
 
-    return (
-        <ProfileImage src={props.institution.logo} handleSubmit={handleSubmit} />
-    );
+  const handleSubmit = (file: File) => {
+    const formData = new FormData();
+    formData.set("id", props.institution.id.toString());
+    formData.set("logo", file);
+    dispatch(formData);
+  };
+
+  return (
+    <ProfileImage src={props.institution.logo} handleSubmit={handleSubmit} />
+  );
 }

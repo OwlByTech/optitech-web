@@ -10,8 +10,8 @@ import { useFormResponse } from "@/modules/common/hooks/use-form-response";
 
 export default function ResetPassword() {
   const [response, dispatch] = useFormState(resetPasswordAction, {
-    message: null,
     errors: [],
+    messages: [],
   });
 
   useFormResponse({ response });

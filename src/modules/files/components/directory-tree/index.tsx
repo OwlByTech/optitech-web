@@ -13,7 +13,7 @@ export function DirectoryTree() {
     const pathname = usePathname()
     const id = Number(pathname.split("/")[3])
     const directoryTreeAction = getDirectoryChildAction.bind(null, id ? id : 1)
-    const [response, dispatch] = useFormState(directoryTreeAction, { directory: null, errors: {}, message: null });
+    const [response, dispatch] = useFormState(directoryTreeAction, { directory: null, errors: [], messages: [] });
     useEffect(() => {
         dispatch()
     }, [])

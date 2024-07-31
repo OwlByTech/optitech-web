@@ -6,11 +6,12 @@ import { Directory } from "@/modules/files/types";
 import { toast } from "sonner";
 import { useFormState } from "react-dom";
 import { downloadDocumentForm } from "@/modules/files/services/actions";
+import { useFormResponse } from "@/modules/common/hooks/use-form-response";
 
 export function DownloadDocumentOption(props: OptionComponentProps) {
   const [response, dispatch] = useFormState(downloadDocumentForm, {
-    message: null,
-    errors: {},
+    messages: [],
+    errors: [],
   });
 
   const value = props.value as Directory;
@@ -21,20 +22,14 @@ export function DownloadDocumentOption(props: OptionComponentProps) {
     dispatch(formData);
   }, []);
 
-  useEffect(() => {
-    if (response.errors) {
-      return;
-    }
-
+  useFormResponse({response, onSuccess: (data) => {
     const link = document.createElement("a");
-    link.href = response.message!;
+    link.href = data;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    toast.success(`Documento ${props.value.name} descargado`);
-    props.onClose();
-  }, [response]);
+    props.onClose && props.onClose();
+  }})
 
   return <></>;
 }
