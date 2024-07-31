@@ -1,33 +1,32 @@
-"use client";
+'use client';
 
-import { useAtom } from "jotai";
-import { signUpAtom } from "../context/signup";
-import { Input } from "@/modules/common/components/input";
-import Link from "next/link";
-import { SubmitButton } from "../../common/components/submit-button";
-import { useState } from "react";
-import { ImageSection } from "@/modules/common/layouts/image-section";
-import { InputPassword } from "@/modules/common/components/input-password";
-import { useRouter } from "next/navigation";
+import {useAtom} from 'jotai';
+import {signUpAtom} from '../context/signup';
+import {Input} from '@/modules/common/components/input';
+import Link from 'next/link';
+import {SubmitButton} from '../../common/components/submit-button';
+import {useState} from 'react';
+import {ImageSection} from '@/modules/common/layouts/image-section';
+import {InputPassword} from '@/modules/common/components/input-password';
+import {useRouter} from 'next/navigation';
 
 export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [signUpData, setSignUpData] = useAtom(signUpAtom);
   const router = useRouter();
 
-
   const handleSubmit = (formData: FormData) => {
     const data = Object.fromEntries(formData.entries());
 
     if (data['password'] !== data['confirmPassword']) {
-      setErrorMessage("Las contraseñas no coinciden");
+      setErrorMessage('Las contraseñas no coinciden');
       return;
     }
 
     delete data['confirmPassword'];
 
-    setSignUpData({ ...signUpData, ...data });
-    router.push("/sign-up/step-one");
+    setSignUpData({...signUpData, ...data});
+    router.push('/sign-up/step-one');
   };
 
   return (
@@ -66,9 +65,7 @@ export default function SignUp() {
             variant="bordered"
           />
 
-          {errorMessage && (
-            <p className="text-red-600 font-bold text-xs">{errorMessage}</p>
-          )}
+          {errorMessage && <p className="text-red-600 font-bold text-xs">{errorMessage}</p>}
 
           <SubmitButton className="rounded-lg gap-1">
             <span className="text-xs font-bold">Registrar</span>
@@ -92,7 +89,6 @@ export default function SignUp() {
             Política de privacidad
           </Link>
         </div>
-
       </div>
     </ImageSection>
   );

@@ -1,23 +1,17 @@
-"use client";
-import { Directory, File } from "../types";
-import { useAtom } from "jotai";
-import { directoryRoute, folderLayout } from "../context";
-import {
-  FolderDocumentOptions,
-  OptionComponentProps,
-} from "../components/folder-document-options";
-import { DragEvent, useCallback, useEffect, useRef, useState } from "react";
-import { contextMenuStorage } from "@/modules/global/context-menu/context";
-import { CreateDirectoryModal } from "../components/create-directory";
-import { DragAndDrop } from "@/modules/common/components/drag-and-drop";
-import { toast } from "sonner";
-import { filesValidations } from "@/modules/common/components/upload-file/handlers";
-import {
-  CreateDocumentModal,
-  CreateDocumentModalRef,
-} from "../components/create-document";
+'use client';
+import {Directory, File} from '../types';
+import {useAtom} from 'jotai';
+import {directoryRoute, folderLayout} from '../context';
+import {FolderDocumentOptions, OptionComponentProps} from '../components/folder-document-options';
+import {DragEvent, useCallback, useEffect, useRef, useState} from 'react';
+import {contextMenuStorage} from '@/modules/global/context-menu/context';
+import {CreateDirectoryModal} from '../components/create-directory';
+import {DragAndDrop} from '@/modules/common/components/drag-and-drop';
+import {toast} from 'sonner';
+import {filesValidations} from '@/modules/common/components/upload-file/handlers';
+import {CreateDocumentModal, CreateDocumentModalRef} from '../components/create-document';
 
-export type DocumentDirectoryType = "document" | "directory";
+export type DocumentDirectoryType = 'document' | 'directory';
 
 type OptionStateType = {
   type?: DocumentDirectoryType;
@@ -26,7 +20,7 @@ type OptionStateType = {
   value?: Directory | File;
 } | null;
 
-type DocumentDiretoryType = "document" | "directory";
+type DocumentDiretoryType = 'document' | 'directory';
 type IsOpenOptionsType = {
   type: DocumentDiretoryType;
   index: number;
@@ -38,14 +32,12 @@ export type FolderAllProps = {
   routeDirectory: Directory[];
 };
 
-const CONTEXT_MENU_ATTRIBUTE = "folder-all";
+const CONTEXT_MENU_ATTRIBUTE = 'folder-all';
 
 export function FolderAll(props: FolderAllProps) {
   const [layout, setLayout] = useAtom(folderLayout);
   const [contextMenuItems, setContextMenuItems] = useAtom(contextMenuStorage);
-  const [isOpenOptions, setIsOpenOptions] = useState<IsOpenOptionsType | null>(
-    null
-  );
+  const [isOpenOptions, setIsOpenOptions] = useState<IsOpenOptionsType | null>(null);
   const uploadDocumentsRef = useRef<CreateDocumentModalRef>(null);
   const [optionState, setOptionState] = useState<OptionStateType>();
   const [_, setDirectories] = useAtom(directoryRoute);
@@ -56,8 +48,8 @@ export function FolderAll(props: FolderAllProps) {
         attribute: CONTEXT_MENU_ATTRIBUTE,
         items: [
           {
-            key: "folder:new",
-            title: "Crear carpeta",
+            key: 'folder:new',
+            title: 'Crear carpeta',
             handler: () => {
               setOptionState({
                 component: CreateDirectoryModal,
@@ -78,7 +70,7 @@ export function FolderAll(props: FolderAllProps) {
     if (type === isOpenOptions?.type && index === index) {
       setIsOpenOptions(null);
     } else {
-      setIsOpenOptions({ type, index });
+      setIsOpenOptions({type, index});
     }
   };
 
@@ -92,7 +84,7 @@ export function FolderAll(props: FolderAllProps) {
     component: React.ComponentType<OptionComponentProps>,
     value: Directory | File
   ) => {
-    setOptionState({ type, index, component, value });
+    setOptionState({type, index, component, value});
   };
 
   const onDropDocuments = useCallback((e: DragEvent<HTMLDivElement>) => {
@@ -110,15 +102,8 @@ export function FolderAll(props: FolderAllProps) {
       onDrop={onDropDocuments}
     >
       <CreateDocumentModal curDir={props.directory} ref={uploadDocumentsRef} />
-      <div
-        data-contextmenu={CONTEXT_MENU_ATTRIBUTE}
-        className="h-full p-4 overflow-auto"
-      >
-        <div
-          className={
-            layout === "grid" ? "grid grid-cols-4 gap-4" : "flex flex-col gap-4"
-          }
-        >
+      <div data-contextmenu={CONTEXT_MENU_ATTRIBUTE} className="h-full p-4 overflow-auto">
+        <div className={layout === 'grid' ? 'grid grid-cols-4 gap-4' : 'flex flex-col gap-4'}>
           {optionState?.component && (
             <optionState.component
               value={optionState.value!}
@@ -137,11 +122,9 @@ export function FolderAll(props: FolderAllProps) {
             <FolderDocumentOptions
               layout={layout}
               key={index}
-              onOpenOptions={() => onOpenOptions("directory", index)}
-              isOpenOptions={isOpenOptionsHandler("directory", index)}
-              onSelectOption={(component) =>
-                onSelectOption("document", index, component, value)
-              }
+              onOpenOptions={() => onOpenOptions('directory', index)}
+              isOpenOptions={isOpenOptionsHandler('directory', index)}
+              onSelectOption={component => onSelectOption('document', index, component, value)}
               onClosedOption={() => setIsOpenOptions(null)}
               type="directory"
               value={value}
@@ -151,12 +134,10 @@ export function FolderAll(props: FolderAllProps) {
             <FolderDocumentOptions
               layout={layout}
               key={index}
-              onOpenOptions={() => onOpenOptions("document", index)}
-              isOpenOptions={isOpenOptionsHandler("document", index)}
+              onOpenOptions={() => onOpenOptions('document', index)}
+              isOpenOptions={isOpenOptionsHandler('document', index)}
               onClosedOption={() => setIsOpenOptions(null)}
-              onSelectOption={(component) =>
-                onSelectOption("document", index, component, value)
-              }
+              onSelectOption={component => onSelectOption('document', index, component, value)}
               type="document"
               value={value}
             />

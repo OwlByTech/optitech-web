@@ -1,9 +1,7 @@
 export const metadata = {
-    title: "Notificaciones",
+  title: 'Notificaciones',
 };
 
-
-
 export default function Page() {
-    return <>Notificacion</>;
+  return <>Notificacion</>;
 }

@@ -1,9 +1,9 @@
-import Step2 from "@/modules/auth/templates/register-step-2";
+import Step2 from '@/modules/auth/templates/register-step-2';
 
 export const metadata = {
-    title: "Registro - Paso 2",
-  };
+  title: 'Registro - Paso 2',
+};
 
 export default function Page() {
-    return <Step2/>;
-  }
+  return <Step2 />;
+}

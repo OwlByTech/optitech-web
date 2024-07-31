@@ -1,15 +1,15 @@
-"use client";
-import { FiArrowLeftCircle } from "react-icons/fi";
-import Link from "next/link";
-import { useFormState } from "react-dom";
-import { SubmitButton } from "@/modules/common/components/submit-button";
-import { changePasswordAction } from "../services/actions";
-import { InputPassword } from "@/modules/common/components/input-password";
-import { useRouter } from "next/navigation";
-import { ROUTES_AUTH } from "../types/auth";
-import { useFormResponse } from "@/modules/common/hooks/use-form-response";
+'use client';
+import {FiArrowLeftCircle} from 'react-icons/fi';
+import Link from 'next/link';
+import {useFormState} from 'react-dom';
+import {SubmitButton} from '@/modules/common/components/submit-button';
+import {changePasswordAction} from '../services/actions';
+import {InputPassword} from '@/modules/common/components/input-password';
+import {useRouter} from 'next/navigation';
+import {ROUTES_AUTH} from '../types/auth';
+import {useFormResponse} from '@/modules/common/hooks/use-form-response';
 
-export default function ChangePassword({ token }: { token: string }) {
+export default function ChangePassword({token}: {token: string}) {
   const change = changePasswordAction.bind(null, token);
   const router = useRouter();
   const [response, dispatch] = useFormState(change, {
@@ -56,9 +56,7 @@ export default function ChangePassword({ token }: { token: string }) {
               variant="bordered"
             />
           </div>
-          {response.errors && (
-            <p className="text-red-600 font-bold text-xs">{response.message}</p>
-          )}
+          {response.errors && <p className="text-red-600 font-bold text-xs">{response.message}</p>}
           <SubmitButton className="rounded-lg">Aceptar</SubmitButton>
         </form>
       </div>

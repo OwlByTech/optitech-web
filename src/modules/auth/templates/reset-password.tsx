@@ -1,12 +1,12 @@
-"use client";
-import { FiArrowLeftCircle } from "react-icons/fi";
-import Link from "next/link";
-import { useFormState } from "react-dom";
-import { Input } from "@/modules/common/components/input";
-import { SubmitButton } from "@/modules/common/components/submit-button";
-import { resetPasswordAction } from "../services/actions";
-import { ROUTES_AUTH } from "../types/auth";
-import { useFormResponse } from "@/modules/common/hooks/use-form-response";
+'use client';
+import {FiArrowLeftCircle} from 'react-icons/fi';
+import Link from 'next/link';
+import {useFormState} from 'react-dom';
+import {Input} from '@/modules/common/components/input';
+import {SubmitButton} from '@/modules/common/components/submit-button';
+import {resetPasswordAction} from '../services/actions';
+import {ROUTES_AUTH} from '../types/auth';
+import {useFormResponse} from '@/modules/common/hooks/use-form-response';
 
 export default function ResetPassword() {
   const [response, dispatch] = useFormState(resetPasswordAction, {
@@ -14,7 +14,7 @@ export default function ResetPassword() {
     messages: [],
   });
 
-  useFormResponse({ response });
+  useFormResponse({response});
 
   return (
     <section className="flex flex-col justify-between  gap-20 md:gap-[114px] py-16 mx-5 md:mx-20 lg:mx-96">
@@ -28,8 +28,8 @@ export default function ResetPassword() {
         <div>
           <h1 className="font-extrabold text-xl">Restablecer Contraseña.</h1>
           <p className="text-sm">
-            Por favor, introduce tu dirección de correo electrónico para
-            solicitar un restablecimiento de contraseña.
+            Por favor, introduce tu dirección de correo electrónico para solicitar un
+            restablecimiento de contraseña.
           </p>
         </div>
         <form action={dispatch} className="flex flex-col gap-[50px] bg-none">
@@ -44,13 +44,9 @@ export default function ResetPassword() {
             />
           </div>
           {response?.errors && response.message && (
-            <p className="text-red-600 font-bold text-xs">
-              {response?.message}
-            </p>
+            <p className="text-red-600 font-bold text-xs">{response?.message}</p>
           )}
-          <SubmitButton className="rounded-lg font-bold">
-            Restablecer contraseña
-          </SubmitButton>
+          <SubmitButton className="rounded-lg font-bold">Restablecer contraseña</SubmitButton>
         </form>
         <div className="flex flex-row gap-1">
           <h1 className="text-sm">¿Recuerdas tu contraseña?</h1>

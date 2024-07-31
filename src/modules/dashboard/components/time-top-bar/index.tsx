@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react';
 
 export function TimeTopBar() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -13,15 +13,15 @@ export function TimeTopBar() {
 
   const formatTime = (date: Date): string => {
     const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     };
 
-    return date.toLocaleDateString("es-ES", options).toUpperCase();
+    return date.toLocaleDateString('es-ES', options).toUpperCase();
   };
 
   return (

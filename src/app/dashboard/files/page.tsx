@@ -1,6 +1,6 @@
 export const metadata = {
-    title: "Directorios",
+  title: 'Directorios',
 };
 export default function Page() {
-    return <></>
+  return <></>;
 }

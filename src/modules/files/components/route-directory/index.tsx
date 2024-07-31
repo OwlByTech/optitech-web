@@ -1,24 +1,15 @@
-"use client";
-import { LinkRef } from "@/modules/common/components/link-ref";
-import { ROUTES_SIDEBAR } from "@/modules/dashboard/types";
-import { useAtom } from "jotai";
-import { usePathname } from "next/navigation";
-import {
-  FiChevronRight,
-  FiFolderPlus,
-  FiGrid,
-  FiList,
-  FiUpload,
-} from "react-icons/fi";
-import { directoryRoute, folderLayout } from "../../context";
-import { Button } from "@/modules/common/components/button";
-import { Tooltip, useDisclosure } from "@nextui-org/react";
-import { CreateDirectoryModal } from "../create-directory";
-import {
-  CreateDocumentModal,
-  CreateDocumentModalRef,
-} from "../create-document";
-import { useRef, useState } from "react";
+'use client';
+import {LinkRef} from '@/modules/common/components/link-ref';
+import {ROUTES_SIDEBAR} from '@/modules/dashboard/types';
+import {useAtom} from 'jotai';
+import {usePathname} from 'next/navigation';
+import {FiChevronRight, FiFolderPlus, FiGrid, FiList, FiUpload} from 'react-icons/fi';
+import {directoryRoute, folderLayout} from '../../context';
+import {Button} from '@/modules/common/components/button';
+import {Tooltip, useDisclosure} from '@nextui-org/react';
+import {CreateDirectoryModal} from '../create-directory';
+import {CreateDocumentModal, CreateDocumentModalRef} from '../create-document';
+import {useRef, useState} from 'react';
 
 export function RouteDirectory() {
   const pathname = usePathname();
@@ -29,8 +20,7 @@ export function RouteDirectory() {
 
   const uploadDocumentsRef = useRef<CreateDocumentModalRef>(null);
 
-  const curParentDirectory =
-    directories?.length > 0 && directories[directories?.length - 1];
+  const curParentDirectory = directories?.length > 0 && directories[directories?.length - 1];
 
   return (
     <div className="flex w-full max-w-full overflow-hidden flex-row p-2 justify-between">
@@ -51,18 +41,14 @@ export function RouteDirectory() {
                 <LinkRef
                   href={`${ROUTES_SIDEBAR.FILES}/${value?.id}`}
                   className={`truncate text-ellipsis hover:bg-gray-50 p-2 ${
-                    Number(pathname.split("/")[3]) === value.id && "font-medium"
+                    Number(pathname.split('/')[3]) === value.id && 'font-medium'
                   } `}
                 >
                   {value.name}
                 </LinkRef>
 
                 {index < directories.length - 1 && (
-                  <FiChevronRight
-                    color="#B5B5B5"
-                    strokeWidth={1}
-                    className="h-6 w-6 "
-                  />
+                  <FiChevronRight color="#B5B5B5" strokeWidth={1} className="h-6 w-6 " />
                 )}
               </div>
             </Tooltip>
@@ -109,34 +95,24 @@ export function RouteDirectory() {
         </Tooltip>
 
         {curParentDirectory && createDir && (
-          <CreateDirectoryModal
-            value={curParentDirectory}
-            onClose={() => setCreateDir(false)}
-          />
+          <CreateDirectoryModal value={curParentDirectory} onClose={() => setCreateDir(false)} />
         )}
 
         {curParentDirectory && (
-          <CreateDocumentModal
-            ref={uploadDocumentsRef}
-            curDir={curParentDirectory}
-          />
+          <CreateDocumentModal ref={uploadDocumentsRef} curDir={curParentDirectory} />
         )}
         <div className="flex gap-2">
           <Button
-            className={
-              layout === "list" ? "text-white bg-black" : "bg-white text-black"
-            }
-            onClick={() => setLayout("list")}
+            className={layout === 'list' ? 'text-white bg-black' : 'bg-white text-black'}
+            onClick={() => setLayout('list')}
             isIconOnly
             radius="md"
             size="md"
             startContent={<FiList className="md:h-5 md:w-5 w-6 h-6" />}
           />
           <Button
-            className={
-              layout === "grid" ? "text-white bg-black" : "bg-white text-black"
-            }
-            onClick={() => setLayout("grid")}
+            className={layout === 'grid' ? 'text-white bg-black' : 'bg-white text-black'}
+            onClick={() => setLayout('grid')}
             isIconOnly
             radius="md"
             size="md"

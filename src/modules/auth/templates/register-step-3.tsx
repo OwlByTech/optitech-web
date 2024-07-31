@@ -1,14 +1,12 @@
-"use client";
-import { SignOut } from "@/modules/auth/components/sign-out";
-import Link from "next/link";
+'use client';
+import {SignOut} from '@/modules/auth/components/sign-out';
+import Link from 'next/link';
 
 export default function Step3() {
   return (
     <section className="flex flex-col items-center justify-center h-screen mx-5 gap-[50px] sm:mx-96">
       <div className="sm:w-full">
-        <h1 className="font-extrabold text-lg sm:text-3xl">
-          Paso 3: Activa tu cuenta
-        </h1>
+        <h1 className="font-extrabold text-lg sm:text-3xl">Paso 3: Activa tu cuenta</h1>
         <p className="text-sm sm:text-xl">
           Para activar tu cuenta, debes escribirnos a los siguientes sitios.
         </p>

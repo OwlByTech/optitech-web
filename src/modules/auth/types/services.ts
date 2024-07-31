@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { REGISTER_ROLE } from "./enum";
+import {z} from 'zod';
+import {REGISTER_ROLE} from './enum';
 
 export type LoginReq = {
   email: string;
