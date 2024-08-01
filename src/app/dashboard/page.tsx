@@ -5,7 +5,7 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const clientInfo = await clientInfoService();
+  const clientInfo = (await clientInfoService()).data;
 
   return (
     <main className="flex flex-col items-center justify-center gap-48 min-h-full">

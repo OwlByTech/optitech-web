@@ -19,8 +19,6 @@ export type InstitutionRes = {
     clients: ClientInfoRes[]
 }
 
-
-
 export type Service = {
     id?: number
     name?: string
@@ -37,7 +35,7 @@ export const CreateInstitution = z.object({
 })
 export const InstitutionLogo = z.object({
     id: z.number({ coerce: true }),
-    photo: z.any(),
+    logo: z.any(),
 })
 export enum ROUTES_INSTITUTION {
     REGISTER_INSTITUTION = "/register-institution",

@@ -1,24 +1,26 @@
-import { auth } from "@/auth";
+import { apiGet, apiSecureGet } from "@/modules/common/services";
 import { ClientInfoRes } from "../types";
+import { CommonServiceRes } from "@/modules/common/types";
 
-export async function clientInfoService(): Promise<ClientInfoRes | null> {
-  const session = await auth();
+export async function clientInfoService(): Promise<
+  CommonServiceRes<ClientInfoRes | null>
+> {
   try {
-    const response = await fetch(`${process.env.API_URL}/client`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user.token}`,
-      },
-    });
-
-    if (!response.ok) {
-      console.error("Login failed:", response.statusText);
-      return null;
+    const res = await apiSecureGet<ClientInfoRes>("/client");
+    // TODO: Implement endpoints error handling
+    // @ts-ignore
+    if (res.error) {
+      return {
+        errors: [[""]],
+      };
     }
-
-    return await response.json();
+    return {
+      data: res,
+    };
   } catch (e) {
-    console.error("Login error:", e);
-    return null;
+    const error = e as Error;
+    return {
+      errors: [[error.message]],
+    };
   }
 }

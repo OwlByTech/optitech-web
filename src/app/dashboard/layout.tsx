@@ -8,7 +8,7 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const clientInfo = await clientInfoService();
+    const clientInfo = (await clientInfoService()).data;
 
     if (!clientInfo) {
         return <>Not found</>;
