@@ -1,6 +1,6 @@
-import { z } from "zod";
+import {z} from 'zod';
 export enum ROUTES_ASESOR {
-  REGISTER_ASESOR = "/register-asesor",
+  REGISTER_ASESOR = '/register-asesor',
 }
 export type Asesor = {
   id: number;

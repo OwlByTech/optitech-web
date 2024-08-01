@@ -1,7 +1,7 @@
-import { LinkRef } from "@/modules/common/components/link-ref";
-import { Directory, FolderLayout } from "../../types";
-import { AiFillFolder } from "react-icons/ai";
-import { ROUTES_SIDEBAR } from "@/modules/dashboard/types";
+import {LinkRef} from '@/modules/common/components/link-ref';
+import {Directory, FolderLayout} from '../../types';
+import {AiFillFolder} from 'react-icons/ai';
+import {ROUTES_SIDEBAR} from '@/modules/dashboard/types';
 
 type Props = {
   directory: Directory;

@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { CommonActionState } from "../types/action";
+import {z} from 'zod';
+import {CommonActionState} from '../types/action';
 
 function formDataToObject(formData: FormData) {
   // Converts FormData to a plain object.
@@ -31,9 +31,7 @@ export async function BaseFormActionService(
 
   if (validateFields.error) {
     return {
-      errors: Object.entries(validateFields.error.flatten().fieldErrors).map(
-        (e) => e[1]
-      ),
+      errors: Object.entries(validateFields.error.flatten().fieldErrors).map(e => e[1]),
     };
   }
 

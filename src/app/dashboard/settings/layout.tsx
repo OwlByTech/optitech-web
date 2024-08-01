@@ -1,4 +1,4 @@
-import { Settings } from "@/modules/settings/components/settings";
+import {Settings} from '@/modules/settings/components/settings';
 
 export default function Page({
   children,

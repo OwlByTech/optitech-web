@@ -1,10 +1,10 @@
-import { InputProps } from "@nextui-org/react";
-import * as React from "react";
-import { EyeSlashFilledIcon } from "../../icons/EyeSlashFilledIcon";
-import { EyeFilledIcon } from "../../icons/EyeFilledIcon";
-import { Input } from "../input";
+import {InputProps} from '@nextui-org/react';
+import * as React from 'react';
+import {EyeSlashFilledIcon} from '../../icons/EyeSlashFilledIcon';
+import {EyeFilledIcon} from '../../icons/EyeFilledIcon';
+import {Input} from '../input';
 
-export function InputPassword({ label, className, ...props }: InputProps) {
+export function InputPassword({label, className, ...props}: InputProps) {
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -13,11 +13,7 @@ export function InputPassword({ label, className, ...props }: InputProps) {
       className={className}
       label={label}
       endContent={
-        <button
-          className="focus:outline-none"
-          type="button"
-          onClick={toggleVisibility}
-        >
+        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
           {isVisible ? (
             <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
           ) : (
@@ -25,7 +21,7 @@ export function InputPassword({ label, className, ...props }: InputProps) {
           )}
         </button>
       }
-      type={isVisible ? "text" : "password"}
+      type={isVisible ? 'text' : 'password'}
       {...props}
     />
   );

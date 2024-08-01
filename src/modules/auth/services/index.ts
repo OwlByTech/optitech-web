@@ -1,5 +1,5 @@
-import { apiGet, apiPost } from "@/modules/common/services";
-import { CommonServiceRes } from "@/modules/common/types";
+import {apiGet, apiPost} from '@/modules/common/services';
+import {CommonServiceRes} from '@/modules/common/types';
 import {
   ChangePasswordReq,
   ChangePasswordRes,
@@ -7,19 +7,17 @@ import {
   LoginRes,
   RegisterReq,
   RegisterRes,
-} from "../types/services";
-import { signIn } from "@/auth";
+} from '../types/services';
+import {signIn} from '@/auth';
 
-export async function resetPasswordService(
-  req: any
-): Promise<CommonServiceRes<boolean>> {
+export async function resetPasswordService(req: any): Promise<CommonServiceRes<boolean>> {
   try {
-    const res = await apiPost("/client/reset-password", req);
+    const res = await apiPost('/client/reset-password', req);
     if (!res) {
       return {
         errors: [
           [
-            "No es posible enviar correo electrónico con instrucciones para restablecer su contraseña",
+            'No es posible enviar correo electrónico con instrucciones para restablecer su contraseña',
           ],
         ],
       };
@@ -27,46 +25,41 @@ export async function resetPasswordService(
     return {
       data: !!res,
       messages: [
-        "Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña",
+        'Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña',
       ],
     };
   } catch (e) {
     const error = e as Error;
-    return { errors: [[error.message]] };
+    return {errors: [[error.message]]};
   }
 }
 
-export async function loginService(
-  req: LoginReq
-): Promise<CommonServiceRes<LoginRes>> {
+export async function loginService(req: LoginReq): Promise<CommonServiceRes<LoginRes>> {
   try {
-    const res = await apiPost<RegisterRes>("/client/login", req);
+    const res = await apiPost<RegisterRes>('/client/login', req);
 
     return {
       data: {
         token: res?.token,
       },
-      messages: ["inicio de sesión exitosamente"],
+      messages: ['inicio de sesión exitosamente'],
     };
   } catch (e) {
     const error = e as Error;
-    return { errors: [[error.message]] };
+    return {errors: [[error.message]]};
   }
 }
 
-export async function registerService(
-  req: RegisterReq
-): Promise<CommonServiceRes<RegisterRes>> {
+export async function registerService(req: RegisterReq): Promise<CommonServiceRes<RegisterRes>> {
   try {
-    const data = await apiPost<RegisterRes>("/client", {
+    const data = await apiPost<RegisterRes>('/client', {
       ...req,
       role: parseInt(req.role),
     });
 
-    if (!data?.token)
-      return { errors: [["El usuario no ha sido registrado."]] };
+    if (!data?.token) return {errors: [['El usuario no ha sido registrado.']]};
 
-    const resData = await signIn("credentials", {
+    const resData = await signIn('credentials', {
       redirect: false,
       email: req.email,
       password: req.password,
@@ -74,11 +67,11 @@ export async function registerService(
 
     return {
       data: resData,
-      messages: ["El usuario ha sido registrado exitosamente."],
+      messages: ['El usuario ha sido registrado exitosamente.'],
     };
   } catch (e) {
     const error = e as Error;
-    return { errors: [[error.message]] };
+    return {errors: [[error.message]]};
   }
 }
 
@@ -86,30 +79,28 @@ export async function changePasswordService(
   req: ChangePasswordReq
 ): Promise<CommonServiceRes<ChangePasswordRes>> {
   if (req.password !== req.passwordReply) {
-    return { errors: [["Contrasena no coincide."]] };
+    return {errors: [['Contrasena no coincide.']]};
   }
   try {
-    const res = await apiPost(
-      `${process.env.API_URL}/client/reset-password-token`,
-      { token: req.token, password: req.password }
-    );
+    const res = await apiPost(`${process.env.API_URL}/client/reset-password-token`, {
+      token: req.token,
+      password: req.password,
+    });
 
     if (!res)
       return {
         data: true,
-        messages: ["Se ha Cambio de contrasena."],
+        messages: ['Se ha Cambio de contrasena.'],
       };
 
-    return { errors: [["No se ha cambio contrasena."]] };
+    return {errors: [['No se ha cambio contrasena.']]};
   } catch (e) {
     const error = e as Error;
-    return { errors: [[error.message]] };
+    return {errors: [[error.message]]};
   }
 }
 
-export async function validateTokenPasswordResetService(
-  token: string
-): Promise<boolean> {
+export async function validateTokenPasswordResetService(token: string): Promise<boolean> {
   try {
     const res = await apiGet(
       `${process.env.API_URL}/client/validate/reset-password-token/?token=${token}`

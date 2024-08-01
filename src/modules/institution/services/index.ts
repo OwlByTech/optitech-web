@@ -1,11 +1,7 @@
-import { Institution, InstitutionRes } from "../types";
-import {
-  apiSecureGet,
-  apiSecureMethodPostFile,
-  apiSecurePost,
-} from "@/modules/common/services";
-import { updateLogoInstitutionReq } from "../types/services";
-import { CommonServiceRes } from "@/modules/common/types";
+import {Institution, InstitutionRes} from '../types';
+import {apiSecureGet, apiSecureMethodPostFile, apiSecurePost} from '@/modules/common/services';
+import {updateLogoInstitutionReq} from '../types/services';
+import {CommonServiceRes} from '@/modules/common/types';
 
 export async function getServicesInstitution() {
   return await apiSecureGet(`/services`);
@@ -17,10 +13,7 @@ export async function getInstitutionService(): Promise<InstitutionRes | null> {
 export async function createInstitutionService(
   institution: Institution
 ): Promise<Institution | null> {
-  const data = await apiSecurePost<Institution | null>(
-    "/institution",
-    institution
-  );
+  const data = await apiSecurePost<Institution | null>('/institution', institution);
   if (data?.id)
     await updateLogoInstitutionService({
       id: data?.id,
@@ -33,19 +26,16 @@ export async function updateLogoInstitutionService(
 ): Promise<CommonServiceRes<boolean | null>> {
   try {
     const formData = new FormData();
-    formData.append("logo", req.logo);
-    const res = await apiSecureMethodPostFile(
-      `/institution/logo/${req.id}`,
-      formData
-    );
+    formData.append('logo', req.logo);
+    const res = await apiSecureMethodPostFile(`/institution/logo/${req.id}`, formData);
     if (!res) {
       return {
-        errors: [["No se ha actualizado foto de institucion"]],
+        errors: [['No se ha actualizado foto de institucion']],
       };
     }
 
     return {
-      messages: ["Se ha actualizado foto de institucion"],
+      messages: ['Se ha actualizado foto de institucion'],
     };
   } catch (error) {
     const e = error as Error;
@@ -55,8 +45,6 @@ export async function updateLogoInstitutionService(
   }
 }
 
-export async function getLogoInstitutionService(
-  id: number
-): Promise<string | null> {
+export async function getLogoInstitutionService(id: number): Promise<string | null> {
   return await apiSecureGet<string | null>(`/institution/logo/${id}`);
 }

@@ -1,12 +1,12 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { Textarea } from "@/modules/common/components/text-area";
-import { ContainerRegister } from "@/modules/common/components/container-register";
-import { ImageSection } from "@/modules/common/layouts/image-section";
-import { useFormState } from "react-dom";
-import { createAsesorForm } from "../services/actions";
-import { ROUTES_SIDEBAR } from "@/modules/dashboard/types";
-import { useFormResponse } from "@/modules/common/hooks/use-form-response";
+'use client';
+import {useRouter} from 'next/navigation';
+import {Textarea} from '@/modules/common/components/text-area';
+import {ContainerRegister} from '@/modules/common/components/container-register';
+import {ImageSection} from '@/modules/common/layouts/image-section';
+import {useFormState} from 'react-dom';
+import {createAsesorForm} from '../services/actions';
+import {ROUTES_SIDEBAR} from '@/modules/dashboard/types';
+import {useFormResponse} from '@/modules/common/hooks/use-form-response';
 
 export default function RegisterAsesor() {
   const router = useRouter();

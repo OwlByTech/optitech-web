@@ -1,8 +1,7 @@
 export const metadata = {
-    title: "Integraciones",
+  title: 'Integraciones',
 };
 
-
 export default function Page() {
-    return <>Integracion</>;
+  return <>Integracion</>;
 }

@@ -1,7 +1,7 @@
-"use client";
-import { SignOut } from "../components/sign-out";
-import { ROUTES_AUTH } from "../types/auth";
-import { LinkRef } from "@/modules/common/components/link-ref";
+'use client';
+import {SignOut} from '../components/sign-out';
+import {ROUTES_AUTH} from '../types/auth';
+import {LinkRef} from '@/modules/common/components/link-ref';
 
 export type PrincipalProps = {
   clientInfo: any;

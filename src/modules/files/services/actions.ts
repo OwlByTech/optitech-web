@@ -1,6 +1,6 @@
-"use server";
+'use server';
 
-import { CommonActionState } from "@/modules/common/types/action";
+import {CommonActionState} from '@/modules/common/types/action';
 import {
   createDirectoryService,
   createDocumentService,
@@ -12,7 +12,7 @@ import {
   getDirectoryService,
   renameDocumentService,
   updateDiretoryService,
-} from ".";
+} from '.';
 import {
   CreateDirectoryReqValidator,
   CreateDocumentReqValidator,
@@ -21,20 +21,20 @@ import {
   DownloadDocumentReqValidator,
   RenameDocumentReqValidator,
   UpdateDirectoryReqValidator,
-} from "../types";
-import { BaseFormActionService } from "@/modules/common/services/action";
+} from '../types';
+import {BaseFormActionService} from '@/modules/common/services/action';
 
 export async function getDirectoryAction(id?: number) {
   const response = await getDirectoryService(id);
   if (response) {
     return {
-      message: "Institución creada exitosamente",
+      message: 'Institución creada exitosamente',
       directory: response,
     };
   }
   return {
     errors: {
-      api: "Error en la conexión del servidor",
+      api: 'Error en la conexión del servidor',
     },
   };
 }
@@ -43,13 +43,13 @@ export async function getDirectoryChildAction(id?: number) {
   const response = await getDirectoryChildService(id);
   if (response) {
     return {
-      message: "Institución creada exitosamente",
+      message: 'Institución creada exitosamente',
       directory: response,
     };
   }
   return {
     errors: {
-      api: "Error en la conexión del servidor",
+      api: 'Error en la conexión del servidor',
     },
   };
 }

@@ -1,10 +1,10 @@
-import { getAsesorService } from "@/modules/asesor/services";
-import { ROLES } from "@/modules/auth/types/enum";
-import { clientInfoService } from "@/modules/dashboard/services";
-import GeneralDetails from "@/modules/settings/pages/general-details";
-import { getPhotoUserService } from "@/modules/settings/services";
+import {getAsesorService} from '@/modules/asesor/services';
+import {ROLES} from '@/modules/auth/types/enum';
+import {clientInfoService} from '@/modules/dashboard/services';
+import GeneralDetails from '@/modules/settings/pages/general-details';
+import {getPhotoUserService} from '@/modules/settings/services';
 export const metadata = {
-  title: "Detalles generales",
+  title: 'Detalles generales',
 };
 
 export default async function Page() {
@@ -18,7 +18,7 @@ export default async function Page() {
     if (asesor) clientInfo.asesor = asesor;
   }
 
-  if (clientInfo.photo != "") {
+  if (clientInfo.photo != '') {
     const photo = await getPhotoUserService(clientInfo.id);
     if (photo) clientInfo.photo = photo;
   }

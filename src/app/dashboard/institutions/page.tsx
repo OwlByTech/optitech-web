@@ -1,4 +1,3 @@
 export default function Page() {
-    return <div>Institutiones</div>
-
+  return <div>Institutiones</div>;
 }

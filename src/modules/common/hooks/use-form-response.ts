@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { CommonActionState } from "../types/action";
-import { toast } from "sonner";
+import {useEffect} from 'react';
+import {CommonActionState} from '../types/action';
+import {toast} from 'sonner';
 
 export type UseFormResponseProps = {
   response: CommonActionState;
@@ -16,12 +16,12 @@ export function useFormResponse(props: UseFormResponseProps) {
     if (errors?.length == 0) return;
 
     if (errors && errors.length > 0) {
-      errors.forEach((error) => error?.forEach((e) => toast.error(e)));
+      errors.forEach(error => error?.forEach(e => toast.error(e)));
       props.onFailed && props.onFailed();
     }
 
     if (messages && messages.length > 0) {
-      messages.forEach((msg) => toast.success(msg));
+      messages.forEach(msg => toast.success(msg));
       props.onSuccess && props.onSuccess(props.response.data);
     }
 

@@ -1,15 +1,15 @@
-import Modal from "@/modules/common/components/modal";
-import { useDisclosure } from "@nextui-org/react";
-import { useEffect } from "react";
-import { OptionComponentProps } from "..";
-import { File } from "@/modules/files/types";
-import { useFormState } from "react-dom";
-import { deleteDocumentForm } from "@/modules/files/services/actions";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { useAtom } from "jotai";
-import { changeDirecotry } from "@/modules/files/context";
-import { useFormResponse } from "@/modules/common/hooks/use-form-response";
+import Modal from '@/modules/common/components/modal';
+import {useDisclosure} from '@nextui-org/react';
+import {useEffect} from 'react';
+import {OptionComponentProps} from '..';
+import {File} from '@/modules/files/types';
+import {useFormState} from 'react-dom';
+import {deleteDocumentForm} from '@/modules/files/services/actions';
+import {useRouter} from 'next/navigation';
+import {toast} from 'sonner';
+import {useAtom} from 'jotai';
+import {changeDirecotry} from '@/modules/files/context';
+import {useFormResponse} from '@/modules/common/hooks/use-form-response';
 
 export function DeleteDocumentOption(props: OptionComponentProps) {
   const router = useRouter();
@@ -19,7 +19,7 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
     errors: [],
   });
 
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
   const value = props.value as File;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
   useFormResponse({
     response,
     onSuccess: () => {
-      setChange({ id: props.directory, action: "delete" });
+      setChange({id: props.directory, action: 'delete'});
       router.refresh();
       onClose();
       props.onClose && props.onClose();
@@ -38,7 +38,7 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
 
   const onAccept = () => {
     const formData = new FormData();
-    formData.set("id", value.id!.toString());
+    formData.set('id', value.id!.toString());
     dispatch(formData);
   };
 
@@ -52,13 +52,13 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
       onAccept={onAccept}
       className="border-none"
       classNamesOwn={{
-        buttonOk: "bg-red-700 text-white text-xs",
-        buttonClose: " text-xs",
+        buttonOk: 'bg-red-700 text-white text-xs',
+        buttonClose: ' text-xs',
       }}
       classNames={{
-        footer: "flex flex-row justify-center",
-        body: "flex flex-col text-sm  justify-center items-center py-6 font-normal",
-        backdrop: "bg-white/80 backdrop-opacity-80",
+        footer: 'flex flex-row justify-center',
+        body: 'flex flex-col text-sm  justify-center items-center py-6 font-normal',
+        backdrop: 'bg-white/80 backdrop-opacity-80',
       }}
     >
       <span>{`Desea eliminar documento`}</span>

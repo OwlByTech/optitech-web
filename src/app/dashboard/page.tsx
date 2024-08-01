@@ -1,7 +1,7 @@
-import { SignOut } from "@/modules/auth/components/sign-out";
-import { clientInfoService } from "@/modules/dashboard/services";
+import {SignOut} from '@/modules/auth/components/sign-out';
+import {clientInfoService} from '@/modules/dashboard/services';
 export const metadata = {
-  title: "Inicio",
+  title: 'Inicio',
 };
 
 export default async function Home() {
