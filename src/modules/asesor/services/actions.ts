@@ -33,6 +33,5 @@ export async function createFormatForm(
     state: CommonActionState,
     payload: FormData
 ): Promise<CommonActionState> {
-    console.log(payload)
     return await BaseFormActionService(state, payload, CreateFormatReqValidator, createFormatService);
 }
