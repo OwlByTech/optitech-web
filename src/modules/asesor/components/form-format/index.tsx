@@ -48,7 +48,6 @@ export const FormFormat = (props: FormFormatProps) => {
             placeholder="Seleciona un servicio"
             items={services.data}
             onSelectionChange={key => {
-              console.log(key);
               props.service.current = Number(key);
             }}
           />
