@@ -56,7 +56,6 @@ export const CreateFormatModal = forwardRef<CreateFormatModalRef, CreateFormatMo
             isOpen={isOpen}
             isForm
             onAccept={(data: FormData) => {
-              console.log(service);
               onClose();
               data.set('serviceId', service.current.toString());
               data.set('extension', '.doc');
