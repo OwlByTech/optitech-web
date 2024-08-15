@@ -85,7 +85,6 @@ async function apiSecureMethod<T>(
 
 export async function apiSecureMethodPostFile<T>(path: string, body: FormData): Promise<T | null> {
     const session = await auth();
-    console.log(body)
     try {
         const response = await fetch(`${process.env.API_URL}${path}`, {
             method: 'POST',
