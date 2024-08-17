@@ -1,6 +1,6 @@
 import Modal from '@/modules/common/components/modal';
-import {useFormState, useFormStatus} from 'react-dom';
-import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {useFormState} from 'react-dom';
+import {forwardRef, useImperativeHandle, useRef} from 'react';
 import {useRouter} from 'next/navigation';
 import {useAtom} from 'jotai';
 import {useDisclosure} from '@nextui-org/react';
@@ -40,7 +40,7 @@ export const CreateFormatModal = forwardRef<CreateFormatModalRef, CreateFormatMo
       },
     });
     useImperativeHandle(ref, () => ({
-      openWithFiles: (fileList: FileList) => {},
+      openWithFiles: (_fileList: FileList) => {},
       open: () => onOpen(),
     }));
 
@@ -69,7 +69,7 @@ export const CreateFormatModal = forwardRef<CreateFormatModalRef, CreateFormatMo
               backdrop: 'bg-white/80 backdrop-opacity-80',
             }}
           >
-            <FormFormat file={file} service={service} />
+            <FormFormat file={file} service={service} serviceName={props.curDir.name!}/>
           </Modal>
         )}
       </>
