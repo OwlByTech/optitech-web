@@ -10,14 +10,16 @@ import {
 import {FiX} from 'react-icons/fi';
 import {Button} from '../button';
 import {clx} from '@/utils/clx';
+import {SubmitButton} from '../submit-button';
 
 type ModalProps = {
   isOpen: boolean;
   onOpenChange?: any;
   title?: string;
   children?: ReactNode;
-  onAccept?: () => void;
+  onAccept?: any;
   onClose?: () => void;
+  isForm?: boolean;
   classNamesOwn?: {
     closeIcon?: string;
     buttonClose?: string;
@@ -46,25 +48,52 @@ export default function Modal(props: ModalProps) {
             <ModalHeader className="flex mx-2 border-black flex-col gap-1">
               {props?.title}
             </ModalHeader>
-            <ModalBody>{props.children}</ModalBody>
-            {props.onAccept && (
-              <ModalFooter>
-                <Button
-                  className={clx('font-bold rounded-lg', props.classNamesOwn?.buttonOk)}
-                  onClick={props.onAccept}
-                >
-                  Aceptar
-                </Button>
-                <Button
-                  className={clx(
-                    'text-black rounded-lg font-bold bg-white border-1 border-black',
-                    props.classNamesOwn?.buttonClose
-                  )}
-                  onPress={onClose}
-                >
-                  Cancelar
-                </Button>
-              </ModalFooter>
+            {!props.isForm ? (
+              <>
+                <ModalBody>{props.children}</ModalBody>
+                {props.onAccept && (
+                  <ModalFooter>
+                    <Button
+                      className={clx('font-bold rounded-lg', props.classNamesOwn?.buttonOk)}
+                      onClick={props.onAccept}
+                    >
+                      Aceptar
+                    </Button>
+                    <Button
+                      className={clx(
+                        'text-black rounded-lg font-bold bg-white border-1 border-black',
+                        props.classNamesOwn?.buttonClose
+                      )}
+                      onPress={onClose}
+                    >
+                      Cancelar
+                    </Button>
+                  </ModalFooter>
+                )}
+              </>
+            ) : (
+              <form action={props.onAccept}>
+                <ModalBody>{props.children}</ModalBody>
+                {props.onAccept && (
+                  <ModalFooter>
+                    <SubmitButton
+                      className={clx('font-bold rounded-lg', props.classNamesOwn?.buttonOk)}
+                      type="submit"
+                    >
+                      Aceptar
+                    </SubmitButton>
+                    <Button
+                      className={clx(
+                        'text-black rounded-lg font-bold bg-white border-1 border-black',
+                        props.classNamesOwn?.buttonClose
+                      )}
+                      onPress={onClose}
+                    >
+                      Cancelar
+                    </Button>
+                  </ModalFooter>
+                )}
+              </form>
             )}
           </>
         )}
