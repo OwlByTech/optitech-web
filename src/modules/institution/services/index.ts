@@ -2,6 +2,7 @@ import {Institution, InstitutionRes} from '../types';
 import {apiSecureGet, apiSecureMethodPostFile, apiSecurePost} from '@/modules/common/services';
 import {updateLogoInstitutionReq} from '../types/services';
 import {CommonServiceRes} from '@/modules/common/types';
+import { CreateAllFormatReq, CreateAllFormatRes } from '@/modules/asesor/types';
 
 export async function getServicesInstitution() {
   return await apiSecureGet(`/services`);
@@ -47,4 +48,24 @@ export async function updateLogoInstitutionService(
 
 export async function getLogoInstitutionService(id: number): Promise<string | null> {
   return await apiSecureGet<string | null>(`/institution/logo/${id}`);
+}
+
+export async function createAllFormatService(
+  req: CreateAllFormatReq
+): Promise<CommonServiceRes<CreateAllFormatRes | null>> {
+  try {
+      const data = await apiSecurePost<CreateAllFormatRes>('/institution/create-all-formats', req);
+      if (!data) {
+          return { errors: [['No se ha podido crear todos los formatos']] };
+      }
+      return {
+          data,
+          messages: ['Los formatos han sido creados.'],
+      };
+  } catch (e) {
+      const error = e as Error;
+      return {
+          errors: [[error.message]],
+      };
+  }
 }

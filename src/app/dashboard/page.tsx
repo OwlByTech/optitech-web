@@ -1,11 +1,11 @@
 import {SignOut} from '@/modules/auth/components/sign-out';
-import {clientInfoService} from '@/modules/dashboard/services';
+import {getClientInfoByTokenService} from '@/modules/dashboard/services';
 export const metadata = {
   title: 'Inicio',
 };
 
 export default async function Home() {
-  const clientInfo = (await clientInfoService()).data;
+  const clientInfo = (await getClientInfoByTokenService()).data;
 
   return (
     <main className="flex flex-col items-center justify-center gap-48 min-h-full">

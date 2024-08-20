@@ -1,7 +1,6 @@
 import { apiSecureGet, apiSecureMethodPostFile, apiSecurePost } from '@/modules/common/services';
-import { Asesor, CreateAseorReq, CreateFormatReq } from '../types';
+import { Asesor, CreateAllFormatReq, CreateAllFormatRes, CreateAseorReq, CreateFormatReq } from '../types';
 import { CommonServiceRes } from '@/modules/common/types';
-import { version } from 'os';
 
 export async function createAsesorService(
     createAsesor: CreateAseorReq
@@ -80,3 +79,5 @@ export async function createFormatService(req: CreateFormatReq): Promise<CommonS
         };
     }
 }
+
+

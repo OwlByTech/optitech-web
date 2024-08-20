@@ -3,7 +3,7 @@ import {authConfig} from './auth.config';
 import {ROUTES_AUTH} from './modules/auth/types/auth';
 import {ROUTES_CONFIG, ROUTES_SIDEBAR} from './modules/dashboard/types';
 import {NextResponse} from 'next/server';
-import {clientInfoService} from './modules/dashboard/services';
+import {getClientInfoByTokenService} from './modules/dashboard/services';
 import {ROUTES_INSTITUTION} from './modules/institution/types';
 import {getInstitutionService} from './modules/institution/services';
 import {getAsesorService} from './modules/asesor/services';
@@ -32,7 +32,7 @@ export default NextAuth(authConfig).auth(async req => {
   if (!isLoggedIn && secureRoutes.has(pathname)) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
-  const client = (await clientInfoService()).data;
+  const client = (await getClientInfoByTokenService()).data;
 
   if (
     client?.status === STATUS_CLIENT.INACTIVE &&

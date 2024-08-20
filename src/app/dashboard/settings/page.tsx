@@ -1,6 +1,6 @@
 import {getAsesorService} from '@/modules/asesor/services';
 import {ROLES} from '@/modules/auth/types/enum';
-import {clientInfoService} from '@/modules/dashboard/services';
+import {getClientInfoByTokenService} from '@/modules/dashboard/services';
 import GeneralDetails from '@/modules/settings/pages/general-details';
 import {getPhotoUserService} from '@/modules/settings/services';
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const clientInfo = (await clientInfoService()).data;
+  const clientInfo = (await getClientInfoByTokenService()).data;
 
   if (!clientInfo) {
     return <>Not found</>;
