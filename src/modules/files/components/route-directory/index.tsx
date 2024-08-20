@@ -6,23 +6,23 @@ import { usePathname } from 'next/navigation';
 import { FiChevronRight, FiFolderPlus, FiGrid, FiList, FiUpload } from 'react-icons/fi';
 import { directoryRoute, folderLayout } from '../../context';
 import { Button } from '@/modules/common/components/button';
-import { Tooltip, useDisclosure } from '@nextui-org/react';
-import { CreateDirectoryModal } from '../create-directory';
+import { Tooltip } from '@nextui-org/react';
+import { CreateDirectoryModal, CreateDirectoryModalRef } from '../create-directory';
 import { CreateDocumentModal, CreateDocumentModalRef } from '../create-document';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { clientState } from '@/modules/auth/context/client';
 import { ROLES } from '@/modules/auth/types/enum';
-import { CreateFormatModal } from '@/modules/asesor/components/create-format';
+import { CreateFormatModal, CreateFormatModalRef } from '@/modules/asesor/components/create-format';
 
 export function RouteDirectory() {
     const pathname = usePathname();
 
     const [layout, setLayout] = useAtom(folderLayout);
     const [directories, _] = useAtom(directoryRoute);
-    const [createDir, setCreateDir] = useState(false);
 
     const uploadDocumentsRef = useRef<CreateDocumentModalRef>(null);
-    const createFormatsRef = useRef<CreateDocumentModalRef>(null);
+    const createDirectoryRef = useRef<CreateDirectoryModalRef>(null);
+    const createFormatsRef = useRef<CreateFormatModalRef>(null);
 
     const [client, __] = useAtom(clientState);
     const curParentDirectory = directories?.length > 0 && directories[directories?.length - 1];
@@ -68,7 +68,7 @@ export function RouteDirectory() {
                 >
                     <Button
                         onClick={() => {
-                            setCreateDir(true);
+                            createDirectoryRef.current?.open();
                         }}
                         className="bg-white border text-xs text-black h-10 md:w-32"
                         isIconOnly
@@ -108,16 +108,14 @@ export function RouteDirectory() {
                     </Button>
                 </Tooltip>
 
-                {curParentDirectory && createDir && (
-                    <CreateDirectoryModal value={curParentDirectory} onClose={() => setCreateDir(false)} />
+                {curParentDirectory && (
+                    <>
+                        <CreateDirectoryModal ref={createDirectoryRef} value={curParentDirectory} />
+                        <CreateDocumentModal ref={uploadDocumentsRef} value={curParentDirectory} />
+                        <CreateFormatModal ref={createFormatsRef} value={curParentDirectory} />
+                    </>
                 )}
 
-                {curParentDirectory && (
-                    <CreateDocumentModal ref={uploadDocumentsRef} curDir={curParentDirectory} />
-                )}
-                {curParentDirectory && (
-                    <CreateFormatModal ref={createFormatsRef} curDir={curParentDirectory} />
-                )}
                 <div className="flex gap-2">
                     <Button
                         className={layout === 'list' ? 'text-white bg-black' : 'bg-white text-black'}

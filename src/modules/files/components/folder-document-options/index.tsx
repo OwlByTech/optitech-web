@@ -19,6 +19,7 @@ export type FolderDocumentOptionsProps = {
 
 export type OptionComponentProps = {
     value: Directory | File;
+    isOpen?: boolean;
     directory?: number;
     onClose?: () => void;
 };
