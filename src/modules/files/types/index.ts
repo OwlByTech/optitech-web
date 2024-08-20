@@ -1,5 +1,5 @@
-import {coerce, z} from 'zod';
-import {DOCUMENT_STATUS} from './enum';
+import { z } from 'zod';
+import { DOCUMENT_STATUS } from './enum';
 
 export type Directory = {
   id?: number;
@@ -21,13 +21,14 @@ export type ChangeDirectory = {
 };
 
 export const CreateDirectoryReqValidator = z.object({
-  parentId: z.number({coerce: true}),
-  institutionId: z.number({coerce: true}),
+  parentId: z.number({ coerce: true }),
+  institutionId: z.number({ coerce: true }).optional(),
+  asesorId: z.number({ coerce: true }).optional(),
   name: z.string().min(1),
 });
 
 export const CreateDocumentReqValidator = z.object({
-  directoryId: z.number({coerce: true}),
+  directoryId: z.number({ coerce: true }),
   status: z.string(),
   files: z.any(),
 });
@@ -53,7 +54,7 @@ export type CreateDirectoryRes = {
 };
 
 export const DeleteDirectoryReqValidator = z.object({
-  id: z.number({coerce: true}),
+  id: z.number({ coerce: true }),
 });
 
 export type DeleteDirectoryReq = {
@@ -63,7 +64,7 @@ export type DeleteDirectoryReq = {
 export type DeleteDirectoryRes = boolean;
 
 export const UpdateDirectoryReqValidator = z.object({
-  directoryId: z.number({coerce: true}),
+  directoryId: z.number({ coerce: true }),
   name: z.string(),
 });
 
@@ -75,7 +76,7 @@ export type UpdateDirectoryReq = {
 export type DownloadDocumentRes = string;
 
 export const DownloadDocumentReqValidator = z.object({
-  id: z.number({coerce: true}),
+  id: z.number({ coerce: true }),
 });
 
 export type DownloadDocumentReq = {
@@ -83,7 +84,7 @@ export type DownloadDocumentReq = {
 };
 
 export const DeleteDocumentReqValidator = z.object({
-  id: z.number({coerce: true}),
+  id: z.number({ coerce: true }),
 });
 
 export type DeleteDocumentReq = {
@@ -93,7 +94,7 @@ export type DeleteDocumentReq = {
 export type DeleteDocumentRes = boolean;
 
 export const RenameDocumentReqValidator = z.object({
-  id: z.number({coerce: true}),
+  id: z.number({ coerce: true }),
   name: z.string(),
 });
 

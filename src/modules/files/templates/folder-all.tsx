@@ -9,6 +9,9 @@ import { CreateDirectoryModal } from '../components/create-directory';
 import { DragAndDrop } from '@/modules/common/components/drag-and-drop';
 import { toast } from 'sonner';
 import { CreateDocumentModal, CreateDocumentModalRef } from '../components/create-document';
+import { CreateFormatModal } from '@/modules/asesor/components/create-format';
+import { clientState } from '@/modules/auth/context/client';
+import { ROLES } from '@/modules/auth/types/enum';
 
 export type DocumentDirectoryType = 'document' | 'directory' | "format";
 
@@ -34,33 +37,61 @@ export type FolderAllProps = {
 const CONTEXT_MENU_ATTRIBUTE = 'folder-all';
 
 export function FolderAll(props: FolderAllProps) {
-
-    const [layout, setLayout] = useAtom(folderLayout);
-    const [contextMenuItems, setContextMenuItems] = useAtom(contextMenuStorage);
+    const [layout, _setLayout] = useAtom(folderLayout);
+    const [_contextMenuItems, setContextMenuItems] = useAtom(contextMenuStorage);
     const [isOpenOptions, setIsOpenOptions] = useState<IsOpenOptionsType | null>(null);
     const uploadDocumentsRef = useRef<CreateDocumentModalRef>(null);
     const [optionState, setOptionState] = useState<OptionStateType>();
     const [_, setDirectories] = useAtom(directoryRoute);
+    const [client, __] = useAtom(clientState);
 
     useEffect(() => {
+        const items = [
+            {
+                key: 'folder:new',
+                title: 'Crear carpeta',
+                handler: () => {
+                    setOptionState({
+                        component: CreateDirectoryModal,
+                        value: props.directory,
+                    });
+                },
+            },
+        ];
+
+        if (client?.roles[0].roleName === ROLES.ASSESOR) {
+            items.unshift({
+                key: 'update:format',
+                title: 'Subir Formato',
+                handler: () => {
+                    setOptionState({
+                        component: CreateFormatModal,
+                        value: props.directory,
+                    });
+                },
+            });
+        }
+
+        if (client?.roles[0].roleName === ROLES.INSTITUTION) {
+            items.unshift({
+                key: 'update:document',
+                title: 'Subir archivo',
+                handler: () => {
+                    setOptionState({
+                        component: CreateDocumentModal,
+                        value: props.directory,
+                    });
+                },
+            });
+        }
+
         setContextMenuItems([
             {
                 attribute: CONTEXT_MENU_ATTRIBUTE,
-                items: [
-                    {
-                        key: 'folder:new',
-                        title: 'Crear carpeta',
-                        handler: () => {
-                            setOptionState({
-                                component: CreateDirectoryModal,
-                                value: props.directory,
-                            });
-                        },
-                    },
-                ],
+                items: items,
             },
         ]);
-    }, []);
+    }, [props.directory]);
 
     useEffect(() => {
         setDirectories(props.routeDirectory);
@@ -106,6 +137,7 @@ export function FolderAll(props: FolderAllProps) {
                 <div className={layout === 'grid' ? 'grid grid-cols-4 gap-4' : 'flex flex-col gap-4'}>
                     {optionState?.component && (
                         <optionState.component
+                            isOpen={true}
                             value={optionState.value!}
                             directory={props.directory.id}
                             onClose={() => setOptionState(null)}

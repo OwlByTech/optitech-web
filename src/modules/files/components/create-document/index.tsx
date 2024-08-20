@@ -1,15 +1,12 @@
 import Modal from '@/modules/common/components/modal';
-import { Directory } from '../../types';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 import {
     forwardRef,
-    MutableRefObject,
     useEffect,
     useImperativeHandle,
     useRef,
     useState,
 } from 'react';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { UploadFile } from '@/modules/common/components/upload-file';
 import { createDocumentForm } from '../../services/actions';
@@ -17,35 +14,37 @@ import { changeDirecotry } from '../../context';
 import { useAtom } from 'jotai';
 import { useDisclosure } from '@nextui-org/react';
 import { useFormResponse } from '@/modules/common/hooks/use-form-response';
-
-export type CreateDocumentModalProps = {
-    curDir: Directory;
-};
+import { OptionComponentProps } from '../folder-document-options';
 
 export type CreateDocumentModalRef = {
     openWithFiles: (files: FileList) => void;
     open: () => void;
+    close: () => void;
 };
 
-export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, CreateDocumentModalProps>(
+export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, OptionComponentProps>(
     (props, ref) => {
         const router = useRouter();
         const files = useRef<File[]>([]);
         const [_, setChange] = useAtom(changeDirecotry);
         const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-        const [pending, setPending] = useState(false);
+        const [_pending, setPending] = useState(false);
 
         const [response, dispatch] = useFormState(createDocumentForm, {
             messages: [],
             errors: [],
         });
 
+        useEffect(() => {
+            props.isOpen && onOpen();
+        }, [props.isOpen]);
+
         useFormResponse({
             response,
             onSuccess: () => {
                 setPending(false);
                 onClose();
-                setChange({ id: props.curDir.id, action: 'create' });
+                setChange({ id: props.value.id, action: 'create' });
                 router.refresh();
             },
         });
@@ -58,7 +57,7 @@ export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, CreateDocu
             if (files.current.length < 0) return;
 
             const data = new FormData();
-            data.set('directoryId', props.curDir.id!.toString());
+            data.set('directoryId', props.value.id!.toString());
             data.set('status', 'aprobado');
 
             files.current.forEach(file => data.append('files', file));
@@ -79,6 +78,7 @@ export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, CreateDocu
                 onOpen();
             },
             open: () => onOpen(),
+            close: () => onClose()
         }));
 
         return (
@@ -90,9 +90,9 @@ export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, CreateDocu
                             onClose();
                             onSubmit();
                         }}
-                        onClose={onClose}
+                        onClose={props.onClose}
                         onOpenChange={onOpenChange}
-                        title={`Subir archivo en ${props.curDir.name}`}
+                        title={`Subir archivo en ${props.value.name}`}
                         classNames={{
                             backdrop: 'bg-white/80 backdrop-opacity-80',
                         }}
@@ -101,7 +101,7 @@ export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, CreateDocu
                             name="files"
                             multiple
                             required
-                            acceptedFileExtensions={['doc', 'pdf']}
+                            acceptedFileExtensions={['docx', 'pdf']}
                             selectedFiles={files.current}
                             onSelectedFile={fileUploads => (files.current = fileUploads)}
                         />
