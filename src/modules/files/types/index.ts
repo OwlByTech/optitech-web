@@ -6,14 +6,18 @@ export type Directory = {
   name?: string;
   parentId?: number;
   open?: boolean;
-  document?: File[];
+  document?: Document[];
   directory?: Directory[];
   institutionId?: number;
 };
 
-export type File = {
+export type Document = {
   id: number;
   name: string;
+  directoryId: number;
+  formatId: number;
+  fileRute: number;
+  status: DOCUMENT_STATUS;
 };
 export type ChangeDirectory = {
   id?: number;
@@ -36,7 +40,7 @@ export const CreateDocumentReqValidator = z.object({
 export type CreateDocumentReq = {
   directoryId: number;
   status: DOCUMENT_STATUS;
-  files: File[];
+  files: Document[];
 };
 
 export type CreateDiretoryReq = {

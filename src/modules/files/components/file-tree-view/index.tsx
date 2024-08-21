@@ -1,11 +1,11 @@
 'use client';
 import {LinkRef} from '@/modules/common/components/link-ref';
 import {FiFile, FiFolder} from 'react-icons/fi';
-import {File} from '../../types';
+import {Document} from '../../types';
 import { ReactNode } from 'react';
 
 type Props = {
-  document: File;
+  document: Document;
 };
 
 export function FileViewTree({document}: Props) {

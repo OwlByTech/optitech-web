@@ -1,5 +1,5 @@
 'use client';
-import { Directory, File } from '../types';
+import { Directory, Document } from '../types';
 import { useAtom } from 'jotai';
 import { directoryRoute, folderLayout } from '../context';
 import { FolderDocumentOptions, OptionComponentProps } from '../components/folder-document-options';
@@ -19,7 +19,7 @@ type OptionStateType = {
     type?: DocumentDirectoryType;
     index?: number;
     component?: React.ComponentType<OptionComponentProps>;
-    value?: Directory | File;
+    value?: Directory | Document;
 } | null;
 
 type DocumentDiretoryType = 'document' | 'directory';
@@ -113,7 +113,7 @@ export function FolderAll(props: FolderAllProps) {
         type: DocumentDiretoryType,
         index: number,
         component: React.ComponentType<OptionComponentProps>,
-        value: Directory | File
+        value: Directory | Document
     ) => {
         setOptionState({ type, index, component, value });
     };

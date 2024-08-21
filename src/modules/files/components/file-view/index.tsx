@@ -1,10 +1,11 @@
-import {File, FolderLayout} from '../../types';
+import {Document, FolderLayout} from '../../types';
 import {AiFillFile} from 'react-icons/ai';
 import Select from '@/modules/common/components/select';
 import {ReactNode} from 'react';
+import {DOCUMENT_STATUS} from '../../types/enum';
 
 export type FileViewProps = {
-  document: File;
+  document: Document;
   layout: FolderLayout;
   options?: ReactNode;
 };
@@ -30,16 +31,20 @@ export function FileView(props: FileViewProps) {
         {props.options}
       </div>
 
-      <Select
-        defaultItem="generated"
-        items={[
-          {key: 'generated', label: 'Generado'},
-          {key: 'review', label: 'En revisión'},
-          {key: 'rejected', label: 'Rechazado'},
-          {key: 'approved', label: 'Aprobado'},
-        ]}
-        onSelect={(key) => {console.log(key)}}
-      />
+      {props.document.status !== DOCUMENT_STATUS.UPLOADED && (
+        <Select
+          defaultItem="generated"
+          items={[
+            {key: 'generated', label: 'Generado'},
+            {key: 'review', label: 'En revisión'},
+            {key: 'rejected', label: 'Rechazado'},
+            {key: 'approved', label: 'Aprobado'},
+          ]}
+          onSelect={key => {
+            console.log(key);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import Modal from '@/modules/common/components/modal';
 import {useDisclosure} from '@nextui-org/react';
 import {useEffect} from 'react';
 import {OptionComponentProps} from '..';
-import {File} from '@/modules/files/types';
+import {Document} from '@/modules/files/types';
 import {useFormState} from 'react-dom';
 import {deleteDocumentForm} from '@/modules/files/services/actions';
 import {useRouter} from 'next/navigation';
@@ -20,7 +20,7 @@ export function DeleteDocumentOption(props: OptionComponentProps) {
   });
 
   const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
-  const value = props.value as File;
+  const value = props.value as Document;
 
   useEffect(() => {
     onOpen();

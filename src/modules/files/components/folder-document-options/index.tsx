@@ -1,5 +1,5 @@
 import {FiMoreVertical} from 'react-icons/fi';
-import {Directory, File, FolderLayout} from '../../types';
+import {Directory, Document, FolderLayout} from '../../types';
 import {FolderView} from '../folder-view';
 import {FileView} from '../file-view';
 import {Button} from '@/modules/common/components/button';
@@ -9,7 +9,7 @@ import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from '@nextui-org
 
 export type FolderDocumentOptionsProps = {
   type: 'document' | 'directory' | 'format';
-  value: Directory | File;
+  value: Directory | Document;
   isOpenOptions: boolean;
   onOpenOptions?: () => void;
   onSelectOption?: (component: React.ComponentType<OptionComponentProps>) => void;
@@ -18,7 +18,7 @@ export type FolderDocumentOptionsProps = {
 };
 
 export type OptionComponentProps = {
-  value: Directory | File;
+  value: Directory | Document;
   isOpen?: boolean;
   directory?: number;
   onClose?: () => void;
@@ -101,7 +101,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
       {props.type === 'directory' ? (
         <FolderView layout={props.layout} directory={props.value as Directory} options={options}/>
       ) : (
-        <FileView layout={props.layout} document={props.value as File} options={options} />
+        <FileView layout={props.layout} document={props.value as Document} options={options} />
       )}
     </div>
   );
