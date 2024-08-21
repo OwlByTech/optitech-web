@@ -17,6 +17,7 @@ export type InstitutionRes = {
   logo: string;
   services: Service[];
   clients: ClientInfoRes[];
+  asesorId: number;
 };
 
 export type Service = {

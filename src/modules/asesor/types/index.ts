@@ -13,6 +13,12 @@ export type CreateAseorReq = {
     about?: string;
 };
 
+export type CreateAllFormatReq = {
+    id: number;
+}
+
+export type CreateAllFormatRes = boolean;
+
 export type UpdateAseorReq = {
     about?: string;
 };
@@ -41,6 +47,9 @@ export const CreateFormatReqValidator = z.object({
     file: z.any()
 });
 
+export const CreateAllFormatReqValidator = z.object({
+    id: z.number({coerce: true})
+});
 
 export type CreateFormatReq = {
     name: string,
