@@ -1,11 +1,16 @@
 'use server';
 
-import {createAllFormatService, createInstitutionService, updateLogoInstitutionService} from '.';
+import {
+  createAllFormatService,
+  createInstitutionService,
+  updateInfoInstitutionService,
+  updateLogoInstitutionService,
+} from '.';
 import {CommonActionState} from '@/modules/common/types/action';
-import {CreateInstitution, InstitutionLogo} from '../types';
+import {CreateInstitution, InstitutionInfo, InstitutionLogo} from '../types';
 import {BaseFormActionService} from '@/modules/common/services/action';
 import {UpdateDirectoryReqValidator} from '@/modules/files/types';
-import { CreateAllFormatReqValidator } from '@/modules/asesor/types';
+import {CreateAllFormatReqValidator} from '@/modules/asesor/types';
 
 export async function createInstitution(
   name?: string,
@@ -50,5 +55,17 @@ export async function updateLogoInstitution(
 }
 
 export async function createAllFormatForm(state: CommonActionState, payload: FormData) {
-  return await BaseFormActionService(state, payload, CreateAllFormatReqValidator, createAllFormatService); 
+  return await BaseFormActionService(
+    state,
+    payload,
+    CreateAllFormatReqValidator,
+    createAllFormatService
+  );
+}
+
+export async function updateInstitutionForm(
+  state: CommonActionState,
+  payload: FormData
+): Promise<CommonActionState> {
+  return await BaseFormActionService(state, payload, InstitutionInfo, updateInfoInstitutionService);
 }
