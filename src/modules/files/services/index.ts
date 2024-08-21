@@ -1,8 +1,7 @@
 import {
-  ApiContentType,
   apiSecureDelete,
   apiSecureGet,
-  apiSecureMethodPostFile,
+  apiSecurePostFormData,
   apiSecurePost,
   apiSecurePut,
 } from '@/modules/common/services';
@@ -19,6 +18,8 @@ import {
   RenameDocumentReq,
   RenameDocumentRes,
   CreateDocumentReq,
+  UpdateDocumentReq,
+  UpdateDocumentRes,
 } from '../types';
 import {CommonServiceRes} from '@/modules/common/types';
 
@@ -109,7 +110,7 @@ export async function createDocumentsService(
 
 export async function createDocumentService(createDocument: FormData): Promise<any | null> {
   try {
-    return await apiSecureMethodPostFile<any>('/document', createDocument);
+    return await apiSecurePostFormData<any>('/document', createDocument);
   } catch (error) {
     const e = error as Error;
     return e;
@@ -198,6 +199,30 @@ export async function renameDocumentService(
 
     return {
       messages: ['Se ha renombrado documento exitosamente.'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      errors: [[e.message]],
+    };
+  }
+}
+
+export async function updateDocumentService(
+  req: UpdateDocumentReq
+): Promise<CommonServiceRes<UpdateDocumentRes | null>> {
+  try {
+    const formData = new FormData();
+    formData.set('file', req.file);
+    formData.set('data', JSON.stringify({id: req.id}));
+    const res = await apiSecurePostFormData<any>(`/document/version`, formData);
+    if (!res) {
+      return {
+        errors: [['No se ha actualizado el documento']],
+      };
+    }
+    return {
+      messages: ['Se ha actualizado documento exitosamente.'],
     };
   } catch (error) {
     const e = error as Error;

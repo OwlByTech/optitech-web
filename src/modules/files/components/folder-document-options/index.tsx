@@ -1,3 +1,4 @@
+'use client'
 import {FiMoreVertical} from 'react-icons/fi';
 import {Directory, Document, FolderLayout} from '../../types';
 import {FolderView} from '../folder-view';
@@ -6,6 +7,8 @@ import {Button} from '@/modules/common/components/button';
 import {dirOptions} from './directory';
 import {docOptions} from './document';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from '@nextui-org/react';
+import {clientState} from '@/modules/auth/context/client';
+import {useAtom} from 'jotai';
 
 export type FolderDocumentOptionsProps = {
   type: 'document' | 'directory' | 'format';
@@ -37,7 +40,7 @@ function FolderDocumentOption(props: FolderDocumentOptionProps) {
   return (
     <Button
       onClick={onSelectOption}
-      className="w-full flex h-7 flex-row gap-2 bg-transparent hover:bg-none  text-xs text-black"
+      className="flex flex-row justify-start w-full h-7 f gap-2 bg-transparent hover:bg-none  text-xs text-black"
     >
       {props.option.icon}
       {props.option.title}
@@ -46,6 +49,8 @@ function FolderDocumentOption(props: FolderDocumentOptionProps) {
 }
 
 export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
+  const [client, _setClient] = useAtom(clientState);
+
   const options = (
     <Dropdown
       showArrow
@@ -75,7 +80,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
         }}
       >
         {props.type === 'directory'
-          ? dirOptions.map(option => (
+          ? dirOptions(client?.roles).map(option => (
               <DropdownItem key={option.action}>
                 <FolderDocumentOption
                   title={option.title}
@@ -84,7 +89,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                 />
               </DropdownItem>
             ))
-          : docOptions.map(option => (
+          : docOptions(client?.roles).map(option => (
               <DropdownItem key={option.action}>
                 <FolderDocumentOption
                   title={option.title}
@@ -96,10 +101,11 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
       </DropdownMenu>
     </Dropdown>
   );
+
   return (
     <div className="relative hover:bg-gray-50 flex flex-row justify-between rounded-lg bg-white text-black font-light text-sm border">
       {props.type === 'directory' ? (
-        <FolderView layout={props.layout} directory={props.value as Directory} options={options}/>
+        <FolderView layout={props.layout} directory={props.value as Directory} options={options} />
       ) : (
         <FileView layout={props.layout} document={props.value as Document} options={options} />
       )}

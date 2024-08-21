@@ -40,10 +40,10 @@ export function FileView(props: FileViewProps) {
           isDisabled={!!client?.roles.find(r => r.roleName === ROLES.INSTITUTION)}
           defaultItem={props.document.status}
           items={[
-            {key: 'generated', label: 'Generado'},
-            {key: 'review', label: 'En revisión'},
-            {key: 'rejected', label: 'Rechazado'},
-            {key: 'approved', label: 'Aprobado'},
+            {key: DOCUMENT_STATUS.GENERATED, label: 'Generado'},
+            {key: DOCUMENT_STATUS.IN_REVIEW, label: 'En revisión'},
+            {key: DOCUMENT_STATUS.REJECTED, label: 'Rechazado'},
+            {key: DOCUMENT_STATUS.APPROVED, label: 'Aprobado'},
           ]}
           onSelect={key => {
             console.log(key);

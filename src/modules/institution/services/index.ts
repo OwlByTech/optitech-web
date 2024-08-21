@@ -1,5 +1,5 @@
 import {Institution, InstitutionRes} from '../types';
-import {apiSecureGet, apiSecureMethodPostFile, apiSecurePost} from '@/modules/common/services';
+import {apiSecureGet, apiSecurePostFormData, apiSecurePost} from '@/modules/common/services';
 import {updateLogoInstitutionReq} from '../types/services';
 import {CommonServiceRes} from '@/modules/common/types';
 import { CreateAllFormatReq, CreateAllFormatRes } from '@/modules/asesor/types';
@@ -28,7 +28,7 @@ export async function updateLogoInstitutionService(
   try {
     const formData = new FormData();
     formData.append('logo', req.logo);
-    const res = await apiSecureMethodPostFile(`/institution/logo/${req.id}`, formData);
+    const res = await apiSecurePostFormData(`/institution/logo/${req.id}`, formData);
     if (!res) {
       return {
         errors: [['No se ha actualizado foto de institucion']],

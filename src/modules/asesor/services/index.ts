@@ -1,4 +1,4 @@
-import { apiSecureGet, apiSecureMethodPostFile, apiSecurePost } from '@/modules/common/services';
+import { apiSecureGet, apiSecurePostFormData, apiSecurePost } from '@/modules/common/services';
 import { Asesor, CreateAllFormatReq, CreateAllFormatRes, CreateAseorReq, CreateFormatReq } from '../types';
 import { CommonServiceRes } from '@/modules/common/types';
 
@@ -62,7 +62,7 @@ export async function createFormatService(req: CreateFormatReq): Promise<CommonS
     dataCreate.set('file', req.file);
 
     try {
-        const data = await apiSecureMethodPostFile<any>('/format', dataCreate);
+        const data = await apiSecurePostFormData<any>('/format', dataCreate);
 
         if (!data) {
             return { errors: [['No se creo el formato.']] };
