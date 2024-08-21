@@ -1,3 +1,7 @@
 export enum DOCUMENT_STATUS {
-  APROBADO = 'aprobado',
+  GENERATED = 'generated',
+  UPLOADED = 'uploaded',
+  IN_REVIEW = 'in_review',
+  REJECTED = 'rejected',
+  APPROVED = 'approved',
 }

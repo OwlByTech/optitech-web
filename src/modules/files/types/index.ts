@@ -35,7 +35,7 @@ export const CreateDocumentReqValidator = z.object({
 
 export type CreateDocumentReq = {
   directoryId: number;
-  status: DOCUMENT_STATUS.APROBADO;
+  status: DOCUMENT_STATUS;
   files: File[];
 };
 

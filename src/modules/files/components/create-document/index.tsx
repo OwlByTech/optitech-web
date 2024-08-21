@@ -15,6 +15,7 @@ import { useAtom } from 'jotai';
 import { useDisclosure } from '@nextui-org/react';
 import { useFormResponse } from '@/modules/common/hooks/use-form-response';
 import { OptionComponentProps } from '../folder-document-options';
+import { DOCUMENT_STATUS } from '../../types/enum';
 
 export type CreateDocumentModalRef = {
     openWithFiles: (files: FileList) => void;
@@ -58,7 +59,7 @@ export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, OptionComp
 
             const data = new FormData();
             data.set('directoryId', props.value.id!.toString());
-            data.set('status', 'aprobado');
+            data.set('status',  DOCUMENT_STATUS.UPLOADED);
 
             files.current.forEach(file => data.append('files', file));
             files.current = [];

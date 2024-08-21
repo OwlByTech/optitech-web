@@ -1,4 +1,3 @@
-import SelectSearch from '@/modules/common/components/select-search';
 import {File, FolderLayout} from '../../types';
 import {AiFillFile} from 'react-icons/ai';
 import Select from '@/modules/common/components/select';
@@ -39,7 +38,7 @@ export function FileView(props: FileViewProps) {
           {key: 'rejected', label: 'Rechazado'},
           {key: 'approved', label: 'Aprobado'},
         ]}
-        onSelect={() => {}}
+        onSelect={(key) => {console.log(key)}}
       />
     </div>
   );
