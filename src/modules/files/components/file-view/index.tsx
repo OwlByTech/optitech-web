@@ -3,6 +3,9 @@ import {AiFillFile} from 'react-icons/ai';
 import Select from '@/modules/common/components/select';
 import {ReactNode} from 'react';
 import {DOCUMENT_STATUS} from '../../types/enum';
+import {useAtom} from 'jotai';
+import {clientState} from '@/modules/auth/context/client';
+import {ROLES} from '@/modules/auth/types/enum';
 
 export type FileViewProps = {
   document: Document;
@@ -11,6 +14,7 @@ export type FileViewProps = {
 };
 
 export function FileView(props: FileViewProps) {
+  const [client, _setClient] = useAtom(clientState);
   const getFileIcon = () => {
     switch (true) {
       case props.document.name.includes('.pdf'):
@@ -33,7 +37,8 @@ export function FileView(props: FileViewProps) {
 
       {props.document.status !== DOCUMENT_STATUS.UPLOADED && (
         <Select
-          defaultItem="generated"
+          isDisabled={!!client?.roles.find(r => r.roleName === ROLES.INSTITUTION)}
+          defaultItem={props.document.status}
           items={[
             {key: 'generated', label: 'Generado'},
             {key: 'review', label: 'En revisión'},

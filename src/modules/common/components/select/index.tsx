@@ -7,6 +7,7 @@ export type SelectProps = {
   defaultItem: string;
   items: SelectItem[];
   onSelect: (selection: Selection) => void;
+  isDisabled?: boolean;
 };
 
 export default function Select(props: SelectProps) {
@@ -16,6 +17,7 @@ export default function Select(props: SelectProps) {
       onSelectionChange={props.onSelect}
       disallowEmptySelection={true}
       defaultSelectedKeys={[props.defaultItem]}
+      isDisabled={props.isDisabled}
     >
       {props.items.map(item => {
         return <NextUISelectItem key={item.key}>{item.label}</NextUISelectItem>;

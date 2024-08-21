@@ -88,9 +88,9 @@ export function RouteDirectory() {
                 >
                     <Button
                         onClick={() =>
-                            client?.roles[0].roleName === ROLES.INSTITUTION ?
+                            !!client?.roles.find(r => r.roleName === ROLES.INSTITUTION) ?
                                 uploadDocumentsRef.current?.open()
-                                : client?.roles[0].roleName === ROLES.ASSESOR &&
+                                : !!client?.roles.find(r => r.roleName === ROLES.ASSESOR) &&
                                 createFormatsRef.current?.open()
                         }
                         className="bg-white border text-xs text-black h-10 md:w-32"
@@ -99,10 +99,10 @@ export function RouteDirectory() {
                         size="md"
                         startContent={<FiUpload className="md:h-5 md:w-5 w-6 h-6" />}
                     >
-                        {client?.roles[0].roleName === ROLES.INSTITUTION ?
+                        {!!client?.roles.find(r => r.roleName === ROLES.INSTITUTION) ?
 
                             <span className="md:pl-2 hidden md:block">Subir archivo</span>
-                            : client?.roles[0].roleName === ROLES.ASSESOR &&
+                            : !!client?.roles.find(r => r.roleName === ROLES.ASSESOR) &&
                             <span className="md:pl-2 hidden md:block">Subir formato</span>
                         }
                     </Button>

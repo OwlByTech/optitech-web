@@ -59,7 +59,7 @@ export function FolderAll(props: FolderAllProps) {
             },
         ];
 
-        if (client?.roles[0].roleName === ROLES.ASSESOR) {
+        if (!!client?.roles.find(r => r.roleName === ROLES.ASSESOR)) {
             items.unshift({
                 key: 'update:format',
                 title: 'Subir Formato',
@@ -72,7 +72,7 @@ export function FolderAll(props: FolderAllProps) {
             });
         }
 
-        if (client?.roles[0].roleName === ROLES.INSTITUTION) {
+        if (!!client?.roles.find(r => r.roleName === ROLES.INSTITUTION)) {
             items.unshift({
                 key: 'update:document',
                 title: 'Subir archivo',
