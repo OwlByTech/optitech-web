@@ -2,9 +2,7 @@ import {ROUTES_SIDEBAR} from '@/modules/dashboard/types';
 import {z} from 'zod';
 
 export enum ROUTES_SETTINGS {
-  INTEGRATIONS = '/dashboard/settings/integrations',
   NOTIFICATIONS = '/dashboard/settings/notifications',
-  SECURITY = '/dashboard/settings/security',
 }
 export type route = {
   route: string;
@@ -35,16 +33,8 @@ export const routesSettings = [
     name: 'Detalles generales',
   },
   {
-    route: ROUTES_SETTINGS.INTEGRATIONS,
-    name: 'Integraciones',
-  },
-  {
     route: ROUTES_SETTINGS.NOTIFICATIONS,
     name: 'Notificaciones',
-  },
-  {
-    route: ROUTES_SETTINGS.SECURITY,
-    name: 'Seguridad',
   },
 ];
 
