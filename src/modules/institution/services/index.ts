@@ -99,3 +99,7 @@ export async function updateInfoInstitutionService(
     };
   }
 }
+
+export async function getInstitutionByAsesorService(): Promise<InstitutionRes | null> {
+  return await apiSecureGet<InstitutionRes>(`/institution/asesor/get`);
+}
