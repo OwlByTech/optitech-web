@@ -46,3 +46,9 @@ export enum ROUTES_INSTITUTION {
   INSTITUTION_SERVICES = '/dashboard/institution-info/services',
   INSTITUTION_USERS = '/dashboard/institution-info/users',
 }
+
+export const InstitutionInfo = z.object({
+  id: z.number({coerce: true}),
+  institutionName: z.string(),
+  description: z.string(),
+});
