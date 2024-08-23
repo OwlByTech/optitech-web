@@ -1,7 +1,5 @@
-import {ROUTES_SIDEBAR} from '@/modules/dashboard/types';
 import {getDirectoryRouteService, getDirectoryService} from '@/modules/files/services';
 import {FolderAll} from '@/modules/files/templates/folder-all';
-import {redirect} from 'next/navigation';
 
 type Props = {
   params: {folder: number};

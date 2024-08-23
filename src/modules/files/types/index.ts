@@ -93,10 +93,12 @@ export type DownloadDocumentRes = string;
 
 export const DownloadDocumentReqValidator = z.object({
   id: z.number({coerce: true}),
+  institution: z.number({coerce: true}).optional()
 });
 
 export type DownloadDocumentReq = {
   id: number;
+  institution?: number;
 };
 
 export const DeleteDocumentReqValidator = z.object({

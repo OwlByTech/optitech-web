@@ -4,22 +4,10 @@ import {DownloadDocumentOption} from './download';
 import {RenameDocumentOption} from './rename';
 import {Role} from '@/modules/dashboard/types';
 import {ROLES} from '@/modules/auth/types/enum';
-import { UpdateDocumentOption } from './update';
+import {UpdateDocumentOption} from './update';
 
-export const docOptions = (roles?: Role[]) => {
+export const docOptions = (roles?: Role[], institution?: number) => {
   const options = [
-    {
-      action: 'rename',
-      title: 'Renombrar',
-      icon: <FiEdit2 />,
-      component: RenameDocumentOption,
-    },
-    {
-      action: 'delete',
-      icon: <FiTrash />,
-      title: 'Eliminar',
-      component: DeleteDocumentOption,
-    },
     {
       action: 'download',
       icon: <FiDownload />,
@@ -27,6 +15,23 @@ export const docOptions = (roles?: Role[]) => {
       component: DownloadDocumentOption,
     },
   ];
+
+  if (!institution) {
+    options.unshift(
+      {
+        action: 'rename',
+        title: 'Renombrar',
+        icon: <FiEdit2 />,
+        component: RenameDocumentOption,
+      },
+      {
+        action: 'delete',
+        icon: <FiTrash />,
+        title: 'Eliminar',
+        component: DeleteDocumentOption,
+      }
+    );
+  }
 
   if (!!roles?.find(r => r.roleName === ROLES.INSTITUTION)) {
     options.unshift({

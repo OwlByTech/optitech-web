@@ -7,14 +7,16 @@ export const metadata = {
 
 export default async function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+  params: any
+}>) { 
   return (
     <section className="flex w-full max-w-full h-full flex-row gap-4 px-4 pb-4">
-      <DirectoryTree />
+      <DirectoryTree institution={params.institution}  />
       <div className="flex shadow-md w-full max-w-full h-full rounded-lg flex-col bg-white gap-8  md:gap-0">
-        <RouteDirectory />
+        <RouteDirectory institution={params.institution}/>
         {children}
       </div>
     </section>

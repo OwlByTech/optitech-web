@@ -1,9 +1,8 @@
 'use client';
 import {LinkRef} from '@/modules/common/components/link-ref';
-import {FiChevronDown, FiChevronRight, FiFile, FiFolder} from 'react-icons/fi';
+import {FiChevronDown, FiChevronRight} from 'react-icons/fi';
 import {useEffect, useState} from 'react';
-import {Button} from '@/modules/common/components/button';
-import {useFormState, useFormStatus} from 'react-dom';
+import {useFormState} from 'react-dom';
 import {Directory} from '../../types';
 import {getDirectoryAction} from '../../services/actions';
 import {FileViewTree} from '../file-tree-view';
@@ -19,13 +18,14 @@ type Props = {
   directoryRoot: Directory;
   directory: Directory;
   setDirectory: any;
+  institution?: number;
 };
 
-export function FolderViewTree({directory, setDirectory, directoryRoot}: Props) {
+export function FolderViewTree(props: Props) {
   const [pending, setPeding] = useState(false);
   const pathname = usePathname();
   const [change, setChange] = useAtom(changeDirecotry);
-  const directoryTreeAction = getDirectoryAction.bind(null, directory.id);
+  const directoryTreeAction = getDirectoryAction.bind(null, props.directory.id, props.institution);
   const [response, dispatch] = useFormState(directoryTreeAction, {
     directory: null,
     errors: {},
@@ -39,17 +39,17 @@ export function FolderViewTree({directory, setDirectory, directoryRoot}: Props) 
         ...response.directory,
         open: true,
       };
-      const directory_node = {...directoryRoot};
+      const directory_node = {...props.directoryRoot};
       handleDirectory(directory_node, data);
-      setDirectory(directory_node);
+      props.setDirectory(directory_node);
     }
   }, [response]);
 
   useEffect(() => {
-    if (change?.action === 'delete-directory' && change.id === directory.id) {
-      setChange({id: directory.parentId, action: 'delete'});
+    if (change?.action === 'delete-directory' && change.id === props.directory.id) {
+      setChange({id: props.directory.parentId, action: 'delete'});
     }
-    if (change?.id === directory.id) {
+    if (change?.id === props.directory.id) {
       setPeding(true);
       dispatch();
     }
@@ -62,14 +62,14 @@ export function FolderViewTree({directory, setDirectory, directoryRoot}: Props) 
 
   useEffect(() => {
     directories.map(value => {
-      if (directory.id === value.id && !directory.directory) {
+      if (props.directory.id === value.id && !props.directory.directory) {
         setPeding(true);
         dispatch();
       }
-      if (directory.id === value.id && directory.directory) {
-        const directory_node = {...directoryRoot};
+      if (props.directory.id === value.id && props.directory.directory) {
+        const directory_node = {...props.directoryRoot};
         handleDirectoryOpenParent(directory_node, value.id);
-        setDirectory(directory_node);
+        props.setDirectory(directory_node);
       }
     });
   }, [directories]);
@@ -112,20 +112,24 @@ export function FolderViewTree({directory, setDirectory, directoryRoot}: Props) 
         color="foreground"
         delay={1000}
         className="text-xs rounded-lg"
-        content={directory.name}
+        content={props.directory.name}
       >
         <button
           className={clx(
             'hover:bg-gray-50 flex flex-row w-full max-h-full items-center justify-between h-8 p-2 border  rounded-lg bg-white text-black   text-xs gap-2',
-            directory?.open && 'bg-gray-100 border-none ',
-            Number(pathname.split('/')[3]) === directory.id && 'bg-gray-300'
+            props.directory?.open && 'bg-gray-100 border-none ',
+            Number(pathname.split('/')[3]) === props.directory.id && 'bg-gray-300'
           )}
         >
           <LinkRef
             className="flex w-full flex-row overflow-hidden gap-2"
-            href={`${ROUTES_SIDEBAR.FILES}/${directory?.id}`}
+            href={
+              props.institution
+                ? `${ROUTES_SIDEBAR.INSTITUTIONS}/${props.institution}/files/${props.directory?.id}`
+                : `${ROUTES_SIDEBAR.FILES}/${props.directory?.id}`
+            }
           >
-            {directory.directory && directory.open ? (
+            {props.directory.directory && props.directory.open ? (
               <div>
                 <AiFillFolderOpen strokeWidth={1} className="h-4 w-4 fill-sky-600" />
               </div>
@@ -134,20 +138,20 @@ export function FolderViewTree({directory, setDirectory, directoryRoot}: Props) 
                 <AiFillFolder strokeWidth={1} className="h-4 w-4 fill-sky-600" />
               </div>
             )}
-            <p className="truncate text-ellipsis">{directory?.name}</p>
+            <p className="truncate text-ellipsis">{props.directory?.name}</p>
           </LinkRef>
           <>
             {pending ? (
               <Spinner size="sm" />
-            ) : directory?.open ? (
+            ) : props.directory?.open ? (
               <FiChevronDown
                 onClick={() => {
-                  const directory_node = {...directoryRoot};
+                  const directory_node = {...props.directoryRoot};
                   handleDirectory(directory_node, {
-                    ...directory,
+                    ...props.directory,
                     open: false,
                   });
-                  setDirectory(directory_node);
+                  props.setDirectory(directory_node);
                 }}
                 strokeWidth={1}
                 className="h-4 w-4"
@@ -157,13 +161,13 @@ export function FolderViewTree({directory, setDirectory, directoryRoot}: Props) 
               <FiChevronRight
                 className="h-4 w-4 cursor-pointer"
                 onClick={() => {
-                  if (!directory.directory) {
+                  if (!props.directory.directory) {
                     setPeding(true);
                     dispatch();
                   } else {
-                    const directory_node = {...directoryRoot};
-                    handleDirectoryOpenParent(directory_node, directory.id);
-                    setDirectory(directory_node);
+                    const directory_node = {...props.directoryRoot};
+                    handleDirectoryOpenParent(directory_node, props.directory.id);
+                    props.setDirectory(directory_node);
                   }
                 }}
                 strokeWidth={1}
@@ -174,22 +178,23 @@ export function FolderViewTree({directory, setDirectory, directoryRoot}: Props) 
         </button>
       </Tooltip>
       {!pending &&
-        directory?.open &&
-        ((directory?.directory && directory.directory.length > 0) ||
-          (directory?.document && directory?.document.length > 0)) && (
+        props.directory?.open &&
+        ((props.directory?.directory && props.directory.directory.length > 0) ||
+          (props.directory?.document && props.directory?.document.length > 0)) && (
           <div className="flex flex-row w-full pl-1 max-w-full">
             <span className="border-l-1 my-3 border-b-1 w-2 " />
             <div className=" pl-1 flex flex-col gap-2 w-full max-w-full  ">
-              {directory?.directory?.map((value, index) => (
+              {props.directory?.directory?.map((value, index) => (
                 <FolderViewTree
                   key={index}
-                  setDirectory={setDirectory}
+                  setDirectory={props.setDirectory}
                   directory={value}
-                  directoryRoot={directoryRoot}
+                  directoryRoot={props.directoryRoot}
+                  institution={props.institution}
                 />
               ))}
-              {directory?.document?.map((value, index) => (
-                <FileViewTree key={index} document={value} />
+              {props.directory?.document?.map((value, index) => (
+                <FileViewTree key={index} document={value}/>
               ))}
             </div>
           </div>

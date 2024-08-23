@@ -8,6 +8,7 @@ type Props = {
   directory: Directory;
   layout: FolderLayout;
   options?: ReactNode;
+  institution?: number;
 };
 
 export function FolderView(props: Props) {
@@ -15,7 +16,11 @@ export function FolderView(props: Props) {
   return (
     <div className='flex flex-row justify-between w-full'>
       <LinkRef
-        href={`${ROUTES_SIDEBAR.FILES}/${props.directory?.id}`}
+        href={
+          props.institution
+            ? `${ROUTES_SIDEBAR.INSTITUTIONS}/${props.institution}/files/${props.directory?.id}`
+            : `${ROUTES_SIDEBAR.FILES}/${props.directory?.id}`
+        }
         className="flex flex-row  items-center font-normal text-xs overflow-hidden h-full p-2 gap-2 w-full"
       >
         <div>

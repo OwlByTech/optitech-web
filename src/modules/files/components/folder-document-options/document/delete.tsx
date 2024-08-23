@@ -6,7 +6,6 @@ import {Document} from '@/modules/files/types';
 import {useFormState} from 'react-dom';
 import {deleteDocumentForm} from '@/modules/files/services/actions';
 import {useRouter} from 'next/navigation';
-import {toast} from 'sonner';
 import {useAtom} from 'jotai';
 import {changeDirecotry} from '@/modules/files/context';
 import {useFormResponse} from '@/modules/common/hooks/use-form-response';

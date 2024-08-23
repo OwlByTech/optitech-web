@@ -25,8 +25,8 @@ import {
 } from '../types';
 import {BaseFormActionService} from '@/modules/common/services/action';
 
-export async function getDirectoryAction(id?: number) {
-  const response = await getDirectoryService(id);
+export async function getDirectoryAction(id?: number, institution?: number) {
+  const response = await getDirectoryService(id, institution);
   if (response) {
     return {
       message: 'Institución creada exitosamente',
@@ -40,8 +40,8 @@ export async function getDirectoryAction(id?: number) {
   };
 }
 
-export async function getDirectoryChildAction(id?: number) {
-  const response = await getDirectoryChildService(id);
+export async function getDirectoryChildAction(id?: number, institution?: number) {
+  const response = await getDirectoryChildService(id, institution);
   if (response) {
     return {
       message: 'Institución creada exitosamente',

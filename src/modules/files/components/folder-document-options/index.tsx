@@ -11,6 +11,7 @@ import {clientState} from '@/modules/auth/context/client';
 import {useAtom} from 'jotai';
 
 export type FolderDocumentOptionsProps = {
+  institution?: number;
   type: 'document' | 'directory' | 'format';
   value: Directory | Document;
   isOpenOptions: boolean;
@@ -21,6 +22,7 @@ export type FolderDocumentOptionsProps = {
 };
 
 export type OptionComponentProps = {
+  extra?: any,
   value: Directory | Document;
   isOpen?: boolean;
   directory?: number;
@@ -80,7 +82,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
         }}
       >
         {props.type === 'directory'
-          ? dirOptions(client?.roles).map(option => (
+          ? dirOptions(client?.roles, props.institution).map(option => (
               <DropdownItem key={option.action}>
                 <FolderDocumentOption
                   title={option.title}
@@ -89,7 +91,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                 />
               </DropdownItem>
             ))
-          : docOptions(client?.roles).map(option => (
+          : docOptions(client?.roles, props.institution).map(option => (
               <DropdownItem key={option.action}>
                 <FolderDocumentOption
                   title={option.title}
@@ -105,7 +107,7 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
   return (
     <div className="relative hover:bg-gray-50 flex flex-row justify-between rounded-lg bg-white text-black font-light text-sm border">
       {props.type === 'directory' ? (
-        <FolderView layout={props.layout} directory={props.value as Directory} options={options} />
+        <FolderView layout={props.layout} directory={props.value as Directory} options={options} institution={props.institution} />
       ) : (
         <FileView layout={props.layout} document={props.value as Document} options={options} />
       )}

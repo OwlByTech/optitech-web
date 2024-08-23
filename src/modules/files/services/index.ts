@@ -20,6 +20,7 @@ import {
   CreateDocumentReq,
   UpdateDocumentReq,
   UpdateDocumentRes,
+  DownloadDocumentReq,
 } from '../types';
 import {CommonServiceRes} from '@/modules/common/types';
 
@@ -181,10 +182,14 @@ export async function deleteDocumentService(
 }
 
 export async function downloadDocumentService(
-  req: DeleteDocumentReq
+  req: DownloadDocumentReq
 ): Promise<CommonServiceRes<DownloadDocumentRes | null>> {
   try {
-    const res = await apiSecureGet<DownloadDocumentRes>(`/document/download/${req.id}`);
+    let path = `/document/download/${req.id}`;
+    if (req.institution) {
+      path += `?institution=${req.institution}`;
+    }
+    const res = await apiSecureGet<DownloadDocumentRes>(path);
 
     if (!res) {
       return {
