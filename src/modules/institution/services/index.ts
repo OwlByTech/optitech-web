@@ -82,7 +82,6 @@ export async function updateInfoInstitutionService(
 ): Promise<CommonServiceRes<boolean | null>> {
   try {
     const res = await apiSecurePut<boolean | null>(`/institution/${req.id}`, req);
-    console.log(req);
     if (!res) {
       return {
         errors: [['No se ha actualizado la institución']],

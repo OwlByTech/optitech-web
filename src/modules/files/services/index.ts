@@ -23,16 +23,34 @@ import {
 } from '../types';
 import {CommonServiceRes} from '@/modules/common/types';
 
-export async function getDirectoryService(id?: number): Promise<Directory | null> {
-  return await apiSecureGet<Directory>(`/directory-tree/parent/${id}`);
+export async function getDirectoryService(
+  id?: number,
+  institutionId?: number
+): Promise<Directory | null> {
+  let path = `/directory-tree/parent/${id}`;
+  if (institutionId) {
+    path += `?institution=${institutionId}`;
+  }
+  return await apiSecureGet<Directory>(path);
 }
 
-export async function getDirectoryChildService(id?: number) {
-  return await apiSecureGet(`/directory-tree/child/${id}`);
+export async function getDirectoryChildService(id?: number, institutionId?: number) {
+  let path = `/directory-tree/child/${id}`;
+  if (institutionId) {
+    path += `?institution=${institutionId}`;
+  }
+  return await apiSecureGet(path);
 }
 
-export async function getDirectoryRouteService(id?: number): Promise<Directory[] | null> {
-  return await apiSecureGet<Directory[]>(`/directory-tree/route/${id}`);
+export async function getDirectoryRouteService(
+  id?: number,
+  institutionId?: number
+): Promise<Directory[] | null> {
+  let path = `/directory-tree/route/${id}`;
+  if (institutionId) {
+    path += `?institution=${institutionId}`;
+  }
+  return await apiSecureGet<Directory[]>(path);
 }
 
 export async function createDirectoryService(
