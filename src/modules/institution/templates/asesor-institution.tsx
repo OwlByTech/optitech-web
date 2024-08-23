@@ -22,11 +22,7 @@ export default function AsesorInstitution({institutions}: AsesorInstitutionProps
             className="flex flex-col justify-center w-44 border-2 rounded-xl p-4"
           >
             <h2>{institution.institutionName}</h2>
-            {institution.photo ? (
-              <img src={institution.photo} />
-            ) : (
-              <img src="/profile.png" alt="Default profile" />
-            )}
+            {institution.photo ? <img src={institution.photo} /> : <img src="/profile.png" />}
             <p>{institution.description}</p>
           </div>
         ))}
