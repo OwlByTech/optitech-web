@@ -19,7 +19,7 @@ export function DirectoryTree(props: DirectoryTreeProps) {
     if(props.institution){
         id = Number(pathname.split('/')[5])
     }
-    const directoryTreeAction = getDirectoryChildAction.bind(null, id ?? 1, props.institution);
+    const directoryTreeAction = getDirectoryChildAction.bind(null, id ? id: 1, props.institution);
     const [response, dispatch] = useFormState(directoryTreeAction, {
         directory: null,
         errors: [],
