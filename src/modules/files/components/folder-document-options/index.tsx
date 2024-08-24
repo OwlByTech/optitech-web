@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import {FiMoreVertical} from 'react-icons/fi';
 import {Directory, Document, FolderLayout} from '../../types';
 import {FolderView} from '../folder-view';
@@ -22,7 +22,7 @@ export type FolderDocumentOptionsProps = {
 };
 
 export type OptionComponentProps = {
-  extra?: any,
+  extra?: any;
   value: Directory | Document;
   isOpen?: boolean;
   directory?: number;
@@ -91,15 +91,17 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
                 />
               </DropdownItem>
             ))
-          : docOptions(client?.roles, props.institution).map(option => (
-              <DropdownItem key={option.action}>
-                <FolderDocumentOption
-                  title={option.title}
-                  option={option}
-                  onSelectOption={props.onSelectOption}
-                />
-              </DropdownItem>
-            ))}
+          : docOptions((props.value as Document).status, client?.roles, props.institution).map(
+              option => (
+                <DropdownItem key={option.action}>
+                  <FolderDocumentOption
+                    title={option.title}
+                    option={option}
+                    onSelectOption={props.onSelectOption}
+                  />
+                </DropdownItem>
+              )
+            )}
       </DropdownMenu>
     </Dropdown>
   );
@@ -107,7 +109,12 @@ export function FolderDocumentOptions(props: FolderDocumentOptionsProps) {
   return (
     <div className="relative hover:bg-gray-50 flex flex-row justify-between rounded-lg bg-white text-black font-light text-sm border">
       {props.type === 'directory' ? (
-        <FolderView layout={props.layout} directory={props.value as Directory} options={options} institution={props.institution} />
+        <FolderView
+          layout={props.layout}
+          directory={props.value as Directory}
+          options={options}
+          institution={props.institution}
+        />
       ) : (
         <FileView layout={props.layout} document={props.value as Document} options={options} />
       )}

@@ -5,8 +5,9 @@ import {RenameDocumentOption} from './rename';
 import {Role} from '@/modules/dashboard/types';
 import {ROLES} from '@/modules/auth/types/enum';
 import {UpdateDocumentOption} from './update';
+import {DOCUMENT_STATUS} from '@/modules/files/types/enum';
 
-export const docOptions = (roles?: Role[], institution?: number) => {
+export const docOptions = (curStatus: DOCUMENT_STATUS, roles?: Role[], institution?: number) => {
   const options = [
     {
       action: 'download',
@@ -33,7 +34,10 @@ export const docOptions = (roles?: Role[], institution?: number) => {
     );
   }
 
-  if (!!roles?.find(r => r.roleName === ROLES.INSTITUTION)) {
+  if (
+    !!roles?.find(r => r.roleName === ROLES.INSTITUTION) &&
+    curStatus === DOCUMENT_STATUS.REJECTED
+  ) {
     options.unshift({
       action: 'update',
       title: 'Actualizar',
