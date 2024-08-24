@@ -21,20 +21,14 @@ export default function AsesorInstitution({institutions}: AsesorInstitutionProps
     <div className="p-8 bg-white mx-5 mb-5 rounded-xl h-screen">
       <div className="flex gap-5 grid-cols-6">
         {institutions.map(institution => (
-          <LinkRef href={`${ROUTES_SIDEBAR.INSTITUTIONS}/${institution.id}`}>
-            <div
-              key={institution.id}
-              className="flex flex-col justify-center w-44 border-2 rounded-xl p-4 cursor-pointer"
-            >
-              <h2>{institution.institutionName}</h2>
-              {institution.photo ? (
-                <img src={institution.photo} />
-              ) : (
-                <img src="/profile.png" alt="Default profile" />
-              )}
-              <p>{institution.description}</p>
-            </div>
-          </LinkRef>
+          <div
+            key={institution.id}
+            className="flex flex-col justify-center w-44 border-2 rounded-xl p-4"
+          >
+            <h2>{institution.institutionName}</h2>
+            {institution.photo ? <img src={institution.photo} /> : <img src="/profile.png" />}
+            <p>{institution.description}</p>
+          </div>
         ))}
       </div>
     </div>
