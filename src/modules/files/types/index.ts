@@ -37,6 +37,16 @@ export const CreateDocumentReqValidator = z.object({
   files: z.any(),
 });
 
+export type UpdateDocumentStatusReq = {
+  id: number;
+  status: DOCUMENT_STATUS;
+}
+export const UpdateDocumentStatusReqValidator = z.object({
+  id: z.number({coerce: true}),
+  status: z.nativeEnum(DOCUMENT_STATUS)
+});
+export type UpdateDocumentStatusRes = boolean;
+
 export type UpdateDocumentReq = {
   id: number;
   file: File;

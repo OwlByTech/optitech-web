@@ -1,11 +1,15 @@
 import {Document, FolderLayout} from '../../types';
 import {AiFillFile} from 'react-icons/ai';
-import Select from '@/modules/common/components/select';
+import Select, {SelectKey} from '@/modules/common/components/select';
 import {ReactNode} from 'react';
 import {DOCUMENT_STATUS} from '../../types/enum';
 import {useAtom} from 'jotai';
 import {clientState} from '@/modules/auth/context/client';
 import {ROLES} from '@/modules/auth/types/enum';
+import {useFormState} from 'react-dom';
+import {updateDocumentStatusForm} from '../../services/actions';
+import {useRouter} from 'next/navigation';
+import {useFormResponse} from '@/modules/common/hooks/use-form-response';
 
 export type FileViewProps = {
   document: Document;
@@ -14,6 +18,26 @@ export type FileViewProps = {
 };
 
 export function FileView(props: FileViewProps) {
+  const router = useRouter();
+  const [response, dispatch] = useFormState(updateDocumentStatusForm, {
+    messages: [],
+    errors: [],
+  });
+
+  useFormResponse({
+    response,
+    onSuccess: data => {
+      router.refresh();
+    },
+  });
+
+  const onSubmit = (key: SelectKey) => {
+    const formData = new FormData();
+    formData.set('id', props.document.id.toString());
+    formData.set('status', key.toString());
+    dispatch(formData);
+  };
+
   const [client, _setClient] = useAtom(clientState);
   const getFileIcon = () => {
     switch (true) {
@@ -39,15 +63,19 @@ export function FileView(props: FileViewProps) {
         <Select
           isDisabled={!!client?.roles.find(r => r.roleName === ROLES.INSTITUTION)}
           defaultItem={props.document.status}
+          disableKeys={[
+            DOCUMENT_STATUS.GENERATED,
+            DOCUMENT_STATUS.UPLOADED,
+            DOCUMENT_STATUS.IN_REVIEW,
+          ]}
           items={[
             {key: DOCUMENT_STATUS.GENERATED, label: 'Generado'},
             {key: DOCUMENT_STATUS.IN_REVIEW, label: 'En revisión'},
+            {key: DOCUMENT_STATUS.UPLOADED, label: 'Subido'},
             {key: DOCUMENT_STATUS.REJECTED, label: 'Rechazado'},
             {key: DOCUMENT_STATUS.APPROVED, label: 'Aprobado'},
           ]}
-          onSelect={key => {
-            console.log(key);
-          }}
+          onSelect={onSubmit}
         />
       )}
     </div>

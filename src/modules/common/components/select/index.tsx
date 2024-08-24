@@ -1,12 +1,16 @@
 import {Selection, SelectItem as NextUISelectItem, Select as SelectUI} from '@nextui-org/react';
+
+export type SelectKey = number | string;
+
 export type SelectItem = {
-  key: string | number;
+  key: SelectKey;
   label: string;
 };
 export type SelectProps = {
   defaultItem: string;
   items: SelectItem[];
-  onSelect: (selection: Selection) => void;
+  disableKeys: string[];
+  onSelect: (key: SelectKey) => void;
   isDisabled?: boolean;
 };
 
@@ -14,9 +18,15 @@ export default function Select(props: SelectProps) {
   return (
     <SelectUI
       isRequired
-      onSelectionChange={props.onSelect}
+      onSelectionChange={(key: Selection) => {
+        const firstValue = [...key][0];
+        if (props.onSelect && firstValue !== undefined) {
+          props.onSelect(firstValue);
+        }
+      }}
       disallowEmptySelection={true}
       defaultSelectedKeys={[props.defaultItem]}
+      disabledKeys={props.disableKeys}
       isDisabled={props.isDisabled}
     >
       {props.items.map(item => {

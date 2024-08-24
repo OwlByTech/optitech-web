@@ -12,6 +12,7 @@ import {
   renameDocumentService,
   updateDiretoryService,
   updateDocumentService,
+  updateDocumentStatusService,
 } from '.';
 import {
   CreateDirectoryReqValidator,
@@ -22,6 +23,7 @@ import {
   RenameDocumentReqValidator,
   UpdateDirectoryReqValidator,
   UpdateDocumentReqValidator,
+  UpdateDocumentStatusReqValidator,
 } from '../types';
 import {BaseFormActionService} from '@/modules/common/services/action';
 
@@ -148,5 +150,17 @@ export async function updateDocumentForm(
     payload,
     UpdateDocumentReqValidator,
     updateDocumentService
+  );
+}
+
+export async function updateDocumentStatusForm(
+  state: CommonActionState,
+  payload: FormData
+): Promise<CommonActionState> {
+  return await BaseFormActionService(
+    state,
+    payload,
+    UpdateDocumentStatusReqValidator,
+    updateDocumentStatusService
   );
 }

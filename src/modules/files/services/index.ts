@@ -21,6 +21,8 @@ import {
   UpdateDocumentReq,
   UpdateDocumentRes,
   DownloadDocumentReq,
+  UpdateDocumentStatusRes,
+  UpdateDocumentStatusReq,
 } from '../types';
 import {CommonServiceRes} from '@/modules/common/types';
 
@@ -246,6 +248,27 @@ export async function updateDocumentService(
     }
     return {
       messages: ['Se ha actualizado documento exitosamente.'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      errors: [[e.message]],
+    };
+  }
+}
+
+export async function updateDocumentStatusService(
+  req: UpdateDocumentStatusReq
+): Promise<CommonServiceRes<UpdateDocumentStatusRes | null>> {
+  try {
+    const res = await apiSecurePut<any>(`/document/status`, req);
+    if (!res) {
+      return {
+        errors: [['No se ha actualizado estado del documento']],
+      };
+    }
+    return {
+      messages: ['Se ha actualizado estado del documento exitosamente.'],
     };
   } catch (error) {
     const e = error as Error;
