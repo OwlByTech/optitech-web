@@ -1,4 +1,7 @@
-import {getInstitutionByAsesorService} from '@/modules/institution/services';
+import {
+  getClientByInstitutionService,
+  getInstitutionByAsesorService,
+} from '@/modules/institution/services';
 import AsesorInstitution from '@/modules/institution/templates/asesor-institution';
 import {getPhotoUserService} from '@/modules/settings/services';
 
@@ -9,7 +12,13 @@ export default async function Page() {
 
   const institutionsWithPhotos = await Promise.all(
     asesor.map(async institution => {
-      const photo = await getPhotoUserService(institution.id);
+      const client = await getClientByInstitutionService(institution.id);
+
+      if (client === null) {
+        return {...institution, photo: null};
+      }
+
+      const photo = await getPhotoUserService(client);
       return {...institution, photo};
     })
   );

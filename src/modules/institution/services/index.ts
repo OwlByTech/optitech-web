@@ -1,5 +1,6 @@
 import {Institution, InstitutionRes} from '../types';
 import {
+  apiGet,
   apiSecureGet,
   apiSecurePostFormData,
   apiSecurePost,
@@ -100,4 +101,14 @@ export async function updateInfoInstitutionService(
 
 export async function getInstitutionByAsesorService(): Promise<InstitutionRes | null> {
   return await apiSecureGet<InstitutionRes>(`/institution/asesor/get`);
+}
+
+export async function getClientByInstitutionService(id: number): Promise<number | null> {
+  try {
+    const response = await apiGet(`/institution-client/get/institution/${id}`);
+    return response.clientId ? parseInt(response.clientId, 10) : null;
+  } catch (error) {
+    console.error('Error fetching client:', error);
+    return null;
+  }
 }
