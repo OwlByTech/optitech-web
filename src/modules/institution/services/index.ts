@@ -1,11 +1,10 @@
 import {Institution, InstitutionRes} from '../types';
 import {
   apiGet,
-  apiPost,
-  apiPut,
   apiSecureGet,
-  apiSecureMethodPostFile,
+  apiSecurePostFormData,
   apiSecurePost,
+  apiSecurePut,
 } from '@/modules/common/services';
 import {updateInfoInstitutionReq, updateLogoInstitutionReq} from '../types/services';
 import {CommonServiceRes} from '@/modules/common/types';
@@ -37,7 +36,7 @@ export async function updateLogoInstitutionService(
   try {
     const formData = new FormData();
     formData.append('logo', req.logo);
-    const res = await apiSecureMethodPostFile(`/institution/logo/${req.id}`, formData);
+    const res = await apiSecurePostFormData(`/institution/logo/${req.id}`, formData);
     if (!res) {
       return {
         errors: [['No se ha actualizado foto de institución']],
@@ -83,8 +82,7 @@ export async function updateInfoInstitutionService(
   req: updateInfoInstitutionReq
 ): Promise<CommonServiceRes<boolean | null>> {
   try {
-    const res = await apiPut<boolean | null>(`/institution/${req.id}`, req);
-    console.log(req);
+    const res = await apiSecurePut<boolean | null>(`/institution/${req.id}`, req);
     if (!res) {
       return {
         errors: [['No se ha actualizado la institución']],

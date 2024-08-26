@@ -1,6 +1,6 @@
 import {CommonServiceRes} from '@/modules/common/types';
 import {UpdateClientInfoReq, UpdateUserPhotoReq} from '../types';
-import {apiSecureGet, apiSecureMethodPostFile, apiSecurePut} from '@/modules/common/services';
+import {apiSecureGet, apiSecurePostFormData, apiSecurePut} from '@/modules/common/services';
 
 export async function updateUserInfoService(
   req: UpdateClientInfoReq
@@ -25,7 +25,7 @@ export async function updatePhotoUserService(
   try {
     const formData = new FormData();
     formData.append('photo', req.photo);
-    const res = await apiSecureMethodPostFile<boolean | null>(`/client/photo/${req.id}`, formData);
+    const res = await apiSecurePostFormData<boolean | null>(`/client/photo/${req.id}`, formData);
     if (!res) {
       return {
         errors: [['No se ha actualizado la foto de perfil.']],

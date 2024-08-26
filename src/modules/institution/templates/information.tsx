@@ -31,7 +31,6 @@ export default function InformationInstitution(props: InformationInstitutionProp
 
   const handleSubmit = (formData: FormData) => {
     formData.set('id', props.institution.id.toString());
-    console.log('Form Data:', Array.from(formData.entries()));
     dispatch(formData);
   };
 

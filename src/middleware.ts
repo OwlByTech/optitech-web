@@ -43,26 +43,24 @@ export default NextAuth(authConfig).auth(async req => {
     return Response.redirect(newUrl);
   }
 
-  if (client?.roles && client?.roles.length > 0) {
-    if (client?.roles[0]?.roleName === ROLES.INSTITUTION) {
-      const institution = await getInstitutionService();
-      if (!institution && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
-        const newUrl = new URL(ROUTES_INSTITUTION.REGISTER_INSTITUTION, req.nextUrl.origin);
-        return Response.redirect(newUrl);
-      }
-
-      if (institution && pathname.startsWith(ROUTES_INSTITUTION.REGISTER_INSTITUTION)) {
-        const newUrl = new URL(ROUTES_SIDEBAR.DASHBOARD, req.nextUrl.origin);
-        return Response.redirect(newUrl);
-      }
+  if (!!client?.roles.find(r => r.roleName === ROLES.INSTITUTION)) {
+    const institution = await getInstitutionService();
+    if (!institution && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
+      const newUrl = new URL(ROUTES_INSTITUTION.REGISTER_INSTITUTION, req.nextUrl.origin);
+      return Response.redirect(newUrl);
     }
 
-    if (client?.roles[0]?.roleName === ROLES.ASSESOR) {
-      const asesor = (await getAsesorService(client.id)).data;
-      if (!asesor && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
-        const newUrl = new URL(ROUTES_ASESOR.REGISTER_ASESOR, req.nextUrl.origin);
-        return Response.redirect(newUrl);
-      }
+    if (institution && pathname.startsWith(ROUTES_INSTITUTION.REGISTER_INSTITUTION)) {
+      const newUrl = new URL(ROUTES_SIDEBAR.DASHBOARD, req.nextUrl.origin);
+      return Response.redirect(newUrl);
+    }
+  }
+
+  if (!!client?.roles.find(r => r.roleName === ROLES.ASSESOR)) {
+    const asesor = (await getAsesorService(client.id)).data;
+    if (!asesor && pathname.startsWith(ROUTES_SIDEBAR.DASHBOARD)) {
+      const newUrl = new URL(ROUTES_ASESOR.REGISTER_ASESOR, req.nextUrl.origin);
+      return Response.redirect(newUrl);
     }
   }
 

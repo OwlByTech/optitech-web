@@ -64,7 +64,7 @@ export const CreateFormatModal = forwardRef<CreateFormatModalRef, OptionComponen
             onAccept={(data: FormData) => {
               onClose();
               data.set('serviceId', service.current.toString());
-              data.set('extension', '.doc');
+              data.set('extension', '.docx');
               data.set('directoryId', props.value.id!.toString());
               onSubmit(data);
             }}

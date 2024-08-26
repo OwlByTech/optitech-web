@@ -83,39 +83,33 @@ async function apiSecureMethod<T>(
   }
 }
 
-export async function apiSecureMethodPostFile<T>(path: string, body: FormData): Promise<T | null> {
+export async function apiSecurePostFormData<T>(path: string, body: FormData): Promise<T | null> {
+  return await apiSecureFormData(path, body, 'POST');
+}
+
+export async function apiSecurePutFormData<T>(
+  path: string,
+  body: FormData
+): Promise<T | null> {
+  return await apiSecureFormData(path, body, 'POST');
+}
+
+export async function apiSecureFormData<T>(
+  path: string,
+  body: FormData,
+  method: 'PUT' | 'POST'
+): Promise<T | null> {
   const session = await auth();
   try {
     const response = await fetch(`${process.env.API_URL}${path}`, {
-      method: 'POST',
+      method,
       headers: {
         Authorization: `Bearer ${session?.user.token}`,
       },
-      body: body,
+      body,
     });
     if (!response.ok) {
-      console.error('Response failed');
-      return null;
-    }
-    return await response.json();
-  } catch (e) {
-    console.error('Error:', e);
-    return null;
-  }
-}
-
-export async function apiPut<T>(path: string, body: {}): Promise<T | null> {
-  try {
-    const response = await fetch(`${process.env.API_URL}${path}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      console.error('Response failed');
+      console.error(await response.text());
       return null;
     }
     return await response.json();

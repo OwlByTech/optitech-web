@@ -1,8 +1,7 @@
 import {
-  ApiContentType,
   apiSecureDelete,
   apiSecureGet,
-  apiSecureMethodPostFile,
+  apiSecurePostFormData,
   apiSecurePost,
   apiSecurePut,
 } from '@/modules/common/services';
@@ -19,19 +18,42 @@ import {
   RenameDocumentReq,
   RenameDocumentRes,
   CreateDocumentReq,
+  UpdateDocumentReq,
+  UpdateDocumentRes,
+  DownloadDocumentReq,
+  UpdateDocumentStatusRes,
+  UpdateDocumentStatusReq,
 } from '../types';
 import {CommonServiceRes} from '@/modules/common/types';
 
-export async function getDirectoryService(id?: number): Promise<Directory | null> {
-  return await apiSecureGet<Directory>(`/directory-tree/parent/${id}`);
+export async function getDirectoryService(
+  id?: number,
+  institutionId?: number
+): Promise<Directory | null> {
+  let path = `/directory-tree/parent/${id}`;
+  if (institutionId) {
+    path += `?institution=${institutionId}`;
+  }
+  return await apiSecureGet<Directory>(path);
 }
 
-export async function getDirectoryChildService(id?: number) {
-  return await apiSecureGet(`/directory-tree/child/${id}`);
+export async function getDirectoryChildService(id?: number, institutionId?: number) {
+  let path = `/directory-tree/child/${id}`;
+  if (institutionId) {
+    path += `?institution=${institutionId}`;
+  }
+  return await apiSecureGet(path);
 }
 
-export async function getDirectoryRouteService(id?: number): Promise<Directory[] | null> {
-  return await apiSecureGet<Directory[]>(`/directory-tree/route/${id}`);
+export async function getDirectoryRouteService(
+  id?: number,
+  institutionId?: number
+): Promise<Directory[] | null> {
+  let path = `/directory-tree/route/${id}`;
+  if (institutionId) {
+    path += `?institution=${institutionId}`;
+  }
+  return await apiSecureGet<Directory[]>(path);
 }
 
 export async function createDirectoryService(
@@ -109,7 +131,7 @@ export async function createDocumentsService(
 
 export async function createDocumentService(createDocument: FormData): Promise<any | null> {
   try {
-    return await apiSecureMethodPostFile<any>('/document', createDocument);
+    return await apiSecurePostFormData<any>('/document', createDocument);
   } catch (error) {
     const e = error as Error;
     return e;
@@ -162,10 +184,14 @@ export async function deleteDocumentService(
 }
 
 export async function downloadDocumentService(
-  req: DeleteDocumentReq
+  req: DownloadDocumentReq
 ): Promise<CommonServiceRes<DownloadDocumentRes | null>> {
   try {
-    const res = await apiSecureGet<DownloadDocumentRes>(`/document/download/${req.id}`);
+    let path = `/document/download/${req.id}`;
+    if (req.institution) {
+      path += `?institution=${req.institution}`;
+    }
+    const res = await apiSecureGet<DownloadDocumentRes>(path);
 
     if (!res) {
       return {
@@ -198,6 +224,51 @@ export async function renameDocumentService(
 
     return {
       messages: ['Se ha renombrado documento exitosamente.'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      errors: [[e.message]],
+    };
+  }
+}
+
+export async function updateDocumentService(
+  req: UpdateDocumentReq
+): Promise<CommonServiceRes<UpdateDocumentRes | null>> {
+  try {
+    const formData = new FormData();
+    formData.set('file', req.file);
+    formData.set('data', JSON.stringify({id: req.id}));
+    const res = await apiSecurePostFormData<any>(`/document/version`, formData);
+    if (!res) {
+      return {
+        errors: [['No se ha actualizado el documento']],
+      };
+    }
+    return {
+      messages: ['Se ha actualizado documento exitosamente.'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      errors: [[e.message]],
+    };
+  }
+}
+
+export async function updateDocumentStatusService(
+  req: UpdateDocumentStatusReq
+): Promise<CommonServiceRes<UpdateDocumentStatusRes | null>> {
+  try {
+    const res = await apiSecurePut<any>(`/document/status`, req);
+    if (!res) {
+      return {
+        errors: [['No se ha actualizado estado del documento']],
+      };
+    }
+    return {
+      messages: ['Se ha actualizado estado del documento exitosamente.'],
     };
   } catch (error) {
     const e = error as Error;
