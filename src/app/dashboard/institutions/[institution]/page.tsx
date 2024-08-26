@@ -1,3 +1,4 @@
+import { getDirectoryChildService } from '@/modules/files/services';
 import InstitutionDetails from '@/modules/institution/templates/details';
 
 export const metadata = {
@@ -8,8 +9,10 @@ type Props = {
   params: {institution: number};
 };
 
-export default function Page({params}: Props) {
+export default async function Page({params}: Props) {
   // TODO: add institutions details and button to files.
   // TODO: Add get to get folder id
-  return <InstitutionDetails folder={1} id={params.institution} />;
+  const parentFolder: any = await getDirectoryChildService(1, params.institution);
+  if(!parentFolder) return <></>;
+  return <InstitutionDetails folder={parentFolder.id} id={params.institution} />;
 }
