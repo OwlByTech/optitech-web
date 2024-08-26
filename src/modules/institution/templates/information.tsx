@@ -5,39 +5,39 @@ import {Input} from '@/modules/common/components/input';
 import {SubmitButton} from '@/modules/common/components/submit-button';
 import {Textarea} from '@/modules/common/components/text-area';
 import LogoInstitution from '../components/logo-institution';
-import Services from '../components/services-institution';
-import {useAtom} from 'jotai';
-import {institutionStorage} from '../context';
 import {InstitutionRes} from '../types';
+import {useRouter} from 'next/navigation';
+import {useFormState} from 'react-dom';
+import {useFormResponse} from '@/modules/common/hooks/use-form-response';
+import {updateInstitutionForm} from '../services/actions';
 
 export type InformationInstitutionProps = {
   institution: InstitutionRes;
 };
 
 export default function InformationInstitution(props: InformationInstitutionProps) {
-  /*
-    const [response, dispatch] = useFormState(, {
-        message: null,
-        errors: {},
-    });
+  const router = useRouter();
+  const [response, dispatch] = useFormState(updateInstitutionForm, {
+    messages: [],
+    errors: [],
+  });
 
-    useEffect(() => {
-        if (response.errors) {
-            return;
-        }
+  useFormResponse({
+    response,
+    onEnd: () => {
+      router.refresh();
+    },
+  });
 
-        toast.success(response?.message);
-    }, [response]);
+  const handleSubmit = (formData: FormData) => {
+    formData.set('id', props.institution.id.toString());
+    console.log('Form Data:', Array.from(formData.entries()));
+    dispatch(formData);
+  };
 
-    const handleSubmit = (formData: FormData) => {
-        formData.set("id", props.institution.id.toString());
-        dispatch(formData);
-    };
-*/
-  const [institution, setInstitution] = useAtom(institutionStorage);
   return (
     <section className="flex flex-col m-4 p-4 bg-white shadow-md rounded-lg ">
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" action={handleSubmit}>
         <div className="flex flex-col gap-[10px]">
           <h1 className="text-xl pt-1">Informacion</h1>
           <hr className="w-full border-t" />
