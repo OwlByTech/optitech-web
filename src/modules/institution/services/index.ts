@@ -1,5 +1,6 @@
 import {Institution, InstitutionRes} from '../types';
 import {
+  apiGet,
   apiSecureGet,
   apiSecurePostFormData,
   apiSecurePost,
