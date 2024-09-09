@@ -1,118 +1,114 @@
-import Modal from "@/modules/common/components/modal";
-import { Directory } from "../../types";
-import { useFormState, useFormStatus } from "react-dom";
+import Modal from '@/modules/common/components/modal';
+import { useFormState } from 'react-dom';
 import {
-  forwardRef,
-  MutableRefObject,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { UploadFile } from "@/modules/common/components/upload-file";
-import { createDocumentForm } from "../../services/actions";
-import { changeDirecotry } from "../../context";
-import { useAtom } from "jotai";
-import { useDisclosure } from "@nextui-org/react";
-
-export type CreateDocumentModalProps = {
-  curDir: Directory;
-};
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from 'react';
+import { useRouter } from 'next/navigation';
+import { UploadFile } from '@/modules/common/components/upload-file';
+import { createDocumentForm } from '../../services/actions';
+import { changeDirecotry } from '../../context';
+import { useAtom } from 'jotai';
+import { useDisclosure } from '@nextui-org/react';
+import { useFormResponse } from '@/modules/common/hooks/use-form-response';
+import { OptionComponentProps } from '../folder-document-options';
+import { DOCUMENT_STATUS } from '../../types/enum';
 
 export type CreateDocumentModalRef = {
-  openWithFiles: (files: FileList) => void;
-  open: () => void;
+    openWithFiles: (files: FileList) => void;
+    open: () => void;
+    close: () => void;
 };
 
-export const CreateDocumentModal = forwardRef<
-  CreateDocumentModalRef,
-  CreateDocumentModalProps
->((props, ref) => {
-  const router = useRouter();
+export const CreateDocumentModal = forwardRef<CreateDocumentModalRef, OptionComponentProps>(
+    (props, ref) => {
+        const router = useRouter();
+        const files = useRef<File[]>([]);
+        const [_, setChange] = useAtom(changeDirecotry);
+        const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+        const [_pending, setPending] = useState(false);
 
-  const files = useRef<File[]>([]);
-  const [response, dispatch] = useFormState(createDocumentForm, {
-    message: [],
-    errors: {},
-  });
+        const [response, dispatch] = useFormState(createDocumentForm, {
+            messages: [],
+            errors: [],
+        });
 
-  const [_, setChange] = useAtom(changeDirecotry);
+        useEffect(() => {
+            props.isOpen && onOpen();
+        }, [props.isOpen]);
 
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-  const [pending, setPending] = useState(false);
+        useFormResponse({
+            response,
+            onSuccess: () => {
+                setPending(false);
+                onClose();
+                setChange({ id: props.value.id, action: 'create' });
+                router.refresh();
+            },
+        });
 
-  useEffect(() => {
-    if (response.errors) {
-      return;
+        useEffect(() => {
+            files.current = [];
+        }, [onOpenChange]);
+
+        const onSubmit = () => {
+            if (files.current.length < 0) return;
+
+            const data = new FormData();
+            data.set('directoryId', props.value.id!.toString());
+            data.set('status',  DOCUMENT_STATUS.UPLOADED);
+
+            files.current.forEach(file => data.append('files', file));
+            files.current = [];
+
+            dispatch(data);
+        };
+
+        useImperativeHandle(ref, () => ({
+            openWithFiles: (fileList: FileList) => {
+                const fileLists = [];
+                for (const file of fileList) {
+                    fileLists.push(file);
+                }
+
+                if (fileLists.length < 0) return;
+                files.current = fileLists;
+                onOpen();
+            },
+            open: () => onOpen(),
+            close: () => onClose()
+        }));
+
+        return (
+            <>
+                {isOpen && (
+                    <Modal
+                        isOpen={isOpen}
+                        onAccept={() => {
+                            onClose();
+                            onSubmit();
+                        }}
+                        onClose={props.onClose}
+                        onOpenChange={onOpenChange}
+                        title={`Subir archivo en ${props.value.name}`}
+                        classNames={{
+                            backdrop: 'bg-white/80 backdrop-opacity-80',
+                        }}
+                    >
+                        <UploadFile
+                            name="files"
+                            multiple
+                            required
+                            acceptedFileExtensions={['docx', 'pdf']}
+                            selectedFiles={files.current}
+                            onSelectedFile={fileUploads => (files.current = fileUploads)}
+                        />
+                    </Modal>
+                )}
+            </>
+        );
     }
-    setPending(false);
-    response.message?.map((data) => {
-      toast.info(data);
-    });
-    router.refresh();
-    onClose();
-    setChange({ id: props.curDir.id, action: "create" });
-  }, [response]);
-
-  useEffect(() => {
-    files.current = [];
-  }, [onOpenChange]);
-
-  const onSubmit = () => {
-    if (files.current.length < 0) return;
-
-    const data = new FormData();
-    data.set("directoryId", props.curDir.id!.toString());
-    data.set("status", "aprobado");
-
-    files.current.forEach((file) => data.append("files", file));
-    files.current = [];
-
-    dispatch(data);
-  };
-
-  useImperativeHandle(ref, () => ({
-    openWithFiles: (fileList: FileList) => {
-      const fileLists = [];
-      for (const file of fileList) {
-        fileLists.push(file);
-      }
-
-      if (fileLists.length < 0) return;
-      files.current = fileLists;
-      onOpen();
-    },
-    open: () => onOpen(),
-  }));
-
-  return (
-    <>
-      {isOpen && (
-        <Modal
-          isOpen={isOpen}
-          onAccept={() => {
-            onClose();
-            onSubmit();
-          }}
-          onClose={onClose}
-          onOpenChange={onOpenChange}
-          title={`Subir archivo en ${props.curDir.name}`}
-          classNames={{
-            backdrop: "bg-white/80 backdrop-opacity-80",
-          }}
-        >
-          <UploadFile
-            name="files"
-            multiple
-            required
-            acceptedFileExtensions={["doc", "pdf"]}
-            selectedFiles={files.current}
-            onSelectedFile={(fileUploads) => (files.current = fileUploads)}
-          />
-        </Modal>
-      )}
-    </>
-  );
-});
+);

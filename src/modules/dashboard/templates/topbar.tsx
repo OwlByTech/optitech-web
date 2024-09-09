@@ -1,20 +1,20 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/modules/common/components/button";
-import { FiInfo, FiMenu, FiPauseCircle } from "react-icons/fi";
-import { TimeTopBar } from "../components/time-top-bar";
-import { Routes } from "./routes";
-
-export function TopBar() {
+'use client';
+import {useState, useEffect, useRef} from 'react';
+import {Button} from '@/modules/common/components/button';
+import {FiArrowLeft, FiInfo, FiMenu, FiPauseCircle} from 'react-icons/fi';
+import {TimeTopBar} from '../components/time-top-bar';
+import {Routes} from './routes';
+import {ClientInfoRes} from '../types';
+import ClickOutside from '@/modules/common/components/click-outside';
+type TopBarProps = {
+  clientInfo: ClientInfoRes;
+};
+export function TopBar(props: TopBarProps) {
   const [isRoutesVisible, setIsRoutesVisible] = useState(false);
   const routesRef = useRef(null);
 
   const toggleRoutes = () => {
     setIsRoutesVisible(!isRoutesVisible);
-  };
-
-  const closeRoutes = () => {
-    setIsRoutesVisible(false);
   };
 
   useEffect(() => {
@@ -26,19 +26,16 @@ export function TopBar() {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [routesRef]);
 
   return (
     <div className="flex h-20 flex-row p-5 md:bg-transparent bg-white items-center justify-between w-screen md:w-full gap-4">
       <TimeTopBar />
-      <FiMenu
-        className="w-6 h-6 md:hidden cursor-pointer"
-        onClick={toggleRoutes}
-      />
+      <FiMenu className="w-6 h-6 md:hidden cursor-pointer" onClick={toggleRoutes} />
 
       <div className="flex flex-row w-auto md:gap-2 ">
         <Button
@@ -61,16 +58,26 @@ export function TopBar() {
         </Button>
         <img
           className="md:hidden bg-white md:bg-gray-200 text-xs text-black h-10 w-10 md:w-32"
-          src="/profile.png"
+          src={props.clientInfo.photo !== '' ? props.clientInfo.photo : '/profile.png'}
         />
       </div>
       {isRoutesVisible && (
-        <div
-          ref={routesRef}
-          className="fixed top-0 left-0 w-[280px] h-full bg-white z-50"
+        <ClickOutside
+          className="fixed top-0 shadow-md left-0 w-[280px] h-full bg-white z-50"
+          onClick={toggleRoutes}
         >
-          <Routes closeRoutes={closeRoutes} />
-        </div>
+          <div className=" flex flex-col gap-4 h-full w-full py-8 px-2">
+            <div
+              className="flex flex-row items-center cursor-pointer gap-3 px-2 md:hidden"
+              onClick={toggleRoutes}
+            >
+              <FiArrowLeft className="w-6 h-6 cursor-pointer" />
+              <p className="text-sm">Atrás</p>
+            </div>
+
+            <Routes clientInfo={props.clientInfo} />
+          </div>
+        </ClickOutside>
       )}
     </div>
   );

@@ -1,81 +1,114 @@
-import { auth } from "@/auth";
-import { Institution } from "../types";
+import {Institution, InstitutionRes} from '../types';
+import {
+  apiGet,
+  apiSecureGet,
+  apiSecurePostFormData,
+  apiSecurePost,
+  apiSecurePut,
+} from '@/modules/common/services';
+import {updateInfoInstitutionReq, updateLogoInstitutionReq} from '../types/services';
+import {CommonServiceRes} from '@/modules/common/types';
+import {CreateAllFormatReq, CreateAllFormatRes} from '@/modules/asesor/types';
 
 export async function getServicesInstitution() {
-    const session = await auth();
-    try {
-        const response = await fetch(`${process.env.API_URL}/services`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${session?.user.token}`
-            }
-        });
-        return await response.json();
-    } catch (e) {
-        return null;
-    }
+  return await apiSecureGet(`/services`);
 }
 
-export async function getInstitutionService() {
-    const session = await auth();
-    try {
-        const response = await fetch(`${process.env.API_URL}/institution`, {
-            headers: {
-                "Authorization": `Bearer ${session?.user.token}`
-            }
-        });
-        return await response.json();
-    } catch (e) {
-        return null;
-    }
-}
-export async function createInstitutionService(institution: Institution): Promise<Institution | null> {
-    const session = await auth();
-    try {
-        const response = await fetch(`${process.env.API_URL}/institution`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${session?.user.token}`
-            },
-            body: JSON.stringify(institution)
-        });
-        if (response.status === 401) {
-            return null
-        }
-        const data = await response.json()
-        const resposeLogo = await updateLogoInstitutionService(data.id, institution.logo as File)
-
-        if (!resposeLogo) {
-            return null
-        }
-        return data
-
-
-    } catch (e) {
-        return null;
-    }
-}
-export async function updateLogoInstitutionService(id: number, logo: File): Promise<boolean | null> {
-    const session = await auth();
-    const formData = new FormData()
-    formData.append("logo", logo)
-    try {
-        const response = await fetch(`${process.env.API_URL}/institution/logo/${id}`, {
-            method: 'PUT',
-            headers: {
-                "Authorization": `Bearer ${session?.user.token}`
-            },
-            body: formData
-        });
-        if (response.status === 401) {
-            return null
-        }
-
-        const data = await response.json();
-        return data
-    } catch (e) {
-        return null;
-    }
+export async function getInstitutionService(): Promise<InstitutionRes | null> {
+  return await apiSecureGet<InstitutionRes>(`/institution`);
 }
 
+export async function createInstitutionService(
+  institution: Institution
+): Promise<Institution | null> {
+  const data = await apiSecurePost<Institution | null>('/institution', institution);
+  if (data?.id)
+    await updateLogoInstitutionService({
+      id: data?.id,
+      logo: institution.logo as File,
+    });
+  return data;
+}
+
+export async function updateLogoInstitutionService(
+  req: updateLogoInstitutionReq
+): Promise<CommonServiceRes<boolean | null>> {
+  try {
+    const formData = new FormData();
+    formData.append('logo', req.logo);
+    const res = await apiSecurePostFormData(`/institution/logo/${req.id}`, formData);
+    if (!res) {
+      return {
+        errors: [['No se ha actualizado foto de institución']],
+      };
+    }
+
+    return {
+      messages: ['Se ha actualizado foto de institución'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      errors: [[e.message]],
+    };
+  }
+}
+
+export async function getLogoInstitutionService(id: number): Promise<string | null> {
+  return await apiSecureGet<string | null>(`/institution/logo/${id}`);
+}
+
+export async function createAllFormatService(
+  req: CreateAllFormatReq
+): Promise<CommonServiceRes<CreateAllFormatRes | null>> {
+  try {
+    const data = await apiSecurePost<CreateAllFormatRes>('/institution/create-all-formats', req);
+    if (!data) {
+      return {errors: [['No se ha podido crear todos los formatos']]};
+    }
+    return {
+      data,
+      messages: ['Los formatos han sido creados.'],
+    };
+  } catch (e) {
+    const error = e as Error;
+    return {
+      errors: [[error.message]],
+    };
+  }
+}
+
+export async function updateInfoInstitutionService(
+  req: updateInfoInstitutionReq
+): Promise<CommonServiceRes<boolean | null>> {
+  try {
+    const res = await apiSecurePut<boolean | null>(`/institution/${req.id}`, req);
+    if (!res) {
+      return {
+        errors: [['No se ha actualizado la institución']],
+      };
+    }
+    return {
+      messages: ['Se ha actualizado la informacion de la institución'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      errors: [[e.message]],
+    };
+  }
+}
+
+export async function getInstitutionByAsesorService(): Promise<InstitutionRes | null> {
+  return await apiSecureGet<InstitutionRes>(`/institution/asesor/get`);
+}
+
+export async function getClientByInstitutionService(id: number): Promise<number | null> {
+  try {
+    const response = await apiGet(`/institution-client/get/institution/${id}`);
+    return response.clientId ? parseInt(response.clientId, 10) : null;
+  } catch (error) {
+    console.error('Error fetching client:', error);
+    return null;
+  }
+}

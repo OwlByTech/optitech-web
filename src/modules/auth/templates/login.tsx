@@ -1,20 +1,20 @@
-"use client";
-import { useFormState } from "react-dom";
-import { authenticate } from "../services/actions";
-import { Input } from "../../common/components/input";
-import { InputPassword } from "../../common/components/input-password";
-import { SubmitButton } from "../../common/components/submit-button";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
-import Link from "next/link";
-import { ROUTES_AUTH } from "../types/auth";
+'use client';
+import {useFormState} from 'react-dom';
+import {authenticate} from '../services/actions';
+import {Input} from '../../common/components/input';
+import {InputPassword} from '../../common/components/input-password';
+import {SubmitButton} from '../../common/components/submit-button';
+import {usePathname, useRouter} from 'next/navigation';
+import {useEffect} from 'react';
+import Link from 'next/link';
+import {ROUTES_AUTH} from '../types/auth';
 
 export default function Login() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const route = useRouter();
   const pathname = usePathname();
   useEffect(() => {
-    if (pathname === "/") route.push(ROUTES_AUTH.LOGIN);
+    if (pathname === '/') route.push(ROUTES_AUTH.LOGIN);
   }, [pathname]);
   return (
     <section className="flex items-center justify-center w-screen h-screen">
@@ -43,23 +43,16 @@ export default function Login() {
               variant="bordered"
             />
           </div>
-          {errorMessage && (
-            <p className="text-red-600 font-bold text-xs">{errorMessage}</p>
-          )}
+          {errorMessage && <p className="text-red-600 font-bold text-xs">{errorMessage}</p>}
 
           <div className="flex flex-grows gap-1 mx-4">
             <p className="text-xs">¿Perdiste tu contraseña? </p>
-            <Link
-              href={ROUTES_AUTH.RESET_PASSWORD}
-              className="text-xs font-bold"
-            >
+            <Link href={ROUTES_AUTH.RESET_PASSWORD} className="text-xs font-bold">
               Recuperar Contraseña
             </Link>
           </div>
 
-          <SubmitButton className="bg-black text-white mx-5 rounded-lg">
-            Aceptar
-          </SubmitButton>
+          <SubmitButton className="bg-black text-white mx-5 rounded-lg">Aceptar</SubmitButton>
         </form>
       </div>
     </section>

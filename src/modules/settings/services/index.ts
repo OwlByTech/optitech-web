@@ -1,73 +1,45 @@
-import { auth } from "@/auth";
-import { UpdateClientInfoReq } from "../types";
+import {CommonServiceRes} from '@/modules/common/types';
+import {UpdateClientInfoReq, UpdateUserPhotoReq} from '../types';
+import {apiSecureGet, apiSecurePostFormData, apiSecurePut} from '@/modules/common/services';
 
-interface ApiGetOptions {
-  type?: string;
-  params?: { [key: string]: string };
-}
-
-type ApiResponse = any;
-
-export async function apiGet(
-  endpoint: string,
-  options: ApiGetOptions = {}
-): Promise<ApiResponse | null> {
-  const session = await auth();
-  const { type = "application/json", params = {} } = options;
-
+export async function updateUserInfoService(
+  req: UpdateClientInfoReq
+): Promise<CommonServiceRes<boolean | null>> {
   try {
-    const url = new URL(`${process.env.API_URL}${endpoint}`);
-    Object.keys(params).forEach((key) =>
-      url.searchParams.append(key, params[key])
-    );
-
-    const response = await fetch(url.toString(), {
-      headers: {
-        "Content-Type": type,
-        Authorization: `Bearer ${session?.user.token}`,
-      },
-    });
-
-    if (response.ok) {
-      return await response.json();
-    } else {
-      console.error(`GET request failed: ${response.statusText}`);
-      return null;
+    const res = await apiSecurePut<boolean | null>(`/client/update/${req.id}`, req);
+    if (!res) {
+      return {errors: [['No se ha actualizado la informacion.']]};
     }
-  } catch (e) {
-    console.error("GET request error:", e);
-    return null;
+    return {
+      messages: ['Informacion Actualizada'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {errors: [[e.message]]};
   }
 }
 
-export async function clientInfoService(): Promise<ApiResponse | null> {
-  return await apiGet("/client");
+export async function updatePhotoUserService(
+  req: UpdateUserPhotoReq
+): Promise<CommonServiceRes<boolean | null>> {
+  try {
+    const formData = new FormData();
+    formData.append('photo', req.photo);
+    const res = await apiSecurePostFormData<boolean | null>(`/client/photo/${req.id}`, formData);
+    if (!res) {
+      return {
+        errors: [['No se ha actualizado la foto de perfil.']],
+      };
+    }
+    return {
+      messages: ['Se ha actualizado la foto de perfil.'],
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {errors: [[e.message]]};
+  }
 }
 
-export async function updateUserInfo(user: UpdateClientInfoReq) {
-  const session = await auth();
-  try {
-    const response = await fetch(
-      `${process.env.API_URL}/client/update/${user.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.user.token}`,
-        },
-        body: JSON.stringify({
-          ...user,
-          id: parseInt(user.id),
-        }),
-      }
-    );
-    if (!response.ok) {
-      console.error("Update info failed");
-      return null;
-    }
-    return await response.json();
-  } catch (e) {
-    console.error("Login error:", e);
-    return null;
-  }
+export async function getPhotoUserService(id: number): Promise<string | null> {
+  return await apiSecureGet<string | null>(`/client/photo/${id}`);
 }

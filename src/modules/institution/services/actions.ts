@@ -1,65 +1,71 @@
-"use server"
+'use server';
 
-import { string, z } from "zod";
-import { createInstitutionService } from ".";
-import { Institution } from "../types";
-const CreateInstitution = z.object({
-    name: z.string(),
-    description: z.string(),
-    services: z.number().array().min(1)
-})
-
-type StateCreateInstitution = {
-    institution?: Institution
-    errors?: {
-        api?: string
-        name?: string[];
-        description?: string[];
-        services?: string[];
-    };
-    message?: string | null;
-};
-
-
+import {
+  createAllFormatService,
+  createInstitutionService,
+  updateInfoInstitutionService,
+  updateLogoInstitutionService,
+} from '.';
+import {CommonActionState} from '@/modules/common/types/action';
+import {CreateInstitution, InstitutionInfo, InstitutionLogo} from '../types';
+import {BaseFormActionService} from '@/modules/common/services/action';
+import {UpdateDirectoryReqValidator} from '@/modules/files/types';
+import {CreateAllFormatReqValidator} from '@/modules/asesor/types';
 
 export async function createInstitution(
-    name?: string,
-    description?: string,
-    services?: number[],
-    prevState: StateCreateInstitution,
-    formData: FormData,
-
-): Promise<StateCreateInstitution> {
-    const validateFields = CreateInstitution.safeParse({
-        name: name,
-        description: description,
-        services: services,
-    })
-    if (validateFields.success) {
-        const response = await createInstitutionService(
-            {
-                ...validateFields.data, logo: formData.get("logo") as File
-            })
-        if (response) {
-
-            return {
-                message: "Institución creada exitosamente",
-                institution: response
-            }
-
-        } else {
-            return {
-                errors: {
-                    api: "Error conexion servidor"
-                },
-            }
-        }
+  name?: string,
+  description?: string,
+  services?: number[],
+  prevState: CommonActionState,
+  formData: FormData
+): Promise<CommonActionState> {
+  const validateFields = CreateInstitution.safeParse({
+    name: name,
+    description: description,
+    services: services,
+  });
+  if (validateFields.success) {
+    const response = await createInstitutionService({
+      ...validateFields.data,
+      logo: formData.get('logo') as File,
+    });
+    if (response) {
+      return {
+        message: 'Institución creada exitosamente',
+      };
+    } else {
+      return {
+        errors: {
+          api: 'Error conexion servidor',
+        },
+      };
     }
-    return {
-        errors: validateFields.error.flatten().fieldErrors,
-        message: 'Error'
-    }
-
+  }
+  return {
+    errors: validateFields.error.flatten().fieldErrors,
+    message: 'Error',
+  };
 }
 
+export async function updateLogoInstitution(
+  state: CommonActionState,
+  payload: FormData
+): Promise<CommonActionState> {
+  return await BaseFormActionService(state, payload, InstitutionLogo, updateLogoInstitutionService);
+}
 
+export async function createAllFormatForm(state: CommonActionState, payload: FormData) {
+  return await BaseFormActionService(
+    state,
+    payload,
+    CreateAllFormatReqValidator,
+    createAllFormatService
+  );
+}
+
+export async function updateInstitutionForm(
+  state: CommonActionState,
+  payload: FormData
+): Promise<CommonActionState> {
+  return await BaseFormActionService(state, payload, InstitutionInfo, updateInfoInstitutionService);
+}

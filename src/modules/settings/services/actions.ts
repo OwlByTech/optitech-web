@@ -1,40 +1,20 @@
-"use server"
+'use server';
 
-import { z } from "zod"
-import { StateUpdateUser } from '../types'
-import { updateUserInfo } from ".";
-
-const UserInfo = z.object({
-    id: z.string(),
-    givenName: z.string(),
-    surname: z.string(),
-    email: z.string().email()
-})
+import {CommonActionState} from '@/modules/common/types/action';
+import {updatePhotoUserService, updateUserInfoService} from '.';
+import {UserInfo, UserPhoto} from '../types';
+import {BaseFormActionService} from '@/modules/common/services/action';
 
 export async function updateUserForm(
-    prevState: StateUpdateUser,
-    formData: FormData,
-): Promise<StateUpdateUser> {
-    const entries = Object.fromEntries(formData.entries());
-    const validateFields = UserInfo.safeParse(entries);
+  state: CommonActionState,
+  payload: FormData
+): Promise<CommonActionState> {
+  return await BaseFormActionService(state, payload, UserInfo, updateUserInfoService);
+}
 
-
-    if (!validateFields.success) {
-        return {
-            errors: validateFields.error?.flatten().fieldErrors,
-            message: 'Error'
-        }
-    }
-    
-    const response = await updateUserInfo(validateFields.data)
-    if (!response) {
-        return {
-            errors: {},
-            message: 'Error'
-        }
-    }
-
-    return {
-        message: 'Informacion Actualizada'
-    }
+export async function updateUserPhoto(
+  state: CommonActionState,
+  payload: FormData
+): Promise<CommonActionState> {
+  return await BaseFormActionService(state, payload, UserPhoto, updatePhotoUserService);
 }

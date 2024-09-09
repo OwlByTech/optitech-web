@@ -1,8 +1,8 @@
+import {ROUTES_SIDEBAR} from '@/modules/dashboard/types';
+import {z} from 'zod';
+
 export enum ROUTES_SETTINGS {
-  GENERAL_DETAILS = "/dashboard/settings/general-details",
-  INTEGRATIONS = "/dashboard/settings/integrations",
-  NOTIFICATIONS = "/dashboard/settings/notifications",
-  SECURITY = "/dashboard/settings/security",
+  NOTIFICATIONS = '/dashboard/settings/notifications',
 }
 export type route = {
   route: string;
@@ -10,32 +10,36 @@ export type route = {
 };
 
 export type UpdateClientInfoReq = {
-  id: string;
+  id: number;
   name?: string;
   surname?: string;
   email?: string;
 };
+export const UserInfo = z.object({
+  id: z.number({coerce: true}),
+  givenName: z.string(),
+  surname: z.string(),
+  email: z.string().email(),
+});
 
-export type StateUpdateUser = {
-  errors?: {} | null;
-  message?: string | null;
-};
+export const UserPhoto = z.object({
+  id: z.number({coerce: true}),
+  photo: z.any(),
+});
 
 export const routesSettings = [
   {
-    route: ROUTES_SETTINGS.GENERAL_DETAILS,
-    name: "Detalles generales",
-  },
-  {
-    route: ROUTES_SETTINGS.INTEGRATIONS,
-    name: "Integraciones",
+    route: ROUTES_SIDEBAR.SETTINGS,
+    name: 'Detalles generales',
   },
   {
     route: ROUTES_SETTINGS.NOTIFICATIONS,
-    name: "Notificaciones",
-  },
-  {
-    route: ROUTES_SETTINGS.SECURITY,
-    name: "Seguridad",
+    name: 'Notificaciones',
   },
 ];
+
+export type UpdateUserPhotoReq = {
+  id: number;
+  photo: File;
+};
+export type UpdateUpserPhotoRes = {};

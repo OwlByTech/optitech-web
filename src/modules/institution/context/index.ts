@@ -1,6 +1,4 @@
-import { atom } from "jotai";
-import { Institution } from "../types";
+import {atom} from 'jotai';
+import {Institution} from '../types';
 
-
-export const institutionStorage = atom<Institution>({})
-
+export const institutionStorage = atom<Institution>({});
